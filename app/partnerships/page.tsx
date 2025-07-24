@@ -117,7 +117,7 @@ export default function PartnershipsPage() {
           text: "Download Funding Guide",
           href: "/resources/indigenous-funding-guide"
         }}
-        className="bg-discovery-charcoal text-discovery-white"
+
       />
     </>
   )

@@ -140,7 +140,7 @@ export default function OurBuildsPage() {
           text: "Download Brochure",
           href: "/resources/brochure"
         }}
-        className="bg-discovery-charcoal text-discovery-white"
+
       />
     </>
   )
