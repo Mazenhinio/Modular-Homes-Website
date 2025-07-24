@@ -4,18 +4,10 @@ import { useEffect } from 'react'
 
 export function SmoothScrollProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
-    // Initialize smooth scrolling
-    const initSmoothScroll = async () => {
-      try {
-        // For now, we'll use CSS smooth scrolling
-        document.documentElement.style.scrollBehavior = 'smooth'
-      } catch (error) {
-        console.log('Smooth scroll initialization skipped:', error)
-      }
-    }
-
-    initSmoothScroll()
-
+    // Temporarily disable smooth scrolling to fix production delays
+    // This ensures normal, responsive scrolling behavior
+    document.documentElement.style.scrollBehavior = 'auto'
+    
     return () => {
       document.documentElement.style.scrollBehavior = 'auto'
     }
