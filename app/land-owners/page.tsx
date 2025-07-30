@@ -11,11 +11,6 @@ export default function LandOwnersLandingPage() {
 
   const handleFormSubmit = async (formData: any) => {
     try {
-      // Track form submission
-      if (typeof window !== 'undefined' && window.landOwnersAnalytics) {
-        window.landOwnersAnalytics.trackFormSubmission(formData)
-      }
-
       const response = await fetch('/api/forms/land-owners', {
         method: 'POST',
         headers: {
