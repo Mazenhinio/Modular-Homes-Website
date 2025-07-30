@@ -13,11 +13,6 @@ export default function FirstNationsLandingPage() {
 
   const handleFormSubmit = async (formData: any) => {
     try {
-      // Track form submission
-      if (typeof window !== 'undefined' && window.firstNationsAnalytics) {
-        window.firstNationsAnalytics.trackFormSubmission(formData)
-      }
-
       const response = await fetch('/api/forms/first-nations', {
         method: 'POST',
         headers: {

@@ -13,11 +13,6 @@ export default function RealEstateRentalLandingPage() {
 
   const handleFormSubmit = async (formData: any) => {
     try {
-      // Track form submission
-      if (typeof window !== 'undefined' && window.realEstateRentalAnalytics) {
-        window.realEstateRentalAnalytics.trackFormSubmission(formData)
-      }
-
       const response = await fetch('/api/forms/real-estate-rental', {
         method: 'POST',
         headers: {
