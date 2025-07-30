@@ -1,10 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { sendEmail } from '@/lib/mailer'
+import { mailer } from '@/lib/mailer'
+import { crmClient } from '@/lib/crmClient'
 
 export async function POST(request: NextRequest) {
   try {
     const formData = await request.json()
-    
+
     // Extract form fields
     const {
       firstName,
@@ -25,40 +26,30 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // Prepare email content
-    const emailSubject = 'New Land Owner Inquiry - Discovery Homes'
-    const emailContent = `
-      <h2>New Land Owner Inquiry</h2>
-      <p><strong>Name:</strong> ${firstName} ${lastName}</p>
-      <p><strong>Email:</strong> ${email}</p>
-      <p><strong>Phone:</strong> ${phone}</p>
-      <p><strong>Property Address:</strong> ${propertyAddress}</p>
-      <p><strong>Land Size:</strong> ${landSize}</p>
-      <p><strong>Current Land Use:</strong> ${currentUse}</p>
-      <p><strong>Development Goals:</strong> ${developmentGoals}</p>
-      
-      <h3>Next Steps:</h3>
-      <ul>
-        <li>Schedule land evaluation consultation</li>
-        <li>Prepare development feasibility study</li>
-        <li>Create preliminary site plan</li>
-        <li>Provide zoning and permit guidance</li>
-      </ul>
-    `
+    // Prepare CRM data with land development specific tags
+    const crmData = {
+      name: `${firstName} ${lastName}`,
+      email,
+      phone,
+      segment: 'developer',
+      source: 'Land Owners Landing Page',
+      tags: ['Land Development', 'Property Owner', 'Landing Page Lead'],
+      status: 'new',
+      property_address: propertyAddress,
+      land_size: landSize,
+      current_use: currentUse,
+      development_goals: developmentGoals
+    }
 
-    // Send notification email
-    await sendEmail({
-      to: 'landowners@discoveryhomes.ca',
-      subject: emailSubject,
-      html: emailContent
-    })
+    // Add to CRM
+    const crmResult = await crmClient.createLead(crmData)
 
     // Send confirmation email to customer
     const customerEmailContent = `
       <h2>Thank you for your land evaluation request!</h2>
       <p>Dear ${firstName},</p>
       <p>Thank you for reaching out to Discovery Homes about your land development project. We've received your inquiry and our land development specialist will contact you within 24 hours to discuss your property's potential.</p>
-      
+
       <h3>What to expect:</h3>
       <ul>
         <li>Comprehensive land evaluation and feasibility study</li>
@@ -73,10 +64,29 @@ export async function POST(request: NextRequest) {
       The Discovery Homes Team</p>
     `
 
-    await sendEmail({
+    await mailer.sendNotification({
       to: email,
       subject: 'Your Land Evaluation Request - Discovery Homes',
-      html: customerEmailContent
+      data: { html: customerEmailContent }
+    })
+
+    // Send internal notification
+    const notificationContent = `
+      <h2>New Land Owners Landing Page Lead</h2>
+      <p><strong>Name:</strong> ${firstName} ${lastName}</p>
+      <p><strong>Email:</strong> ${email}</p>
+      <p><strong>Phone:</strong> ${phone}</p>
+      <p><strong>Property Address:</strong> ${propertyAddress}</p>
+      <p><strong>Land Size:</strong> ${landSize}</p>
+      <p><strong>Current Land Use:</strong> ${currentUse}</p>
+      <p><strong>Development Goals:</strong> ${developmentGoals}</p>
+      <p><strong>CRM ID:</strong> ${crmResult?.id || 'N/A'}</p>
+    `
+
+    await mailer.sendNotification({
+      to: 'landowners@discoveryhomes.ca',
+      subject: 'New Land Owners Landing Page Lead',
+      data: { html: notificationContent }
     })
 
     return NextResponse.json({ success: true })

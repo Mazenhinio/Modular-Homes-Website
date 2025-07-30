@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { sendEmail } from '@/lib/mailer'
-import { addToCRM } from '@/lib/crmClient'
+import { mailer } from '@/lib/mailer'
+import { crmClient } from '@/lib/crmClient'
 
 export async function POST(request: NextRequest) {
   try {
@@ -27,63 +27,64 @@ export async function POST(request: NextRequest) {
 
     // Prepare CRM data with First Nations specific tags
     const crmData = {
-      firstName,
-      lastName,
+      name: `${firstName} ${lastName}`,
       email,
       phone,
-      company: community,
+      segment: 'indigenous-community',
       source,
-      interest,
       tags: ['First Nations', 'Community Housing', 'Landing Page Lead'],
-      customFields: {
-        community_name: community,
-        project_type: projectType,
-        timeline: timeline,
-        lead_source: 'First Nations Landing Page',
-        interest_area: 'First Nations Community Housing'
-      }
+      status: 'new',
+      community_name: community,
+      project_type: projectType,
+      timeline: timeline
     }
 
     // Add to CRM
-    const crmResult = await addToCRM(crmData)
+    const crmResult = await crmClient.createLead(crmData)
 
-    // Prepare email data
-    const emailData = {
+    // Send confirmation email to customer
+    const customerEmailContent = `
+      <h2>Thank you for your First Nations housing inquiry!</h2>
+      <p>Dear ${firstName},</p>
+      <p>Thank you for reaching out to Discovery Homes about your community housing project. We've received your inquiry and our First Nations housing specialist will contact you within 24 hours to discuss your project.</p>
+
+      <h3>What to expect:</h3>
+      <ul>
+        <li>Comprehensive housing needs assessment</li>
+        <li>Funding and grant opportunities</li>
+        <li>Community consultation process</li>
+        <li>Sustainable housing solutions</li>
+      </ul>
+      
+      <p>In the meantime, you can download our <a href="#">First Nations Housing Guide</a> to learn more about our community-focused approach.</p>
+      
+      <p>Best regards,<br>
+      The Discovery Homes Team</p>
+    `
+
+    await mailer.sendNotification({
       to: email,
-      subject: 'Your First Nations Housing Guide - Discovery Homes',
-      template: 'first-nations-guide',
-      data: {
-        firstName,
-        lastName,
-        community,
-        projectType,
-        timeline,
-        downloadLink: 'https://discoveryhomes.ca/first-nations-guide.pdf', // Placeholder
-        consultationLink: 'https://calendly.com/discovery-homes/first-nations-consultation' // Placeholder
-      }
-    }
-
-    // Send confirmation email
-    const emailResult = await sendEmail(emailData)
+      subject: 'Your First Nations Housing Inquiry - Discovery Homes',
+      data: { html: customerEmailContent }
+    })
 
     // Send internal notification
-    const notificationData = {
-      to: 'sales@discoveryhomes.ca', // Replace with actual email
-      subject: 'New First Nations Landing Page Lead',
-      template: 'first-nations-lead-notification',
-      data: {
-        firstName,
-        lastName,
-        email,
-        phone,
-        community,
-        projectType,
-        timeline,
-        crmId: crmResult?.id || 'N/A'
-      }
-    }
+    const notificationContent = `
+      <h2>New First Nations Landing Page Lead</h2>
+      <p><strong>Name:</strong> ${firstName} ${lastName}</p>
+      <p><strong>Email:</strong> ${email}</p>
+      <p><strong>Phone:</strong> ${phone}</p>
+      <p><strong>Community:</strong> ${community}</p>
+      <p><strong>Project Type:</strong> ${projectType}</p>
+      <p><strong>Timeline:</strong> ${timeline}</p>
+      <p><strong>CRM ID:</strong> ${crmResult?.id || 'N/A'}</p>
+    `
 
-    await sendEmail(notificationData)
+    await mailer.sendNotification({
+      to: 'firstnations@discoveryhomes.ca',
+      subject: 'New First Nations Landing Page Lead',
+      data: { html: notificationContent }
+    })
 
     return NextResponse.json({
       success: true,
