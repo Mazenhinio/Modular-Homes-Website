@@ -1,58 +1,8 @@
 'use client'
 
-import { useState } from 'react'
-import { Phone, Mail, MapPin, Calendar, Clock, Users, MessageCircle, Send, CheckCircle } from 'lucide-react'
+import { Phone, Mail, MapPin, Calendar } from 'lucide-react'
 
 export default function ContactPage() {
-  const [selectedDate, setSelectedDate] = useState('')
-  const [selectedTime, setSelectedTime] = useState('')
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    subject: '',
-    message: '',
-    consultationType: '',
-    preferredContact: 'email'
-  })
-  const [isSubmitted, setIsSubmitted] = useState(false)
-
-  const consultationTypes = [
-    'General Inquiry',
-    'Quote Request',
-    'Indigenous Community Project',
-    'Resort/Tourism Development',
-    'Rural/Acreage Development',
-    'Off-Grid/Net-Zero Solutions',
-    'Custom Build Consultation'
-  ]
-
-  const timeSlots = [
-    '9:00 AM', '10:00 AM', '11:00 AM',
-    '1:00 PM', '2:00 PM', '3:00 PM', '4:00 PM'
-  ]
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    // In production, this would send to CRM
-    console.log('Contact form submitted:', { ...formData, selectedDate, selectedTime })
-    setIsSubmitted(true)
-    
-    // Reset form after 3 seconds
-    setTimeout(() => {
-      setIsSubmitted(false)
-      setFormData({
-        name: '', email: '', phone: '', subject: '', message: '',
-        consultationType: '', preferredContact: 'email'
-      })
-      setSelectedDate('')
-      setSelectedTime('')
-    }, 3000)
-  }
-
-  const updateFormData = (field: string, value: string) => {
-    setFormData(prev => ({ ...prev, [field]: value }))
-  }
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -133,239 +83,42 @@ export default function ContactPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
             
-            {/* Contact Form */}
-            <div className="bg-white rounded-2xl p-8 shadow-lg">
-              <h2 className="text-3xl font-bold text-[#2D2D2D] mb-6">Send Us a Message</h2>
-              
-              {!isSubmitted ? (
-                <form onSubmit={handleSubmit} className="space-y-6">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">Full Name *</label>
-                      <input
-                        type="text"
-                        value={formData.name}
-                        onChange={(e) => updateFormData('name', e.target.value)}
-                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#D4AF37] focus:border-transparent"
-                        required
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">Email Address *</label>
-                      <input
-                        type="email"
-                        value={formData.email}
-                        onChange={(e) => updateFormData('email', e.target.value)}
-                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#D4AF37] focus:border-transparent"
-                        required
-                      />
-                    </div>
-                  </div>
-
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">Phone Number</label>
-                      <input
-                        type="tel"
-                        value={formData.phone}
-                        onChange={(e) => updateFormData('phone', e.target.value)}
-                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#D4AF37] focus:border-transparent"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">Consultation Type</label>
-                      <select
-                        value={formData.consultationType}
-                        onChange={(e) => updateFormData('consultationType', e.target.value)}
-                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#D4AF37] focus:border-transparent"
-                      >
-                        <option value="">Select a type</option>
-                        {consultationTypes.map((type) => (
-                          <option key={type} value={type}>{type}</option>
-                        ))}
-                      </select>
-                    </div>
-                  </div>
-
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Subject</label>
-                    <input
-                      type="text"
-                      value={formData.subject}
-                      onChange={(e) => updateFormData('subject', e.target.value)}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#D4AF37] focus:border-transparent"
-                      placeholder="How can we help you?"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Message *</label>
-                    <textarea
-                      value={formData.message}
-                      onChange={(e) => updateFormData('message', e.target.value)}
-                      rows={4}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#D4AF37] focus:border-transparent"
-                      placeholder="Tell us about your project..."
-                      required
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-4">Preferred Contact Method</label>
-                    <div className="flex gap-4">
-                      <label className="flex items-center">
-                        <input
-                          type="radio"
-                          name="preferredContact"
-                          value="email"
-                          checked={formData.preferredContact === 'email'}
-                          onChange={(e) => updateFormData('preferredContact', e.target.value)}
-                          className="mr-2"
-                        />
-                        Email
-                      </label>
-                      <label className="flex items-center">
-                        <input
-                          type="radio"
-                          name="preferredContact"
-                          value="phone"
-                          checked={formData.preferredContact === 'phone'}
-                          onChange={(e) => updateFormData('preferredContact', e.target.value)}
-                          className="mr-2"
-                        />
-                        Phone
-                      </label>
-                    </div>
-                  </div>
-
-                  <button
-                    type="submit"
-                    className="w-full bg-[#D4AF37] text-white py-4 rounded-lg font-semibold hover:bg-[#B8941F] transition-colors flex items-center justify-center"
-                  >
-                    <Send className="mr-2" size={20} />
-                    Send Message
-                  </button>
-                </form>
-              ) : (
-                <div className="text-center py-12">
-                  <div className="bg-green-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6">
-                    <CheckCircle className="text-green-600" size={32} />
-                  </div>
-                  <h3 className="text-2xl font-bold text-[#2D2D2D] mb-4">Message Sent!</h3>
-                  <p className="text-gray-600">
-                    Thank you for contacting Discovery Homes. We'll get back to you within 24 hours.
-                  </p>
-                </div>
-              )}
+                         {/* GHL Contact Form */}
+             <div className="bg-white rounded-2xl p-8 shadow-lg">
+               <h2 className="text-3xl font-bold text-[#2D2D2D] mb-0">Send Us a Message</h2>
+              <iframe
+                src="https://api.leadconnectorhq.com/widget/form/YhVFMsmHW8sz26gUbqdJ"
+                style={{width: '100%', height: '100%', border: 'none', borderRadius: '3px'}}
+                id="inline-YhVFMsmHW8sz26gUbqdJ" 
+                data-layout="{'id':'INLINE'}"
+                data-trigger-type="alwaysShow"
+                data-trigger-value=""
+                data-activation-type="alwaysActivated"
+                data-activation-value=""
+                data-deactivation-type="neverDeactivate"
+                data-deactivation-value=""
+                data-form-name="Contact Form"
+                data-height="758"
+                data-layout-iframe-id="inline-YhVFMsmHW8sz26gUbqdJ"
+                data-form-id="YhVFMsmHW8sz26gUbqdJ"
+                title="Contact Form"
+                className="w-full min-h-[758px]"
+              />
+              <script src="https://link.msgsndr.com/js/form_embed.js"></script>
             </div>
 
-            {/* Booking Calendar */}
-            <div className="bg-white rounded-2xl p-8 shadow-lg">
-              <h2 className="text-3xl font-bold text-[#2D2D2D] mb-6">Book a Consultation</h2>
-              
-              <div className="space-y-6">
-                <div className="bg-[#D4AF37]/10 border border-[#D4AF37] rounded-lg p-4">
-                  <div className="flex items-center mb-2">
-                    <Calendar className="text-[#D4AF37] mr-2" size={20} />
-                    <span className="font-semibold text-[#2D2D2D]">Free 30-Minute Consultation</span>
-                  </div>
-                  <p className="text-sm text-gray-600">
-                    Discuss your project requirements with our expert team
-                  </p>
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-3">Select Date</label>
-                  <div className="grid grid-cols-3 gap-2">
-                    {[...Array(14)].map((_, index) => {
-                      const date = new Date()
-                      date.setDate(date.getDate() + index + 1)
-                      const dateStr = date.toISOString().split('T')[0]
-                      const isWeekend = date.getDay() === 0 || date.getDay() === 6
-                      
-                      return (
-                        <button
-                          key={index}
-                          onClick={() => setSelectedDate(dateStr)}
-                          disabled={isWeekend}
-                          className={`p-3 text-sm rounded-lg border transition-colors ${
-                            selectedDate === dateStr
-                              ? 'bg-[#D4AF37] text-white border-[#D4AF37]'
-                              : isWeekend
-                              ? 'bg-gray-100 text-gray-400 border-gray-200 cursor-not-allowed'
-                              : 'bg-white text-gray-700 border-gray-300 hover:border-[#D4AF37]'
-                          }`}
-                        >
-                          <div className="font-medium">
-                            {date.toLocaleDateString('en-CA', { weekday: 'short' })}
-                          </div>
-                          <div className="text-xs">
-                            {date.toLocaleDateString('en-CA', { month: 'short', day: 'numeric' })}
-                          </div>
-                        </button>
-                      )
-                    })}
-                  </div>
-                </div>
-
-                {selectedDate && (
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-3">Select Time</label>
-                    <div className="grid grid-cols-3 gap-2">
-                      {timeSlots.map((time) => (
-                        <button
-                          key={time}
-                          onClick={() => setSelectedTime(time)}
-                          className={`p-3 text-sm rounded-lg border transition-colors ${
-                            selectedTime === time
-                              ? 'bg-[#D4AF37] text-white border-[#D4AF37]'
-                              : 'bg-white text-gray-700 border-gray-300 hover:border-[#D4AF37]'
-                          }`}
-                        >
-                          {time}
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-                )}
-
-                {selectedDate && selectedTime && (
-                  <div className="bg-gray-50 rounded-lg p-4">
-                    <h4 className="font-semibold text-[#2D2D2D] mb-2">Consultation Summary:</h4>
-                    <div className="space-y-1 text-sm text-gray-600">
-                      <div className="flex items-center">
-                        <Calendar size={14} className="mr-2" />
-                        {new Date(selectedDate).toLocaleDateString('en-CA', { 
-                          weekday: 'long', 
-                          year: 'numeric', 
-                          month: 'long', 
-                          day: 'numeric' 
-                        })}
-                      </div>
-                      <div className="flex items-center">
-                        <Clock size={14} className="mr-2" />
-                        {selectedTime} MST (30 minutes)
-                      </div>
-                      <div className="flex items-center">
-                        <Users size={14} className="mr-2" />
-                        Discovery Homes Expert Team
-                      </div>
-                    </div>
-                    
-                    <button
-                      onClick={() => {
-                        alert(`Consultation booked for ${new Date(selectedDate).toLocaleDateString('en-CA')} at ${selectedTime}! We'll send you a confirmation email.`)
-                        setSelectedDate('')
-                        setSelectedTime('')
-                      }}
-                      className="w-full bg-[#D4AF37] text-white py-3 rounded-lg font-semibold hover:bg-[#B8941F] transition-colors mt-4"
-                    >
-                      Confirm Booking
-                    </button>
-                  </div>
-                )}
-              </div>
-            </div>
+                         {/* GHL Booking Calendar ONLY */}
+             <div className="bg-white rounded-2xl p-8 shadow-lg">
+               <h2 className="text-3xl font-bold text-[#2D2D2D] mb-0">Book a Consultation</h2>
+                               <iframe 
+                  src="https://api.leadconnectorhq.com/widget/booking/PTZ3zcQLwvLZ7CizfIdf" 
+                  style={{width: '100%', height: '800px', border: 'none', overflow: 'hidden'}} 
+                  scrolling="no" 
+                  id="PTZ3zcQLwvLZ7CizfIdf_1753871801578"
+                  className="w-full"
+                />
+               <script src="https://link.msgsndr.com/js/form_embed.js" type="text/javascript"></script>
+             </div>
           </div>
         </div>
       </section>
