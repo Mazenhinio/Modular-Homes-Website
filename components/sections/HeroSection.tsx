@@ -118,14 +118,14 @@ export function HeroSection() {
       {/* Navigation Controls */}
       <button
         onClick={prevSlide}
-        className="absolute left-6 top-1/2 transform -translate-y-1/2 bg-black/50 text-white p-3 rounded-full hover:bg-black/70 transition-colors z-10"
+        className="absolute left-6 top-1/2 transform -translate-y-1/2 glass-nature text-discovery-lime p-3 rounded-full hover:glow-green transition-all duration-300 z-10 micro-interaction"
       >
         <ChevronLeft size={24} />
       </button>
 
       <button
         onClick={nextSlide}
-        className="absolute right-6 top-1/2 transform -translate-y-1/2 bg-black/50 text-white p-3 rounded-full hover:bg-black/70 transition-colors z-10"
+        className="absolute right-6 top-1/2 transform -translate-y-1/2 glass-nature text-discovery-lime p-3 rounded-full hover:glow-green transition-all duration-300 z-10 micro-interaction"
       >
         <ChevronRight size={24} />
       </button>
@@ -133,7 +133,7 @@ export function HeroSection() {
       {/* Play/Pause Control */}
       <button
         onClick={togglePlayPause}
-        className="absolute top-6 right-6 bg-black/50 text-white p-3 rounded-full hover:bg-black/70 transition-colors z-10"
+        className="absolute top-6 right-6 glass-nature text-discovery-lime p-3 rounded-full hover:glow-green transition-all duration-300 z-10 micro-interaction"
       >
         {isPlaying ? <Pause size={20} /> : <Play size={20} />}
       </button>
@@ -141,7 +141,7 @@ export function HeroSection() {
       {/* Show Text Arrow Button - Smooth animation */}
       <button
         onClick={showTextOverlay}
-        className={`absolute bottom-20 left-1/2 transform -translate-x-1/2 bg-black/50 text-white p-4 rounded-full hover:bg-black/70 transition-all duration-500 ease-out z-20 ${
+        className={`absolute bottom-20 left-1/2 transform -translate-x-1/2 glass-eco text-discovery-lime p-4 rounded-full hover:glow-lime transition-all duration-500 ease-out z-20 growth-pulse ${
           !showText 
             ? 'opacity-100 translate-y-0 scale-100 pointer-events-auto' 
             : 'opacity-0 translate-y-4 scale-75 pointer-events-none'
@@ -162,17 +162,17 @@ export function HeroSection() {
           {/* Dark backdrop for better contrast */}
           <div className="absolute inset-0 bg-black/10 backdrop-blur-sm rounded-3xl -z-10 -m-4"></div>
           
-          <h1 className={`text-6xl font-black mb-6 transition-all duration-600 ease-out glow-text drop-shadow-2xl ${
+          <h1 className={`text-6xl font-black mb-6 transition-all duration-600 ease-out drop-shadow-2xl text-discovery-lime nature-shimmer ${
             showText ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4'
           }`}>
             {slides[currentSlide].title}
           </h1>
-          <p className={`text-2xl mb-4 font-bold glow-text-yellow transition-all duration-600 ease-out delay-100 ${
+          <p className={`text-2xl mb-4 font-bold transition-all duration-600 ease-out delay-100 text-discovery-sage ${
             showText ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4'
           }`}>
             {slides[currentSlide].subtitle}
           </p>
-          <p className={`text-lg mb-8 max-w-3xl mx-auto leading-relaxed text-white/90 transition-all duration-600 ease-out delay-150 ${
+          <p className={`text-lg mb-8 max-w-3xl mx-auto leading-relaxed text-discovery-forest transition-all duration-600 ease-out delay-150 ${
             showText ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4'
           }`}>
             High-quality, culturally-respectful modular housing that respects the land, empowers communities, and helps Canadians unlock the potential of their property.
@@ -182,13 +182,13 @@ export function HeroSection() {
           }`}>
             <a 
               href="/quote-builder"
-              className="bg-yellow-500 text-black px-8 py-3 rounded-lg text-lg font-semibold hover:bg-yellow-400 transition-all duration-300 hover:scale-105"
+              className="btn-nature px-8 py-3 rounded-lg text-lg font-semibold glow-green growth-pulse transition-all duration-300 hover:scale-105"
             >
               Start Building My Home →
             </a>
             <a 
               href="/success-stories"
-              className="border-2 border-yellow-400 text-yellow-400 px-8 py-3 rounded-lg text-lg font-semibold hover:bg-yellow-400 hover:text-black transition-all duration-300 hover:scale-105"
+              className="btn-forest px-8 py-3 rounded-lg text-lg font-semibold transition-all duration-300 hover:scale-105"
             >
               Watch Success Stories
             </a>
@@ -197,7 +197,7 @@ export function HeroSection() {
           {/* Hide Text Button - Smooth animation */}
           <button
             onClick={hideText}
-            className={`bg-black/30 text-yellow-400 px-6 py-2 rounded-full hover:bg-black/50 transition-all duration-600 ease-out delay-300 hover:scale-105 ${
+            className={`glass-eco text-discovery-lime px-6 py-2 rounded-full hover:glow-lime transition-all duration-600 ease-out delay-300 hover:scale-105 ${
               showText ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
             }`}
           >
@@ -212,8 +212,14 @@ export function HeroSection() {
           <button
             key={index}
             onClick={() => setCurrentSlide(index)}
-            className={`w-3 h-3 rounded-full transition-all duration-300 hover:scale-125 ${
-              index === currentSlide ? 'bg-white scale-110' : 'bg-white/50'
+            className={`w-3 h-3 rounded-full transition-all duration-300 hover:scale-125 micro-interaction ${
+              index === currentSlide 
+                ? `scale-110 leaf-sway ${
+                    index % 3 === 0 ? 'bg-discovery-lime glow-lime' : 
+                    index % 3 === 1 ? 'bg-discovery-sage glow-green' : 
+                    'bg-discovery-forest glow-forest'
+                  }` 
+                : 'bg-white/50 hover:bg-discovery-lime/70'
             }`}
           />
         ))}

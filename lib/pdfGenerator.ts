@@ -1,5 +1,5 @@
 // Discovery Homes PDF Quote Generator
-// TODO: Replace with actual PDF generation library (jsPDF, Puppeteer, etc.)
+import puppeteer from 'puppeteer'
 
 interface QuoteData {
   name: string
@@ -10,365 +10,362 @@ interface QuoteData {
   basePrice: number
   addOnsCost: number
   addOns: string[]
-  propertyLocation?: string
-  timeline?: string
+  propertyLocation: string
+  timeline: string
   quoteNumber: string
   leadId: string
   validUntil: Date
-  [key: string]: any
+  landStatus: string
+  intendedUse: string
+  bedrooms: string
+  bathrooms: string
+  sqft: string
+  budget: string
+  isIndigenous: string
+  numberOfHomes: string
+  financing: string
 }
 
-class PDFGeneratorService {
-  
-  async createQuote(quoteData: QuoteData): Promise<Buffer> {
-    try {
-      console.log('Generating PDF quote:', quoteData.quoteNumber)
-
-      // TODO: Replace with actual PDF generation
-      // Examples:
-      // 1. Using jsPDF for client-side generation
-      // 2. Using Puppeteer to convert HTML to PDF
-      // 3. Using a service like PDFShift or HTMLToPDF
-
-      // Mock implementation - would normally generate actual PDF
-      const pdfContent = this.generateQuoteHTML(quoteData)
-      
-      // Convert HTML to PDF (mock)
-      const pdfBuffer = Buffer.from(pdfContent, 'utf8')
-
-      if (process.env.NODE_ENV === 'development') {
-        console.log('📄 PDF Quote Generated:', {
-          quoteNumber: quoteData.quoteNumber,
-          model: quoteData.model,
-          estimatedPrice: `$${quoteData.estimatedPrice.toLocaleString()}`,
-          customer: quoteData.name,
-          size: `${pdfBuffer.length} bytes`
-        })
-      }
-
-      return pdfBuffer
-
-    } catch (error) {
-      console.error('PDF Error - Failed to generate quote:', error)
-      throw new Error('Failed to generate PDF quote')
+export class PDFGeneratorService {
+  private getModelName(model: string): string {
+    const modelNames = {
+      'pine1': 'Pine 1',
+      'pine2': 'Pine 2', 
+      'pine3': 'Pine 3',
+      'custom': 'Custom Build'
     }
+    return modelNames[model as keyof typeof modelNames] || 'Custom Build'
   }
 
-  private generateQuoteHTML(data: QuoteData): string {
-    const currentDate = new Date().toLocaleDateString('en-CA')
-    const validUntil = data.validUntil.toLocaleDateString('en-CA')
-    
-    const modelDescriptions = {
-      'pine-1': 'The Efficient One - 504 sq/ft, 1 Bedroom',
-      'pine-2': 'The Versatile One - 504 sq/ft, 2 Bedroom with Loft', 
-      'pine-3': 'The Minimalist - 240 sq/ft with Loft',
-      'custom': 'Custom Modular Home'
+  private getAddOnPrice(addOn: string): number {
+    const addOnPrices = {
+      'solar': 25000,
+      'net-zero': 35000,
+      'off-grid': 40000,
+      'loft': 15000,
+      'garage': 30000,
+      'deck': 8000,
+      'appliances': 12000,
+      'smart-home': 5000,
+      'upgraded-finishes': 18000,
+      'foundation': 20000
     }
+    return addOnPrices[addOn as keyof typeof addOnPrices] || 0
+  }
 
+  private getAddOnDescription(addOn: string): string {
     const addOnDescriptions = {
       'solar': 'Solar Panel System',
       'net-zero': 'Net-Zero Ready Package',
       'off-grid': 'Off-Grid Complete System',
-      'upgraded-finishes': 'Upgraded Interior Finishes',
+      'loft': 'Additional Floor Space',
+      'garage': 'Attached Garage',
       'deck': 'Deck and Outdoor Space',
-      'garage': 'Attached Garage'
+      'appliances': 'Upgraded Appliances',
+      'smart-home': 'Smart Home Package',
+      'upgraded-finishes': 'Upgraded Interior Finishes',
+      'foundation': 'Foundation Upgrade'
     }
+    return addOnDescriptions[addOn as keyof typeof addOnDescriptions] || addOn
+  }
+
+  async createQuote(quoteData: QuoteData): Promise<Buffer> {
+    const htmlContent = this.generateHTML(quoteData)
+    
+    try {
+      // Launch browser
+      const browser = await puppeteer.launch({
+        headless: true,
+        args: ['--no-sandbox', '--disable-setuid-sandbox']
+      })
+      
+      const page = await browser.newPage()
+      
+      // Set content and wait for it to load
+      await page.setContent(htmlContent, { waitUntil: 'networkidle0' })
+      
+      // Generate PDF
+      const pdfBuffer = await page.pdf({
+        format: 'A4',
+        printBackground: true,
+        margin: {
+          top: '20mm',
+          right: '20mm',
+          bottom: '20mm',
+          left: '20mm'
+        }
+      })
+      
+      await browser.close()
+      return Buffer.from(pdfBuffer)
+      
+    } catch (error) {
+      console.error('PDF generation error:', error)
+      throw new Error('Failed to generate PDF')
+    }
+  }
+
+  private generateHTML(quoteData: QuoteData): string {
+    const modelName = this.getModelName(quoteData.model)
+    const formattedPrice = new Intl.NumberFormat('en-CA', {
+      style: 'currency',
+      currency: 'CAD'
+    }).format(quoteData.estimatedPrice)
+    
+    const formattedBasePrice = new Intl.NumberFormat('en-CA', {
+      style: 'currency',
+      currency: 'CAD'
+    }).format(quoteData.basePrice)
+    
+    const formattedAddOnsCost = new Intl.NumberFormat('en-CA', {
+      style: 'currency',
+      currency: 'CAD'
+    }).format(quoteData.addOnsCost)
 
     return `
       <!DOCTYPE html>
-      <html>
+      <html lang="en">
       <head>
-        <meta charset="utf-8">
-        <title>Discovery Homes Quote - ${data.quoteNumber}</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Discovery Homes Quote - ${quoteData.quoteNumber}</title>
         <style>
-          @page {
-            margin: 20mm;
-            @top-center {
-              content: "Discovery Homes - Affordable. Modular. Ready When You Are.";
-              font-size: 10pt;
-              color: #666;
-            }
-          }
-          
           body {
-            font-family: 'Helvetica', Arial, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             line-height: 1.6;
-            color: #2D2D2D;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+            background-color: #f8f9fa;
+          }
+          .container {
             max-width: 800px;
             margin: 0 auto;
-            padding: 20px;
+            background: white;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
           }
-          
           .header {
             text-align: center;
-            margin-bottom: 40px;
-            border-bottom: 3px solid #D4AF37;
+            border-bottom: 3px solid #2D2D2D;
             padding-bottom: 20px;
+            margin-bottom: 30px;
           }
-          
           .logo {
-            font-size: 28pt;
+            font-size: 28px;
             font-weight: bold;
             color: #2D2D2D;
             margin-bottom: 10px;
           }
-          
-          .tagline {
-            font-size: 12pt;
-            color: #737373;
-            margin-bottom: 20px;
-          }
-          
-          .quote-header {
-            background-color: #F5F5F5;
-            padding: 20px;
-            border-radius: 8px;
-            margin-bottom: 30px;
-          }
-          
           .quote-number {
-            font-size: 18pt;
-            font-weight: bold;
-            color: #D4AF37;
+            font-size: 18px;
+            color: #666;
             margin-bottom: 10px;
           }
-          
-          .customer-info {
+          .date {
+            font-size: 14px;
+            color: #888;
+          }
+          .section {
+            margin-bottom: 30px;
+          }
+          .section-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: #2D2D2D;
+            border-bottom: 2px solid #e0e0e0;
+            padding-bottom: 8px;
+            margin-bottom: 15px;
+          }
+          .info-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 20px;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
           }
-          
-          .price-summary {
-            background-color: #D4AF37;
+          .info-item {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 6px;
+            border-left: 4px solid #2D2D2D;
+          }
+          .info-label {
+            font-weight: bold;
             color: #2D2D2D;
+            margin-bottom: 5px;
+          }
+          .info-value {
+            color: #555;
+          }
+          .price-breakdown {
+            background: #f8f9fa;
             padding: 20px;
             border-radius: 8px;
-            text-align: center;
-            margin-bottom: 30px;
+            margin: 20px 0;
           }
-          
-          .price-summary .total {
-            font-size: 24pt;
-            font-weight: bold;
+          .price-row {
+            display: flex;
+            justify-content: space-between;
             margin-bottom: 10px;
+            padding: 8px 0;
+            border-bottom: 1px solid #e0e0e0;
           }
-          
-          .breakdown-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 30px;
-          }
-          
-          .breakdown-table th,
-          .breakdown-table td {
-            padding: 12px;
-            text-align: left;
-            border-bottom: 1px solid #E5E5E5;
-          }
-          
-          .breakdown-table th {
-            background-color: #F5F5F5;
+          .price-row:last-child {
+            border-bottom: none;
             font-weight: bold;
+            font-size: 18px;
+            color: #2D2D2D;
           }
-          
-          .breakdown-table .price {
-            text-align: right;
-            font-weight: bold;
-          }
-          
-          .model-features {
-            margin-bottom: 30px;
-          }
-          
-          .features-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
+          .addons-list {
             margin-top: 15px;
           }
-          
-          .feature-item {
+          .addon-item {
             display: flex;
-            align-items: center;
+            justify-content: space-between;
+            padding: 5px 0;
+            color: #666;
           }
-          
-          .feature-item::before {
-            content: "✓";
-            color: #D4AF37;
-            font-weight: bold;
-            margin-right: 8px;
-          }
-          
-          .next-steps {
-            background-color: #F5F5F5;
-            padding: 20px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-          }
-          
-          .contact-info {
-            text-align: center;
-            color: #737373;
-            font-size: 10pt;
+          .footer {
             margin-top: 40px;
-            border-top: 1px solid #E5E5E5;
             padding-top: 20px;
-          }
-          
-          .valid-until {
-            color: #D4AF37;
-            font-weight: bold;
+            border-top: 2px solid #e0e0e0;
             text-align: center;
-            margin-bottom: 20px;
+            color: #666;
+            font-size: 14px;
+          }
+          .valid-until {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            padding: 10px;
+            border-radius: 6px;
+            margin-top: 20px;
+            text-align: center;
           }
         </style>
       </head>
       <body>
-        <div class="header">
-          <div class="logo">Discovery Homes</div>
-          <div class="tagline">Affordable. Modular. Ready When You Are.</div>
-        </div>
-
-        <div class="quote-header">
-          <div class="quote-number">Quote #${data.quoteNumber}</div>
-          <div>Date: ${currentDate}</div>
-          <div class="valid-until">Valid Until: ${validUntil}</div>
-        </div>
-
-        <div class="customer-info">
-          <div>
-            <h3>Prepared For:</h3>
-            <p><strong>${data.name}</strong><br>
-            ${data.email}<br>
-            ${data.phone}</p>
-            ${data.propertyLocation ? `<p><strong>Property Location:</strong><br>${data.propertyLocation}</p>` : ''}
+        <div class="container">
+          <div class="header">
+            <div class="logo">Discovery Homes</div>
+            <div class="quote-number">Quote #${quoteData.quoteNumber}</div>
+            <div class="date">Generated: ${new Date().toLocaleDateString('en-CA')}</div>
           </div>
-          <div>
-            <h3>Project Details:</h3>
-            <p><strong>Model:</strong> ${data.model.toUpperCase()}<br>
-            ${modelDescriptions[data.model as keyof typeof modelDescriptions] || 'Custom Configuration'}</p>
-            ${data.timeline ? `<p><strong>Timeline:</strong> ${data.timeline}</p>` : ''}
+
+          <div class="section">
+            <div class="section-title">Customer Information</div>
+            <div class="info-grid">
+              <div class="info-item">
+                <div class="info-label">Name</div>
+                <div class="info-value">${quoteData.name}</div>
+              </div>
+              <div class="info-item">
+                <div class="info-label">Email</div>
+                <div class="info-value">${quoteData.email}</div>
+              </div>
+              <div class="info-item">
+                <div class="info-label">Phone</div>
+                <div class="info-value">${quoteData.phone}</div>
+              </div>
+              <div class="info-item">
+                <div class="info-label">Property Location</div>
+                <div class="info-value">${quoteData.propertyLocation}</div>
+              </div>
+            </div>
           </div>
-        </div>
 
-        <div class="price-summary">
-          <div class="total">$${data.estimatedPrice.toLocaleString()} CAD</div>
-          <div>Estimated Total Price</div>
-        </div>
-
-        <table class="breakdown-table">
-          <thead>
-            <tr>
-              <th>Item</th>
-              <th>Description</th>
-              <th class="price">Price</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><strong>${data.model.toUpperCase()} Base Model</strong></td>
-              <td>${modelDescriptions[data.model as keyof typeof modelDescriptions] || 'Custom Configuration'}</td>
-              <td class="price">$${data.basePrice.toLocaleString()}</td>
-            </tr>
-            ${data.addOns.map(addOn => `
-              <tr>
-                <td>${addOnDescriptions[addOn as keyof typeof addOnDescriptions] || addOn}</td>
-                <td>Premium upgrade option</td>
-                <td class="price">$${this.getAddOnPrice(addOn).toLocaleString()}</td>
-              </tr>
-            `).join('')}
-            ${data.addOnsCost > 0 ? `
-              <tr style="border-top: 2px solid #D4AF37;">
-                <td colspan="2"><strong>Total Add-Ons</strong></td>
-                <td class="price"><strong>$${data.addOnsCost.toLocaleString()}</strong></td>
-              </tr>
-            ` : ''}
-            <tr style="border-top: 2px solid #D4AF37; background-color: #F5F5F5;">
-              <td colspan="2"><strong>TOTAL ESTIMATED PRICE</strong></td>
-              <td class="price"><strong>$${data.estimatedPrice.toLocaleString()} CAD</strong></td>
-            </tr>
-          </tbody>
-        </table>
-
-        <div class="model-features">
-          <h3>What's Included:</h3>
-          <div class="features-grid">
-            <div class="feature-item">Energy-efficient construction</div>
-            <div class="feature-item">Quality interior finishes</div>
-            <div class="feature-item">Modern kitchen appliances</div>
-            <div class="feature-item">Full bathroom with fixtures</div>
-            <div class="feature-item">Electrical and plumbing rough-in</div>
-            <div class="feature-item">Insulation and vapor barrier</div>
-            <div class="feature-item">Exterior siding and roofing</div>
-            <div class="feature-item">Windows and exterior doors</div>
-            <div class="feature-item">Interior doors and trim</div>
-            <div class="feature-item">Flooring throughout</div>
-            <div class="feature-item">Factory quality control</div>
-            <div class="feature-item">Delivery to your site</div>
+          <div class="section">
+            <div class="section-title">Project Details</div>
+            <div class="info-grid">
+              <div class="info-item">
+                <div class="info-label">Selected Model</div>
+                <div class="info-value">${modelName}</div>
+              </div>
+              <div class="info-item">
+                <div class="info-label">Land Status</div>
+                <div class="info-value">${quoteData.landStatus}</div>
+              </div>
+              <div class="info-item">
+                <div class="info-label">Intended Use</div>
+                <div class="info-value">${quoteData.intendedUse}</div>
+              </div>
+              <div class="info-item">
+                <div class="info-label">Timeline</div>
+                <div class="info-value">${quoteData.timeline}</div>
+              </div>
+                             <div class="info-item">
+                 <div class="info-label">Bedrooms</div>
+                 <div class="info-value">${quoteData.bedrooms}</div>
+               </div>
+               <div class="info-item">
+                 <div class="info-label">Bathrooms</div>
+                 <div class="info-value">${quoteData.bathrooms}</div>
+               </div>
+               <div class="info-item">
+                 <div class="info-label">Square Footage</div>
+                 <div class="info-value">${quoteData.sqft}</div>
+               </div>
+              <div class="info-item">
+                <div class="info-label">Budget Range</div>
+                <div class="info-value">${quoteData.budget}</div>
+              </div>
+              <div class="info-item">
+                <div class="info-label">Indigenous Community</div>
+                <div class="info-value">${quoteData.isIndigenous}</div>
+              </div>
+              <div class="info-item">
+                <div class="info-label">Number of Homes</div>
+                <div class="info-value">${quoteData.numberOfHomes}</div>
+              </div>
+              <div class="info-item">
+                <div class="info-label">Financing</div>
+                <div class="info-value">${quoteData.financing}</div>
+              </div>
+            </div>
           </div>
-        </div>
 
-        <div class="next-steps">
-          <h3>Next Steps:</h3>
-          <ol>
-            <li><strong>Review this quote</strong> - Take time to consider the options and pricing</li>
-            <li><strong>Schedule a consultation</strong> - We'll discuss your project in detail</li>
-            <li><strong>Site assessment</strong> - We'll evaluate your property for preparation requirements</li>
-            <li><strong>Finalize design</strong> - Work with our team to customize your home</li>
-            <li><strong>Contract and timeline</strong> - Secure your build slot and confirm delivery</li>
-            <li><strong>Site preparation</strong> - Prepare your foundation and utilities</li>
-            <li><strong>Delivery and setup</strong> - Your new home arrives in 60 days!</li>
-          </ol>
-        </div>
+          <div class="section">
+            <div class="section-title">Price Breakdown</div>
+            <div class="price-breakdown">
+              <div class="price-row">
+                <span>Base Price (${modelName})</span>
+                <span>${formattedBasePrice}</span>
+              </div>
+              ${quoteData.addOns.length > 0 ? `
+                <div class="addons-list">
+                  ${quoteData.addOns.map(addon => `
+                    <div class="addon-item">
+                      <span>${this.getAddOnDescription(addon)}</span>
+                      <span>${new Intl.NumberFormat('en-CA', { style: 'currency', currency: 'CAD' }).format(this.getAddOnPrice(addon))}</span>
+                    </div>
+                  `).join('')}
+                </div>
+                <div class="price-row">
+                  <span>Add-ons Total</span>
+                  <span>${formattedAddOnsCost}</span>
+                </div>
+              ` : ''}
+              <div class="price-row">
+                <span>Estimated Total</span>
+                <span>${formattedPrice}</span>
+              </div>
+            </div>
+          </div>
 
-        <div style="margin: 30px 0; padding: 20px; background-color: #2D2D2D; color: white; border-radius: 8px;">
-          <h3 style="color: #D4AF37; margin-top: 0;">Why Choose Discovery Homes?</h3>
-          <p style="margin: 0;">
-            "At Discovery Homes, we believe a home is more than walls and a roof — it's a foundation for stronger families, 
-            thriving communities, and a better future. We exist to make high‑quality, sustainable, and culturally‑respectful 
-            housing accessible to everyone, no matter where they live or what challenges they face."
-          </p>
-          <p style="margin: 10px 0 0 0; text-align: right; font-style: italic;">
-            — Aaron, Corey & Jeff, Discovery Homes Owners
-          </p>
-        </div>
+          <div class="valid-until">
+            <strong>This quote is valid until:</strong> ${quoteData.validUntil.toLocaleDateString('en-CA')}
+          </div>
 
-        <div class="contact-info">
-          <p><strong>Discovery Homes</strong><br>
-          Lloydminster, SK/AB<br>
-          Email: sales@discoveryhomes.ca<br>
-          Phone: {{COPY_FROM_DOC: Phone Number}}<br>
-          Web: www.discoveryhomes.ca</p>
-          
-          <p style="margin-top: 20px; font-size: 9pt;">
-            This quote is valid for 30 days from the date issued. Prices are estimates and subject to final design confirmation, 
-            site conditions, and material availability. Does not include site preparation, foundation, utilities connection, 
-            permits, or delivery beyond standard access.
-          </p>
+          <div class="footer">
+            <p>Thank you for choosing Discovery Homes!</p>
+            <p>For questions about this quote, please contact us at info@discoveryhomes.ca</p>
+            <p>Lead ID: ${quoteData.leadId}</p>
+          </div>
         </div>
       </body>
       </html>
     `
   }
-
-  private getAddOnPrice(addOn: string): number {
-    const addOnPrices = {
-      'solar': 15000,
-      'net-zero': 25000,
-      'off-grid': 35000,
-      'upgraded-finishes': 8000,
-      'deck': 5000,
-      'garage': 12000
-    }
-    
-    return addOnPrices[addOn as keyof typeof addOnPrices] || 0
-  }
 }
 
-// Export singleton instance
-export const pdfGenerator = new PDFGeneratorService()
-
-// Export types
-export type { QuoteData } 
+export const pdfGenerator = new PDFGeneratorService() 

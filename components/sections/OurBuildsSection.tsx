@@ -35,10 +35,10 @@ export function OurBuildsSection() {
   ]
 
   return (
-    <section className="py-20 bg-white">
+    <section className="py-20 bg-white bg-forest-pattern">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold text-[#2D2D2D] mb-6">
+          <h2 className="text-4xl md:text-5xl font-bold text-gradient-nature mb-6 nature-shimmer">
             Our Builds
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
@@ -63,9 +63,9 @@ export function OurBuildsSection() {
               
               <div className="p-8">
                 <div className="mb-4">
-                  <h3 className="text-2xl font-bold text-[#2D2D2D] mb-2">{build.name}</h3>
-                  <p className="text-lg text-[#D4AF37] font-semibold mb-2">{build.subtitle}</p>
-                  <p className="text-gray-600 font-medium">{build.specs}</p>
+                  <h3 className="text-2xl font-bold text-discovery-forest mb-2">{build.name}</h3>
+                  <p className="text-lg text-gradient-eco font-semibold mb-2">{build.subtitle}</p>
+                  <p className="text-discovery-sage font-medium">{build.specs}</p>
                 </div>
                 
                 <p className="text-gray-700 mb-6 leading-relaxed">{build.description}</p>
@@ -74,28 +74,32 @@ export function OurBuildsSection() {
                   <ul className="space-y-2">
                     {build.features.map((feature, index) => (
                       <li key={index} className="flex items-center text-sm text-gray-600">
-                        <div className="w-2 h-2 bg-[#D4AF37] rounded-full mr-3"></div>
+                        <div className={`w-2 h-2 rounded-full mr-3 leaf-sway ${
+                          index % 3 === 0 ? 'bg-discovery-forest' : 
+                          index % 3 === 1 ? 'bg-discovery-sage' : 
+                          'bg-discovery-lime'
+                        }`} style={{animationDelay: `${index * 0.2}s`}}></div>
                         {feature}
                       </li>
                     ))}
                   </ul>
                 </div>
                 
-                <div className="border-t border-gray-200 pt-6">
+                <div className="border-t border-discovery-sage/20 pt-6">
                   <div className="flex items-center justify-between mb-4">
-                    <div className="text-2xl font-bold text-[#2D2D2D]">{build.price}</div>
+                    <div className="text-2xl font-bold text-gradient-nature">{build.price}</div>
                   </div>
                   
                   <div className="flex gap-3">
                     <Link
                       href={build.href}
-                      className="flex-1 text-center bg-[#D4AF37] text-white px-4 py-3 rounded-lg font-semibold hover:bg-[#B8941F] transition-colors"
+                      className="flex-1 text-center btn-nature px-4 py-3 rounded-lg font-semibold glow-green micro-interaction"
                     >
                       View Details
                     </Link>
                     <Link
                       href="/quote-builder"
-                      className="flex-1 text-center border-2 border-[#D4AF37] text-[#D4AF37] px-4 py-3 rounded-lg font-semibold hover:bg-[#D4AF37] hover:text-white transition-colors"
+                      className="flex-1 text-center btn-forest px-4 py-3 rounded-lg font-semibold micro-interaction"
                     >
                       Get Quote
                     </Link>
@@ -107,16 +111,20 @@ export function OurBuildsSection() {
         </div>
 
         {/* Custom Build Options */}
-        <div className="bg-gradient-to-r from-[#2D2D2D] to-gray-800 rounded-2xl p-8 md:p-12 text-center text-white">
-          <h3 className="text-3xl md:text-4xl font-bold mb-6">Custom Build Options</h3>
-          <p className="text-xl mb-8 opacity-90 max-w-4xl mx-auto">
+        <div className="bg-nature-gradient rounded-2xl p-8 md:p-12 text-center text-white relative overflow-hidden">
+          {/* Floating elements for visual interest */}
+          <div className="absolute top-4 left-4 w-16 h-16 bg-discovery-lime/20 rounded-full blur-lg leaf-sway"></div>
+          <div className="absolute bottom-4 right-4 w-20 h-20 bg-discovery-forest/30 rounded-full blur-xl leaf-sway" style={{animationDelay: '0.5s'}}></div>
+          
+          <h3 className="text-3xl md:text-4xl font-bold mb-6 text-gradient-eco">Custom Build Options</h3>
+          <p className="text-xl mb-8 text-discovery-lime max-w-4xl mx-auto">
             Fully tailored modular homes: larger footprints, net-zero ready kits, off-grid solutions, 
             or culturally-specific Indigenous designs — crafted to fit each customer's unique needs.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <div className="flex flex-col sm:flex-row gap-4 justify-center relative z-10">
             <Link
               href="/quote-builder"
-              className="bg-[#D4AF37] text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-[#B8941F] transition-colors"
+              className="btn-eco px-8 py-4 rounded-lg text-lg font-semibold glow-lime growth-pulse micro-interaction"
             >
               Start Custom Quote
             </Link>

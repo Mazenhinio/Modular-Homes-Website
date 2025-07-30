@@ -1,6 +1,7 @@
 import { Metadata } from 'next'
 import Link from 'next/link'
 import { ArrowLeft, Check } from 'lucide-react'
+import CustomBuildsCarousel from '@/components/CustomBuildsCarousel'
 
 export const metadata: Metadata = {
   title: 'Custom Build Options | Tailored Modular Homes | Discovery Homes',
@@ -8,6 +9,105 @@ export const metadata: Metadata = {
 }
 
 export default function CustomBuildsPage() {
+  const customImages = [
+    {
+      src: '/images/custom/1000017133.webp',
+      alt: 'Custom Modular Home Design 1',
+      title: 'Luxury Custom Build',
+      description: 'Premium modular home with expansive living spaces and modern amenities'
+    },
+    {
+      src: '/images/custom/1000017134.webp',
+      alt: 'Custom Modular Home Design 2',
+      title: 'Contemporary Custom Home',
+      description: 'Sleek design featuring open-concept living and premium finishes'
+    },
+    {
+      src: '/images/custom/1000017135.webp',
+      alt: 'Custom Modular Home Design 3',
+      title: 'Modern Family Residence',
+      description: 'Spacious family home with multiple bedrooms and entertainment areas'
+    },
+    {
+      src: '/images/custom/1000017136.webp',
+      alt: 'Custom Modular Home Design 4',
+      title: 'Elegant Custom Build',
+      description: 'Sophisticated design with luxury features and attention to detail'
+    },
+    {
+      src: '/images/custom/1000017137.webp',
+      alt: 'Custom Modular Home Design 5',
+      title: 'Premium Custom Home',
+      description: 'High-end modular construction with custom architectural elements'
+    },
+    {
+      src: '/images/custom/1000017138.webp',
+      alt: 'Custom Modular Home Design 6',
+      title: 'Luxury Family Estate',
+      description: 'Expansive custom home designed for multi-generational living'
+    },
+    {
+      src: '/images/custom/1000017139.webp',
+      alt: 'Custom Modular Home Design 7',
+      title: 'Contemporary Luxury Build',
+      description: 'Modern architectural design with premium materials and finishes'
+    },
+    {
+      src: '/images/custom/hero-slide-1.webp',
+      alt: 'Custom Build Exterior View',
+      title: 'Exterior Custom Design',
+      description: 'Stunning exterior showcasing modern modular architecture'
+    },
+    {
+      src: '/images/custom/hero-slide-2.webp',
+      alt: 'Custom Build Interior View',
+      title: 'Interior Custom Design',
+      description: 'Beautiful interior spaces with custom lighting and finishes'
+    },
+    {
+      src: '/images/custom/hero-slide-3.webp',
+      alt: 'Custom Build Living Area',
+      title: 'Living Area Design',
+      description: 'Open-concept living space with premium amenities'
+    },
+    {
+      src: '/images/custom/hero-slide-4.webp',
+      alt: 'Custom Build Kitchen',
+      title: 'Kitchen Design',
+      description: 'Gourmet kitchen with high-end appliances and custom cabinetry'
+    },
+    {
+      src: '/images/custom/hero-slide-5.webp',
+      alt: 'Custom Build Bedroom',
+      title: 'Master Suite Design',
+      description: 'Luxurious master bedroom with custom features and amenities'
+    },
+    {
+      src: '/images/custom/hero-slide-6.webp',
+      alt: 'Custom Build Bathroom',
+      title: 'Bathroom Design',
+      description: 'Spa-inspired bathroom with premium fixtures and finishes'
+    },
+    {
+      src: '/images/custom/hero-slide-7.webp',
+      alt: 'Custom Build Outdoor Space',
+      title: 'Outdoor Living Design',
+      description: 'Seamless indoor-outdoor living with custom landscaping'
+    },
+    {
+      src: '/images/custom/hero-slide-8.webp',
+      alt: 'Custom Build Night View',
+      title: 'Evening Ambiance',
+      description: 'Beautiful evening lighting showcasing the custom home design'
+    },
+    {
+      src: '/images/custom/hero-slide-9.webp',
+      alt: 'Custom Build Aerial View',
+      title: 'Aerial Perspective',
+      description: 'Bird\'s eye view of the complete custom modular home'
+    }
+  ]
+
   const customOptions = [
     {
       title: "Larger Footprints",
@@ -107,13 +207,13 @@ export default function CustomBuildsPage() {
             </Link>
             
             <div className="text-center">
-              <h1 className="text-4xl md:text-6xl font-serif font-bold mb-6">
+              <h1 className="text-4xl md:text-6xl font-serif font-bold mb-6 text-discovery-lime nature-shimmer">
                 Custom Build Options
               </h1>
-              <p className="text-xl md:text-2xl leading-relaxed mb-8">
+              <p className="text-xl md:text-2xl leading-relaxed mb-8 text-discovery-sage">
                 Fully tailored modular homes crafted to fit your unique needs, land, and vision.
               </p>
-              <p className="text-lg text-discovery-white-soft max-w-3xl mx-auto">
+              <p className="text-lg text-discovery-forest max-w-3xl mx-auto">
                 From larger family compounds to off-grid retreats, net-zero energy homes to culturally-specific Indigenous designs — we bring your dream home to life.
               </p>
             </div>
@@ -121,8 +221,32 @@ export default function CustomBuildsPage() {
         </div>
       </section>
 
-      {/* Custom Options */}
+      {/* 3D Carousel Section */}
       <section className="section bg-discovery-white">
+        <div className="container-custom">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-serif font-bold text-discovery-charcoal mb-6">
+              Explore Our Custom Designs
+            </h2>
+            <p className="text-xl text-neutral-600 max-w-3xl mx-auto">
+              Discover our portfolio of luxurious custom modular homes. Click on any image to view it in full detail.
+            </p>
+          </div>
+
+          <div className="max-w-6xl mx-auto">
+            <CustomBuildsCarousel images={customImages} />
+          </div>
+
+          <div className="text-center mt-8">
+            <p className="text-discovery-gold font-semibold">
+              ✨ Interactive 3D Carousel • Click to Enlarge • Auto-Advancing Gallery
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Custom Options */}
+      <section className="section bg-neutral-50">
         <div className="container-custom">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-serif font-bold text-discovery-charcoal mb-6">
@@ -135,7 +259,7 @@ export default function CustomBuildsPage() {
 
           <div className="grid md:grid-cols-2 gap-8">
             {customOptions.map((option, index) => (
-              <div key={index} className="bg-neutral-50 rounded-2xl p-8 hover:shadow-lg transition-shadow">
+              <div key={index} className="bg-discovery-white rounded-2xl p-8 hover:shadow-lg transition-shadow">
                 <div className="flex items-start gap-4 mb-6">
                   <div className="text-4xl flex-shrink-0">{option.icon}</div>
                   <div>
@@ -167,7 +291,7 @@ export default function CustomBuildsPage() {
       </section>
 
       {/* Process */}
-      <section className="section bg-neutral-50">
+      <section className="section bg-discovery-white">
         <div className="container-custom">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-serif font-bold text-discovery-charcoal mb-6">
@@ -180,7 +304,7 @@ export default function CustomBuildsPage() {
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {processSteps.map((step, index) => (
-              <div key={index} className="bg-discovery-white rounded-2xl p-6 text-center shadow-lg">
+              <div key={index} className="bg-neutral-50 rounded-2xl p-6 text-center shadow-lg">
                 <div className="w-12 h-12 bg-discovery-gold rounded-full flex items-center justify-center mx-auto mb-4">
                   <span className="text-discovery-charcoal font-bold text-lg">{step.step}</span>
                 </div>
@@ -197,7 +321,7 @@ export default function CustomBuildsPage() {
       </section>
 
       {/* Timeline & Pricing */}
-      <section className="section bg-discovery-white">
+      <section className="section bg-neutral-50">
         <div className="container-custom">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div>
@@ -220,7 +344,7 @@ export default function CustomBuildsPage() {
               </div>
             </div>
 
-            <div className="bg-neutral-50 rounded-2xl p-8">
+            <div className="bg-discovery-white rounded-2xl p-8">
               <h3 className="text-2xl font-serif font-bold text-discovery-charcoal mb-6">
                 Investment Ranges
               </h3>
@@ -264,13 +388,13 @@ export default function CustomBuildsPage() {
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link
                 href="/quote-builder"
-                className="bg-discovery-gold text-discovery-charcoal px-8 py-4 rounded-lg text-lg font-semibold hover:bg-discovery-gold-dark transition-colors"
+                className="btn-eco px-8 py-4 rounded-lg text-lg font-semibold glow-lime growth-pulse micro-interaction"
               >
                 Start Custom Quote
               </Link>
               <Link
                 href="/contact"
-                className="border-2 border-discovery-white text-discovery-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-discovery-white hover:text-discovery-charcoal transition-colors"
+                className="btn-forest px-8 py-4 rounded-lg text-lg font-semibold micro-interaction"
               >
                 Schedule Free Consultation
               </Link>

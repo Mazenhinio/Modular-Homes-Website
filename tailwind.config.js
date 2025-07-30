@@ -17,6 +17,16 @@ module.exports = {
           'gold-dark': '#B8941F',
           'charcoal-light': '#4A4A4A',
           'charcoal-dark': '#1A1A1A',
+          // New Green Accent Colors
+          'forest': '#3e7645',    // Dark Forest Green
+          'lime': '#b5db2a',      // Bright Lime Green  
+          'sage': '#68a71d',      // Medium Sage Green
+          'forest-light': '#5a8f63',
+          'forest-dark': '#2d5832',
+          'lime-light': '#c9e055',
+          'lime-dark': '#9ac424',
+          'sage-light': '#7cb529',
+          'sage-dark': '#558917',
         },
         primary: {
           50: '#FEF7E6',
@@ -29,6 +39,19 @@ module.exports = {
           700: '#9B7A1A',
           800: '#7D6014',
           900: '#65500F',
+        },
+        // Green accent scale
+        accent: {
+          50: '#f0f9f0',
+          100: '#dcf2dc',
+          200: '#b5db2a', // Bright lime
+          300: '#9ac424',
+          400: '#7cb529',
+          500: '#68a71d', // Medium sage
+          600: '#558917',
+          700: '#456f1e',
+          800: '#3e7645', // Dark forest
+          900: '#2d5832',
         },
         neutral: {
           50: '#FAFAFA',
@@ -108,6 +131,11 @@ module.exports = {
         'gold': '0 4px 14px 0 rgba(212, 175, 55, 0.39)',
         'gold-lg': '0 10px 25px -3px rgba(212, 175, 55, 0.4)',
         'charcoal': '0 4px 14px 0 rgba(45, 45, 45, 0.2)',
+        'forest': '0 4px 14px 0 rgba(62, 118, 69, 0.35)',
+        'lime': '0 4px 14px 0 rgba(181, 219, 42, 0.4)',
+        'sage': '0 4px 14px 0 rgba(104, 167, 29, 0.35)',
+        'green-glow': '0 0 20px rgba(104, 167, 29, 0.3)',
+        'lime-glow': '0 0 25px rgba(181, 219, 42, 0.4)',
       }
     },
   },

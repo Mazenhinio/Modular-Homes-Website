@@ -1,54 +1,105 @@
+import { useState } from 'react';
+
 interface LeadCaptureFormProps {
   title?: string;
+  subtitle?: string;
   description?: string;
   segment?: string;
   submitText?: string;
   fields?: any[];
+  onSubmit?: (formData: any) => void;
+  isSubmitted?: boolean;
+  successMessage?: string;
 }
 
-export function LeadCaptureForm({ title = "Get Started", description = "Contact us for more information", segment, submitText = "Submit", fields }: LeadCaptureFormProps) {
-  return (
-    <section className="py-16 bg-gray-50">
-      <div className="container mx-auto px-4 max-w-2xl">
-        <div className="text-center mb-8">
-          <h2 className="text-3xl font-bold text-[#2D2D2D] mb-4">{title}</h2>
-          <p className="text-gray-600">{description}</p>
+export function LeadCaptureForm({ 
+  title = "Get Started", 
+  subtitle,
+  description = "Contact us for more information", 
+  segment, 
+  submitText = "Submit", 
+  fields = [],
+  onSubmit,
+  isSubmitted = false,
+  successMessage = "Thank you for your submission!"
+}: LeadCaptureFormProps) {
+  const [formData, setFormData] = useState<any>({})
+  const [localIsSubmitted, setLocalIsSubmitted] = useState(isSubmitted)
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault()
+    if (onSubmit) {
+      onSubmit(formData)
+    }
+    setLocalIsSubmitted(true)
+  }
+
+  const handleInputChange = (name: string, value: string) => {
+    setFormData((prev: any) => ({
+      ...prev,
+      [name]: value
+    }))
+  }
+
+  if (localIsSubmitted) {
+    return (
+      <div className="bg-discovery-white p-8 rounded-2xl shadow-2xl">
+        <div className="text-center">
+          <div className="w-16 h-16 bg-discovery-gold rounded-full flex items-center justify-center mx-auto mb-4">
+            <svg className="w-8 h-8 text-discovery-charcoal" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+            </svg>
+          </div>
+          <h3 className="text-2xl font-serif font-bold text-discovery-charcoal mb-2">Success!</h3>
+          <p className="text-discovery-charcoal-light">{successMessage}</p>
         </div>
-        <form className="bg-white p-8 rounded-lg shadow-lg">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-            <input
-              type="text"
-              placeholder="First Name"
-              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#D4AF37] focus:border-transparent"
-            />
-            <input
-              type="text"
-              placeholder="Last Name"
-              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#D4AF37] focus:border-transparent"
-            />
-          </div>
-          <div className="mb-6">
-            <input
-              type="email"
-              placeholder="Email Address"
-              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#D4AF37] focus:border-transparent"
-            />
-          </div>
-          <div className="mb-6">
-            <textarea
-              placeholder="Message"
-              rows={4}
-              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#D4AF37] focus:border-transparent"
-            />
-          </div>
-          <button
-            type="submit"
-            className="w-full bg-[#D4AF37] text-[#2D2D2D] font-bold py-3 px-6 rounded-lg hover:bg-[#C4A027] transition-colors"
-          >
-{submitText}
-          </button>
-        </form>
       </div>
-    </section>
+    )
+  }
+
+  return (
+    <div className="bg-discovery-white p-8 rounded-2xl shadow-2xl">
+      <div className="text-center mb-8">
+        <h3 className="text-2xl font-serif font-bold text-discovery-charcoal mb-2">{title}</h3>
+        {subtitle && <p className="text-discovery-charcoal-light">{subtitle}</p>}
+      </div>
+      
+      <form onSubmit={handleSubmit} className="space-y-6">
+        {fields.map((field, index) => (
+          <div key={index}>
+            <label className="block text-sm font-medium text-discovery-charcoal mb-2">
+              {field.label} {field.required && <span className="text-red-500">*</span>}
+            </label>
+            {field.type === 'select' ? (
+              <select
+                required={field.required}
+                onChange={(e) => handleInputChange(field.name, e.target.value)}
+                className="w-full p-3 border border-discovery-charcoal/20 rounded-lg focus:ring-2 focus:ring-discovery-gold focus:border-transparent bg-discovery-white"
+              >
+                <option value="">Select {field.label}</option>
+                {field.options?.map((option: string, optionIndex: number) => (
+                  <option key={optionIndex} value={option}>{option}</option>
+                ))}
+              </select>
+            ) : (
+              <input
+                type={field.type}
+                required={field.required}
+                onChange={(e) => handleInputChange(field.name, e.target.value)}
+                className="w-full p-3 border border-discovery-charcoal/20 rounded-lg focus:ring-2 focus:ring-discovery-gold focus:border-transparent"
+                placeholder={field.label}
+              />
+            )}
+          </div>
+        ))}
+        
+        <button
+          type="submit"
+          className="w-full bg-discovery-gold hover:bg-discovery-gold-dark text-discovery-charcoal font-semibold py-3 px-6 rounded-lg transition-colors"
+        >
+          {submitText}
+        </button>
+      </form>
+    </div>
   );
 } 

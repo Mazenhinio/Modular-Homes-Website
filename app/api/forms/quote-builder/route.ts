@@ -66,10 +66,28 @@ export async function POST(request: NextRequest) {
     
     // Generate branded PDF quote
     const pdfBuffer = await pdfGenerator.createQuote({
-      ...leadData,
-      leadId: crmResult.id,
+      name,
+      email,
+      phone,
+      model,
+      estimatedPrice: pricing.total,
+      basePrice: pricing.base,
+      addOnsCost: pricing.addOns,
+      addOns: Array.isArray(addOns) ? addOns : [],
+      propertyLocation: propertyLocation || '',
+      timeline: timeline || '',
       quoteNumber: `DH-${Date.now()}`,
-      validUntil: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000) // 30 days
+      leadId: crmResult.id,
+      validUntil: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000), // 30 days
+      landStatus: landStatus || '',
+      intendedUse: intendedUse || '',
+      bedrooms: bedPreferences || '',
+      bathrooms: body.bathrooms || '',
+      sqft: sqftPreferences || '',
+      budget: budgetRange || '',
+      isIndigenous: body.isIndigenous || '',
+      numberOfHomes: body.numberOfHomes || '',
+      financing: body.financing || ''
     })
     
     // Send quote via email

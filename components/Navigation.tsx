@@ -58,11 +58,11 @@ export function Navigation() {
               onMouseEnter={handleDropdownMouseEnter}
               onMouseLeave={handleDropdownMouseLeave}
             >
-              <button className="nav-link flex items-center group py-4">
-                <span className="text-gradient font-semibold">Our Builds</span>
+              <button className="nav-link nav-link-nature flex items-center group py-4">
+                <span className="text-gradient-nature font-semibold">Our Builds</span>
                 <ChevronDown 
                   size={16} 
-                  className={`ml-1 transition-transform duration-300 ${
+                  className={`ml-1 transition-transform duration-300 text-discovery-sage ${
                     isBuildsDropdownOpen ? 'rotate-180' : ''
                   }`} 
                 />
@@ -134,7 +134,7 @@ export function Navigation() {
                       <div className="flex items-center space-x-3">
                         <span className="text-lg">✨</span>
                         <div>
-                          <div className="font-semibold text-gradient">Custom Builds</div>
+                          <div className="font-semibold text-gradient-eco">Custom Builds</div>
                           <div className="text-xs text-gray-500">Tailored to Your Vision</div>
                         </div>
                       </div>
@@ -144,8 +144,8 @@ export function Navigation() {
               )}
             </div>
 
-            <Link href="/quote-builder" className="nav-link nav-item">
-              <span className="font-semibold">Get Quote</span>
+            <Link href="/quote-builder" className="nav-link nav-link-eco nav-item">
+              <span className="font-semibold text-discovery-sage hover:text-discovery-lime transition-colors">Get Quote</span>
             </Link>
             <Link href="/success-stories" className="nav-link nav-item">
               <span className="font-medium">Success Stories</span>
@@ -161,7 +161,7 @@ export function Navigation() {
             </Link>
             <Link 
               href="/quote-builder" 
-              className="btn-luxury nav-item shadow-gold micro-interaction"
+              className="btn-nature nav-item shadow-sage micro-interaction glow-green"
             >
               Start Your Quote
             </Link>
@@ -202,7 +202,7 @@ export function Navigation() {
                   onClick={() => setIsBuildsDropdownOpen(!isBuildsDropdownOpen)}
                   className="flex items-center justify-between w-full px-4 py-3 text-discovery-white hover:text-discovery-gold transition-all duration-300 rounded-lg hover:bg-white/10"
                 >
-                  <span className="font-semibold text-gradient">Our Builds</span>
+                  <span className="font-semibold text-gradient-nature">Our Builds</span>
                   <ChevronDown 
                     size={16} 
                     className={`transform transition-transform duration-300 ${
@@ -293,7 +293,7 @@ export function Navigation() {
               <div className="pt-4 border-t border-white/20">
                 <Link 
                   href="/quote-builder" 
-                  className="block mx-2 px-6 py-3 bg-gradient-to-r from-discovery-gold to-discovery-gold-dark text-discovery-charcoal rounded-lg font-semibold text-center shadow-gold micro-interaction"
+                  className="block mx-2 px-6 py-3 bg-gradient-to-r from-discovery-sage to-discovery-forest text-discovery-white rounded-lg font-semibold text-center shadow-sage micro-interaction glow-green"
                   onClick={() => setIsOpen(false)}
                 >
                   Start Your Quote
