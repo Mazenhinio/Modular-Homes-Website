@@ -45,7 +45,7 @@ export function Navigation() {
               <img
                 src="/images/logo/logo-header.webp"
                 alt="Discovery Homes"
-                className="h-8 w-auto transition-transform duration-300 hover:scale-105"
+                className="h-11 w-auto transition-transform duration-300 hover:scale-105"
               />
             </Link>
           </div>
