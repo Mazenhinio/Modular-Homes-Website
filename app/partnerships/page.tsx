@@ -18,10 +18,10 @@ export default function PartnershipsPage() {
       <section className="section bg-discovery-white">
         <div className="container-custom">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-serif font-bold text-discovery-charcoal mb-4">
+            <h2 className="text-3xl md:text-4xl font-serif font-bold text-discovery-charcoal mb-6">
               Building with Respect, Serving with Pride
             </h2>
-            <p className="text-xl text-neutral-600 max-w-4xl mx-auto">
+            <p className="text-xl text-neutral-600 max-w-4xl mx-auto leading-relaxed">
               At Discovery Homes, we believe that housing should honor the land, respect the culture, 
               and serve the community. Our partnerships with Indigenous communities across Western Canada 
               are built on trust, understanding, and a shared commitment to creating homes that families 
@@ -36,11 +36,11 @@ export default function PartnershipsPage() {
       <section className="section bg-neutral-50">
         <div className="container-custom">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-serif font-bold text-discovery-charcoal mb-4">
+            <h2 className="text-3xl md:text-4xl font-serif font-bold text-discovery-charcoal mb-6">
               Our Commitment to Cultural Respect
             </h2>
             <div className="max-w-4xl mx-auto">
-              <p className="text-lg text-neutral-600 mb-8">
+              <p className="text-lg text-neutral-600 mb-8 leading-relaxed">
                 We understand that every community has unique needs, traditions, and values. 
                 That's why we work closely with Chiefs, councils, and community members to ensure 
                 our homes reflect and respect the cultural identity of each community we serve.
