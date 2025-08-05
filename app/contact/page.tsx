@@ -8,8 +8,8 @@ export default function ContactPage() {
     <div className="min-h-screen bg-gray-50">
       
       {/* Hero Section */}
-      <section className="bg-gradient-to-r from-[#2D2D2D] to-gray-800 py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <section className="bg-gradient-to-r from-[#2D2D2D] to-gray-800 py-24">
+        <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 text-center">
           <h1 className="text-4xl md:text-6xl font-bold text-white mb-6">
             Contact Us
           </h1>
@@ -31,8 +31,8 @@ export default function ContactPage() {
       </section>
 
       {/* Contact Information */}
-      <section className="py-16 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="py-20 bg-white">
+        <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-16">
             
             {/* Phone */}
@@ -79,12 +79,12 @@ export default function ContactPage() {
       </section>
 
       {/* Contact Form & Booking */}
-      <section className="py-16 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="py-20 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
             
                          {/* GHL Contact Form */}
-             <div className="bg-white rounded-2xl p-8 shadow-lg">
+             <div className="bg-white rounded-2xl p-10 shadow-lg">
                <h2 className="text-3xl font-bold text-[#2D2D2D] mb-0">Send Us a Message</h2>
               <iframe
                 src="https://api.leadconnectorhq.com/widget/form/YhVFMsmHW8sz26gUbqdJ"
@@ -108,7 +108,7 @@ export default function ContactPage() {
             </div>
 
                          {/* GHL Booking Calendar ONLY */}
-             <div className="bg-white rounded-2xl p-8 shadow-lg">
+             <div className="bg-white rounded-2xl p-10 shadow-lg">
                <h2 className="text-3xl font-bold text-[#2D2D2D] mb-0">Book a Consultation</h2>
                                <iframe 
                   src="https://api.leadconnectorhq.com/widget/booking/PTZ3zcQLwvLZ7CizfIdf" 
@@ -124,8 +124,8 @@ export default function ContactPage() {
       </section>
 
       {/* FAQ Section */}
-      <section className="py-16 bg-white">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="py-20 bg-white">
+        <div className="max-w-4xl mx-auto px-6 sm:px-8 lg:px-12">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold text-[#2D2D2D] mb-6">
               Frequently Asked Questions
@@ -154,7 +154,7 @@ export default function ContactPage() {
                 answer: "Our base prices include the complete modular home structure, basic electrical and plumbing, and standard finishes. Add-ons like solar panels are extra."
               }
             ].map((faq, index) => (
-              <div key={index} className="bg-gray-50 rounded-lg p-6">
+              <div key={index} className="bg-gray-50 rounded-lg p-8">
                 <h3 className="text-lg font-bold text-[#2D2D2D] mb-3">{faq.question}</h3>
                 <p className="text-gray-700">{faq.answer}</p>
               </div>
@@ -164,8 +164,8 @@ export default function ContactPage() {
       </section>
 
       {/* Final CTA */}
-      <section className="py-16 bg-[#2D2D2D]">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <section className="py-20 bg-[#2D2D2D]">
+        <div className="max-w-4xl mx-auto px-6 sm:px-8 lg:px-12 text-center">
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
             Ready to Start Your Project?
           </h2>

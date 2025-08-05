@@ -156,7 +156,7 @@ export function HeroSection() {
           ? 'opacity-100 translate-y-0' 
           : 'opacity-0 translate-y-8 pointer-events-none'
       }`}>
-        <div className={`text-center text-yellow-400 max-w-4xl px-6 py-8 transition-all duration-500 ease-out delay-100 relative ${
+        <div className={`text-center text-yellow-400 max-w-4xl px-8 py-12 transition-all duration-500 ease-out delay-100 relative ${
           showText ? 'scale-100' : 'scale-95'
         }`}>
           {/* Dark backdrop for better contrast */}

@@ -14,8 +14,8 @@ interface OwnerProfileProps {
 
 export function OwnerProfile({ owner, reverse = false }: OwnerProfileProps) {
   return (
-    <section className="py-16 bg-white">
-      <div className="container mx-auto px-4 max-w-6xl">
+    <section className="py-20 bg-white">
+      <div className="container mx-auto px-6 max-w-6xl">
         <div className={`grid grid-cols-1 lg:grid-cols-2 gap-12 items-center ${reverse ? 'lg:gap-x-reverse' : ''}`}>
           <div className={reverse ? 'lg:order-2' : ''}>
             <div className="relative">

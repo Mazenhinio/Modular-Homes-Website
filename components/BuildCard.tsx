@@ -43,7 +43,7 @@ export function BuildCard({ build, reversed = false }: BuildCardProps) {
       </div>
 
       {/* Content */}
-      <div className={`space-y-6 ${reversed ? 'lg:col-start-1' : ''}`}>
+      <div className={`space-y-8 ${reversed ? 'lg:col-start-1' : ''}`}>
         <div>
           <div className="flex items-center gap-3 mb-2">
             <span className="text-discovery-gold font-semibold text-lg">{build.name}</span>
@@ -55,7 +55,7 @@ export function BuildCard({ build, reversed = false }: BuildCardProps) {
           </h2>
         </div>
 
-        <div className="grid grid-cols-2 gap-4 p-6 bg-neutral-50 rounded-xl">
+        <div className="grid grid-cols-2 gap-6 p-8 bg-neutral-50 rounded-xl">
           <div>
             <div className="text-sm text-neutral-600 mb-1">Size</div>
             <div className="font-semibold text-discovery-charcoal">{build.sqft}</div>

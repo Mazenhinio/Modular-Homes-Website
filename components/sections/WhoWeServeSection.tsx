@@ -53,8 +53,8 @@ export function WhoWeServeSection() {
   ]
 
   return (
-    <section className="py-20 bg-gray-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section className="py-24 bg-gray-50">
+      <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold text-[#2D2D2D] mb-6">
             Who We Serve
@@ -67,7 +67,7 @@ export function WhoWeServeSection() {
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {segments.map((segment) => (
-            <div key={segment.title} className="bg-white rounded-2xl p-8 hover:shadow-xl transition-all duration-300 hover:transform hover:-translate-y-2 border border-gray-200">
+            <div key={segment.title} className="bg-white rounded-2xl p-10 hover:shadow-xl transition-all duration-300 hover:transform hover:-translate-y-2 border border-gray-200">
               <div className="text-center mb-6">
                 <div className="text-4xl mb-4">{segment.icon}</div>
                 <div className={`inline-block px-4 py-2 rounded-full text-sm font-medium mb-4 border ${segment.color}`}>

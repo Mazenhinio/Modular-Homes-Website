@@ -24,7 +24,7 @@ export function CTABanner({ title, description, primaryAction, secondaryAction }
       </div>
 
       {/* Main content */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+      <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 text-center relative z-10">
         <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-discovery-white mb-6 text-shadow-luxury scale-on-scroll">
           {title}
         </h2>

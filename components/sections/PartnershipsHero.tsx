@@ -3,9 +3,9 @@ import { ArrowRight, Heart, Users, Home } from 'lucide-react'
 
 export function PartnershipsHero() {
   return (
-    <section className="relative py-20 bg-gradient-to-br from-discovery-charcoal via-discovery-charcoal-light to-discovery-charcoal text-discovery-white hero-element">
+    <section className="relative py-24 bg-gradient-to-br from-discovery-charcoal via-discovery-charcoal-light to-discovery-charcoal text-discovery-white hero-element">
       <div className="container-custom">
-        <div className="max-w-4xl mx-auto text-center">
+        <div className="max-w-4xl mx-auto text-center px-6">
           <div className="flex items-center justify-center gap-3 mb-6">
             <Heart className="text-discovery-gold" size={32} />
             <span className="text-discovery-gold font-semibold text-xl">Partnerships</span>

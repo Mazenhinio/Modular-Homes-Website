@@ -35,8 +35,8 @@ export function OurBuildsSection() {
   ]
 
   return (
-    <section className="py-20 bg-white bg-forest-pattern">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section className="py-24 bg-white bg-forest-pattern">
+      <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold text-gradient-nature mb-6 nature-shimmer">
             Our Builds

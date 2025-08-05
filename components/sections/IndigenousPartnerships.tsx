@@ -51,7 +51,7 @@ export function IndigenousPartnerships() {
           <h2 className="text-3xl md:text-4xl font-serif font-bold text-discovery-charcoal mb-6">
             Indigenous Community Partnerships
           </h2>
-          <p className="text-xl text-neutral-600 max-w-3xl mx-auto">
+          <p className="text-xl text-neutral-600 max-w-3xl mx-auto leading-relaxed">
             For over 15 years, we've been honored to work alongside Indigenous communities, 
             building homes that respect cultural traditions while providing modern comfort and efficiency.
           </p>

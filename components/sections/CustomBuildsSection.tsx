@@ -51,7 +51,7 @@ export function CustomBuildsSection() {
           ))}
         </div>
 
-        <div className="bg-discovery-white rounded-2xl p-8 md:p-12">
+        <div className="bg-discovery-white rounded-2xl p-10 md:p-16">
           <div className="max-w-3xl mx-auto text-center">
             <h3 className="text-2xl md:text-3xl font-serif font-bold text-discovery-charcoal mb-6">
               Design Your Dream Home

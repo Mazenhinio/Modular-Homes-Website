@@ -90,7 +90,7 @@ export default function MeetTheOwnersPage() {
     <>
       <section className="section-lg bg-gradient-to-br from-discovery-charcoal via-discovery-charcoal-light to-discovery-charcoal text-discovery-white">
         <div className="container-custom">
-          <div className="max-w-4xl mx-auto text-center">
+          <div className="max-w-4xl mx-auto text-center px-6">
             <h1 className="text-4xl md:text-6xl font-serif font-bold mb-6">
               Meet the Owners
             </h1>
