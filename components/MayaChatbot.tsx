@@ -132,6 +132,21 @@ export function MayaChatbot() {
 
   return (
     <>
+<<<<<<< HEAD
+=======
+      {/* Chat Toggle Button */}
+      <button
+        onClick={() => setIsOpen(!isOpen)}
+        className="fixed bottom-6 right-6 bg-gradient-to-r from-discovery-gold to-discovery-gold-dark text-discovery-charcoal p-4 rounded-full shadow-xl hover:shadow-2xl transition-all duration-300 z-50 group"
+      >
+        {isOpen ? (
+          <X size={24} className="group-hover:rotate-90 transition-transform duration-300" />
+        ) : (
+          <MessageCircle size={24} className="group-hover:scale-110 transition-transform duration-300" />
+        )}
+      </button>
+
+>>>>>>> f5aa04643132b011e3b7890252de059de1ed1489
       {/* Chat Window */}
       {isOpen && (
         <div className="fixed bottom-24 right-6 w-96 h-[500px] bg-white rounded-2xl shadow-2xl border border-gray-100 z-50 flex flex-col overflow-hidden">
