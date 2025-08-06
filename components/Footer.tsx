@@ -10,11 +10,7 @@ export function Footer() {
             <img
               src="/images/logo/logo-footer.webp"
               alt="Discovery Homes"
-<<<<<<< HEAD
               className="h-20 w-auto mb-4"
-=======
-              className="h-12 w-auto mb-4"
->>>>>>> f5aa04643132b011e3b7890252de059de1ed1489
             />
             <p className="text-gray-300 mb-4">
               Discovery Homes believes a home is more than walls and a roof — it's a foundation 
