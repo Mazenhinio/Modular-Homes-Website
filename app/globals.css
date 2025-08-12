@@ -42,6 +42,33 @@
     transform: translateY(0);
     transition: opacity 0.3s ease, transform 0.3s ease;
   }
+
+  /* Ensure VapiWidget doesn't interfere with navigation */
+  vapi-widget {
+    position: fixed !important;
+    z-index: 40 !important;
+    pointer-events: auto !important;
+  }
+
+  /* Prevent any viewport changes from affecting navigation */
+  body {
+    overflow-x: hidden;
+    width: 100vw;
+    max-width: 100vw;
+  }
+
+  /* Ensure navigation stays in desktop mode unless explicitly mobile */
+  nav {
+    position: fixed !important;
+    z-index: 50 !important;
+  }
+
+  /* Ensure VapiWidget doesn't interfere with navigation layout */
+  vapi-widget {
+    position: fixed !important;
+    z-index: 40 !important;
+    pointer-events: auto !important;
+  }
 }
 
 @layer components {

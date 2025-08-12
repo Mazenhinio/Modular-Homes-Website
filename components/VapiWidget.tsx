@@ -14,6 +14,38 @@ export function VapiWidget({ mode }: VapiWidgetProps) {
   useEffect(() => {
     if (!userChoice) return
 
+    // Guard: prevent any third-party script from changing the meta viewport
+    const viewportMeta = document.querySelector('meta[name="viewport"]') as HTMLMetaElement | null
+    const originalViewportContent = viewportMeta?.getAttribute('content') || undefined
+    const enforceViewport = () => {
+      // Ensure only the original viewport meta exists
+      const metas = Array.from(document.querySelectorAll('meta[name="viewport"]')) as HTMLMetaElement[]
+      metas.forEach((m) => {
+        if (viewportMeta && m !== viewportMeta) {
+          m.parentNode?.removeChild(m)
+        }
+      })
+      // Ensure its content is unchanged
+      if (viewportMeta && originalViewportContent && viewportMeta.getAttribute('content') !== originalViewportContent) {
+        viewportMeta.setAttribute('content', originalViewportContent)
+      }
+    }
+    // Observe head mutations and keep viewport stable
+    const headObserver = new MutationObserver(() => enforceViewport())
+    headObserver.observe(document.head, { childList: true, subtree: true, attributes: true })
+    // Run once in case something already changed it
+    enforceViewport()
+
+    // Store original viewport dimensions and prevent changes
+    const originalViewportWidth = window.innerWidth
+    const originalDocumentWidth = document.documentElement.clientWidth
+    const originalBodyOverflow = document.body.style.overflow
+    const originalBodyWidth = document.body.style.width
+
+    // (debug removed)
+
+    // Do not modify global document/body styles so the page remains scrollable
+
     // Load VAPI script
     const script = document.createElement('script')
     script.src = 'https://unpkg.com/@vapi-ai/client-sdk-react/dist/embed/widget.umd.js'
@@ -21,7 +53,7 @@ export function VapiWidget({ mode }: VapiWidgetProps) {
     script.type = 'text/javascript'
     document.head.appendChild(script)
 
-    // Create VAPI widget element
+    // Create VAPI widget element with viewport protection
     const vapiWidget = document.createElement('vapi-widget')
     vapiWidget.setAttribute('public-key', '8bb91407-0cab-4af1-a757-84aa8bebf9a0')
     vapiWidget.setAttribute('assistant-id', '5e726eab-ad3f-4a8a-a4d0-1888cfab8cc3')
@@ -41,9 +73,33 @@ export function VapiWidget({ mode }: VapiWidgetProps) {
     vapiWidget.setAttribute('chat-placeholder', 'Type your message...')
     vapiWidget.setAttribute('voice-show-transcript', 'true')
     vapiWidget.setAttribute('consent-required', 'false')
+    
+    // Set widget styles to prevent viewport changes
+    vapiWidget.style.position = 'fixed'
+    vapiWidget.style.zIndex = '40'
+    vapiWidget.style.pointerEvents = 'auto'
+    vapiWidget.style.width = 'auto'
+    vapiWidget.style.height = 'auto'
+    vapiWidget.style.maxWidth = 'none'
+    vapiWidget.style.maxHeight = 'none'
 
-    // Add widget to body
-    document.body.appendChild(vapiWidget)
+    // Create a container to isolate the widget (no global side effects)
+    const widgetContainer = document.createElement('div')
+    widgetContainer.style.position = 'fixed'
+    widgetContainer.style.bottom = '0'
+    widgetContainer.style.right = '0'
+    widgetContainer.style.zIndex = '40'
+    widgetContainer.style.pointerEvents = 'auto'
+    
+    // Add container to body first
+    document.body.appendChild(widgetContainer)
+    
+    // Add widget to container instead of body
+    widgetContainer.appendChild(vapiWidget)
+    // Notify that the widget is open once appended
+    document.dispatchEvent(new CustomEvent('vapi-widget-open'))
+    
+    // No body/resize mutations
 
     // Show callout after a short delay
     setTimeout(() => {
@@ -60,14 +116,42 @@ export function VapiWidget({ mode }: VapiWidgetProps) {
       if (existingWidget?.parentNode) {
         existingWidget.parentNode.removeChild(existingWidget)
       }
+      
+      // Remove widget container
+      const widgetContainer = document.querySelector('div[style*="z-index: 40"]')
+      if (widgetContainer?.parentNode) {
+        widgetContainer.parentNode.removeChild(widgetContainer)
+      }
+      // Notify that the widget is closed
+      document.dispatchEvent(new CustomEvent('vapi-widget-close'))
+      
+      // No global style restoration needed
+      // Stop observing and restore viewport if needed
+      headObserver.disconnect()
+      enforceViewport()
     }
   }, [userChoice])
 
-  const handleShowChoice = () => {
+  const handleShowChoice = (e: React.MouseEvent) => {
+    e.preventDefault()
+    e.stopPropagation()
+    
+    // (debug removed)
+    
     setShowChoice(true)
+    
+    // Dispatch custom event to notify navigation
+    document.dispatchEvent(new CustomEvent('vapi-widget-click'))
+    
+    // (debug removed)
   }
 
   const handleModeSelection = (mode: 'voice' | 'chat') => {
+    // (debug removed)
+    
+    // Dispatch event before creating the VapiWidget to prevent navigation issues
+    document.dispatchEvent(new CustomEvent('vapi-widget-click'))
+    
     setUserChoice(mode)
     setShowChoice(false)
   }
@@ -131,15 +215,15 @@ export function VapiWidget({ mode }: VapiWidgetProps) {
   if (!userChoice) {
     return (
       <div className="fixed bottom-4 right-4 z-50">
-              <button
-        onClick={handleShowChoice}
-        className="bg-gradient-to-r from-discovery-gold to-discovery-gold-dark text-discovery-charcoal p-5 rounded-full shadow-xl hover:shadow-2xl transition-all duration-300 animate-bounce"
-        title="Chat with Maya"
-      >
-        <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
-        </svg>
-      </button>
+        <button
+          onClick={handleShowChoice}
+          className="bg-gradient-to-r from-discovery-gold to-discovery-gold-dark text-discovery-charcoal p-5 rounded-full shadow-xl hover:shadow-2xl transition-all duration-300 animate-bounce"
+          title="Chat with Maya"
+        >
+          <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+          </svg>
+        </button>
       </div>
     )
   }

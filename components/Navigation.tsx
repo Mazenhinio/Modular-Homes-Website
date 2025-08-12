@@ -8,15 +8,54 @@ export function Navigation() {
   const [isOpen, setIsOpen] = useState(false)
   const [isBuildsDropdownOpen, setIsBuildsDropdownOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
+  const [forceDesktop, setForceDesktop] = useState(false)
+  const [isDesktop, setIsDesktop] = useState<boolean>(false)
   const dropdownTimeoutRef = useRef<NodeJS.Timeout>()
+
+  // Establish desktop/mobile using real viewport media query
+  useEffect(() => {
+    const mq = window.matchMedia('(min-width: 768px)')
+    const update = () => setIsDesktop(mq.matches)
+    update()
+    mq.addEventListener ? mq.addEventListener('change', update) : mq.addListener(update)
+    return () => {
+      mq.removeEventListener ? mq.removeEventListener('change', update) : mq.removeListener(update)
+    }
+  }, [])
+
+  // No-op: previously used for debug logging
+  useEffect(() => {}, [isOpen, forceDesktop, isDesktop])
 
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 20)
     }
 
+    // Listen for VapiWidget interactions
+    const handleVapiWidgetClick = () => setForceDesktop(true)
+    const handleVapiWidgetOpen = () => setForceDesktop(true)
+    const handleVapiWidgetClose = () => setForceDesktop(false)
+
+    // Add event listeners for Vapi widget lifecycle
+    document.addEventListener('vapi-widget-click', handleVapiWidgetClick)
+    document.addEventListener('vapi-widget-open', handleVapiWidgetOpen)
+    document.addEventListener('vapi-widget-close', handleVapiWidgetClose)
+
+    // Add resize listener to track viewport changes
+    const handleResize = () => {
+      // If forceDesktop is true, prevent mobile mode from activating
+      if (forceDesktop && window.innerWidth >= 768) return
+    }
+
     window.addEventListener('scroll', handleScroll)
-    return () => window.removeEventListener('scroll', handleScroll)
+    window.addEventListener('resize', handleResize)
+    return () => {
+      window.removeEventListener('scroll', handleScroll)
+      window.removeEventListener('resize', handleResize)
+      document.removeEventListener('vapi-widget-click', handleVapiWidgetClick)
+      document.removeEventListener('vapi-widget-open', handleVapiWidgetOpen)
+      document.removeEventListener('vapi-widget-close', handleVapiWidgetClose)
+    }
   }, [])
 
   const handleDropdownMouseEnter = () => {
@@ -50,8 +89,8 @@ export function Navigation() {
             </Link>
           </div>
 
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-8">
+          {/* Desktop Navigation (rendered based on MQ or override) */}
+          <div className={`${(isDesktop || forceDesktop) ? 'flex' : 'hidden'} items-center space-x-8`}>
             {/* Our Builds Luxury Dropdown */}
             <div 
               className="relative nav-item"
@@ -167,8 +206,8 @@ export function Navigation() {
             </Link>
           </div>
 
-          {/* Mobile menu button */}
-          <div className="md:hidden flex items-center">
+          {/* Mobile menu button (hidden on desktop or when forced) */}
+          <div className={`${(isDesktop || forceDesktop) ? 'hidden' : 'flex'} items-center`}>
             <button
               onClick={() => setIsOpen(!isOpen)}
               className="text-discovery-charcoal hover:text-discovery-gold focus:outline-none transition-all duration-300 micro-interaction"
@@ -189,7 +228,7 @@ export function Navigation() {
         </div>
 
         {/* Mobile Navigation */}
-        <div className={`md:hidden transition-all duration-500 ease-out ${
+        <div className={`${(isDesktop || forceDesktop) ? 'hidden' : 'block'} transition-all duration-500 ease-out ${
           isOpen 
             ? 'max-h-screen opacity-100 pb-4' 
             : 'max-h-0 opacity-0 overflow-hidden'
