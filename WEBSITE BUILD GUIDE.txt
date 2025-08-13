@@ -1,0 +1,276 @@
+Discovery Homes Luxury Website Build
+Live URL example  https://re0k3b4wfj.space.minimax.io 
+live  www.discoveryhomes.ca USE THESE COLORS
+
+ Prepared by: Kyle Zellweger — Sales Lead & CRM Owner
+ Date: 
+________________________________________
+🖤✨ Who We Are & Why We Do This
+At Discovery Homes, we believe a home is more than walls and a roof — it’s a foundation for stronger families, thriving communities, and a better future.
+We exist to make high‑quality, sustainable, and culturally‑respectful housing accessible to everyone, no matter where they live or what challenges they face. From Indigenous communities to off‑grid acreage buyers to resort owners looking to grow their business, we’re here to unlock the potential of land and deliver homes people are proud of — without compromise.
+Our mission is rooted in respect for the land, care for our customers, and a commitment to smart, affordable, sustainable living.
+Discovery Homes: Affordable. Modular. Ready When You Are.
+________________________________________
+🎯 Project Objective
+The Discovery Homes website is designed as a world‑class sales platform and brand flagship, embodying our mission while delivering:
+ ✅ A premium, professional experience that builds trust.
+ ✅ A 24/7 intelligent sales funnel that captures, qualifies, and nurtures leads.
+ ✅ A measurable, scalable growth engine aligned to our billion‑dollar brand vision.
+________________________________________
+🖤✨ Brand & Design Theme
+●	Colors: Deep Charcoal Black, Warm Gold/Amber, Clean White.
+
+●	Tone: Sophisticated, approachable, culturally‑aware.
+
+●	Photography: Realistic lifestyle scenes featuring homes in authentic Canadian contexts.
+
+●	Message: We are the trusted partner for affordable, energy‑smart modular housing — grounded in respect, reliability, and results.
+
+________________________________________
+🏗️ Our Builds
+🔷 Pine 1 — The Efficient One
+📐 504 sq/ft, 1 Bedroom
+ 💰 Starting at $174,000 CAD
+ Ideal for singles, couples, or resort units — blending simplicity with style in a compact footprint.
+________________________________________
+🔷 Pine 2 — The Versatile One
+📐 504 sq/ft, 2 Bedroom with Loft
+ 💰 Starting at $179,000 CAD
+ Perfect for families or rental markets, with extra space and a flexible layout.
+________________________________________
+🔷 Pine 3 — The Minimalist
+📐 240 sq/ft with Loft
+ 💰 Starting at $99,000 CAD
+ A modern, tiny‑home solution — perfect as an office, rental, or weekend retreat.
+________________________________________
+🔷 Custom Build Options
+Fully tailored modular homes: larger footprints, net‑zero ready kits, off‑grid solutions, or culturally‑specific Indigenous designs — crafted to fit each customer’s unique needs.
+________________________________________
+👥 Who We Serve
+✅ Indigenous Communities — culturally‑aligned, grant‑ready housing
+ ✅ Resort & Airbnb Owners — high‑ROI cabins & units
+ ✅ Acreage & Rural Buyers — affordable homes for private land
+ ✅ Industrial Camps — workforce housing delivered fast
+ ✅ Eco‑Conscious Buyers — net‑zero & off‑grid enthusiasts________________________________________
+🏠 Website Features & Highlights
+✅ Hero Section: luxury video, clear CTAs, trust signals
+ ✅ Maya AI Chatbot: voice‑enabled, culturally‑aware, dynamic lead qualifier
+ ✅ Quote Builder: 8‑step wizard delivering personalized PDF quotes
+ ✅ Success Stories: testimonials, photo galleries, community impact
+ ✅ First Nations Partnerships: cultural respect & funding resources
+ ✅ Blog & Resources: SEO‑driven content + gated lead magnets
+ ✅ Call‑to‑Action Banners: “Build Your Custom Dream Home — Net Zero & Off‑Grid Options Available”
+________________________________________
+🗂️ Navigation
+Menu Item	Content
+Home	Hero, story, trust
+Our Builds	Pine 1, Pine 2, Pine 3, Custom
+Quote Builder	Guided Wizard
+Success Stories	Testimonials & Galleries
+Partnerships	First Nations Focus
+Blog & Resources	SEO & Downloadables
+Contact	Booking & Map
+________________________________________
+📊 Why This Build Matters
+✅ This site is more than a brochure — it is:
+●	A flagship of our brand story and purpose.
+
+●	A measurable lead engine fueling pipeline growth.
+
+●	A trusted resource for customers & partners.
+
+●	A foundation for scalable, sustainable success.
+
+________________________________________
+🔷 Next Recommendations
+✅ Expand photography & video library.
+ ✅ Publish regular blog content & seasonal campaigns.
+ ✅ Continue Maya AI training with real customer data.
+
+
+
+WEBSITE BUILD SPECIFICATION
+Prepared by: Kyle Zellweger – Sales Lead & Project Owner
+ Date: [Insert Date]
+ For: Development & Design Team
+ Focus: Western Canada: Alberta, Saskatchewan, British Columbia
+________________________________________
+🖋️ Our Story & Vision
+Discovery Homes builds modular homes that are smart, sustainable, and accessible — designed to respect the land, empower communities, and help Canadians unlock the potential of their property.
+ From Indigenous housing projects to resort cabins, rural family homes to income‑producing rentals, we deliver affordable, energy‑efficient homes with integrity and care.
+✅ Discovery Homes: Build Smart. Save Smart.
+Our website must reflect our mission, professionalism, and local trustworthiness, while also serving as a 24/7 sales engine.
+________________________________________
+🎨 Design Direction & Brand
+✅ Clean, modern, approachable design — light and bright, rooted in trust and quality.
+Colors:
+●	Navy Blue: #003366 (primary brand color)
+
+●	Light Blue: #4DB8FF (secondary, accents & CTAs)
+
+●	White: #FFFFFF (backgrounds, clean feel)
+
+●	Neutral Grey: #E5E5E5 (dividers, subtle backgrounds)
+
+Fonts:
+●	Professional sans-serif (e.g., Open Sans, Lato, or similar)
+
+Tone:
+●	Approachable, trustworthy, inclusive, environmentally‑aware
+
+Photography:
+●	High‑resolution, lifestyle‑oriented images of homes placed in realistic Western Canadian settings: reserves, lakesides, farms, small towns.
+
+●	Consistent lighting, natural feel — no CGI.
+
+________________________________________
+📄 Pages & Structure
+🔷 Homepage
+●	Hero Section:
+
+○	Background: looping video of homes delivered & lived in
+
+○	Headline: “Smart, Sustainable Modular Homes — Built for Western Canada”
+
+○	Primary CTA: “Start Building My Home”
+
+○	Secondary CTA: “Watch Success Stories”
+
+○	Trust Bar: 15+ Years | 98% Satisfaction | Serving Indigenous & Rural Communities
+
+●	Three featured boxes below hero:
+
+○	Pine 1 – The Efficient One: 504 sq ft, 1 bed – from $174k
+
+○	Pine 2 – The Versatile One: 504 sq ft, 2 bed loft – from $179k
+
+○	Pine 3 – The Minimalist: 240 sq ft loft – from $99k
+
+○	[Button: See Our Builds]
+
+●	Brand Story Section:
+
+○	“Built to respect the land, empower people, and unlock opportunity — one home at a time.”
+
+●	Segments We Serve (cards w/ icons & CTAs):
+ ✅ Indigenous Communities
+ ✅ Rural Landowners
+ ✅ Resort & Airbnb Owners
+ ✅ Developers & Builders
+ ✅ Business Owners
+ ✅ Workforce Camps
+
+●	Testimonials Carousel: video + written quotes
+
+●	Downloadable Guides:
+
+○	“Grant Programs for Indigenous Communities”
+
+○	“How to Turn Your Land Into Cash Flow”
+
+○	“Guide for Resort Owners: Adding Revenue‑Generating Units”
+
+●	Footer: company info, social links, privacy policy, etc.
+
+________________________________________
+🔷 Our Builds
+Dedicated product showcase with detailed specs, use cases, and downloadable PDFs:
+ ✅ Pine 1 – The Efficient One (504 sq ft, 1 bed – from $174k)
+ ✅ Pine 2 – The Versatile One (504 sq ft, 2 bed loft – from $179k)
+ ✅ Pine 3 – The Minimalist (240 sq ft loft – from $99k)
+ ✅ Custom Build Options (for unique designs, larger footprints, Indigenous‑specific layouts, off‑grid kits)
+Each section includes:
+●	Lifestyle image of the home in context
+
+●	Floor plan diagram (downloadable)
+
+●	Spec sheet
+
+●	CTA: “Get My Quote”
+
+________________________________________
+🔷 Quote Builder
+The primary lead capture experience:
+●	Step‑by‑step wizard with branded Discovery colors and UX
+
+●	Asks:
+ ✅ Name, email, phone
+ ✅ Property location, land status
+ ✅ Intended use: family home, rental, resort, workforce, other
+ ✅ Model: Pine 1, 2, 3, or Custom
+ ✅ Sq ft / bed preferences
+ ✅ Add‑ons: solar, net‑zero, off‑grid
+ ✅ Budget range
+ ✅ Timeline
+
+●	On completion:
+
+○	Shows estimated price
+
+○	Emails branded PDF quote to customer & CRM
+
+○	Assigns lead to sales rep with segment tag
+
+________________________________________
+🔷 Success Stories
+●	Video & written testimonials from Indigenous Chiefs, farmers, resort owners
+
+●	Before/after photo gallery
+
+●	Highlight: “Built in 60 Days”
+
+________________________________________
+🔷 Partnerships
+●	Indigenous communities:
+
+○	Cultural respect, community partnerships
+
+○	Downloadable grant resources: CMHC, ISC, provincial
+
+○	CTA: “Book a Consultation”
+
+________________________________________
+🔷 Blog & Resources
+●	Blog posts optimized for Western Canadian audiences
+
+●	Downloadable guides gated behind lead capture forms
+
+________________________________________
+🔷 Contact
+●	Contact form
+
+●	Google Map embed
+
+●	Calendar to book appointments directly
+
+________________________________________
+🤖 Intelligent Lead Engine
+Maya — AI Chat Widget
+●	Culturally‑aware tone, available on all pages
+
+●	Welcomes visitors:
+ ✅ “Looking to Buy?”
+ ✅ “Want a Custom Quote?”
+ ✅ “Just Browsing?”
+
+●	Tags lead by segment & intent
+
+●	Escalates hot leads to sales team
+
+________________________________________
+📊 Why This Matters
+This site is a modern, branded sales engine, not just a brochure.
+ ✅ Reflects our premium yet approachable identity
+ ✅ Educates and qualifies leads by segment
+ ✅ Multiple lead capture points: Quote Builder, guides, webinars, direct chat
+ ✅ Feeds CRM with actionable data
+________________________________________
+📋 Developer Deliverables
+✅ Fully‑styled homepage with all sections, videos, and CTAs
+ ✅ Our Builds product pages with specs & floorplans
+ ✅ Fully‑functioning branded Quote Builder
+ ✅ Success Stories, Partnerships, Blog, Contact
+ ✅ Maya chatbot trained and deployed
+ ✅ CRM integration & tagging by segment
+ ✅ Gated downloadable guides with lead forms
+
