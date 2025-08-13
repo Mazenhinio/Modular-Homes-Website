@@ -1,166 +1,112 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 interface VapiWidgetProps {
   mode?: 'voice' | 'chat'
 }
 
+// The widget is fully sandboxed inside an iframe so it can NEVER change
+// the parent document's viewport, styles, or responsive mode.
 export function VapiWidget({ mode }: VapiWidgetProps) {
   const [userChoice, setUserChoice] = useState<'voice' | 'chat' | null>(mode || null)
   const [showChoice, setShowChoice] = useState(false)
   const [showCallout, setShowCallout] = useState(false)
+  const iframeRef = useRef<HTMLIFrameElement>(null)
 
   useEffect(() => {
     if (!userChoice) return
+    const iframe = iframeRef.current
+    if (!iframe) return
 
-    // Guard: prevent any third-party script from changing the meta viewport
-    const viewportMeta = document.querySelector('meta[name="viewport"]') as HTMLMetaElement | null
-    const originalViewportContent = viewportMeta?.getAttribute('content') || undefined
-    const enforceViewport = () => {
-      // Ensure only the original viewport meta exists
-      const metas = Array.from(document.querySelectorAll('meta[name="viewport"]')) as HTMLMetaElement[]
-      metas.forEach((m) => {
-        if (viewportMeta && m !== viewportMeta) {
-          m.parentNode?.removeChild(m)
-        }
-      })
-      // Ensure its content is unchanged
-      if (viewportMeta && originalViewportContent && viewportMeta.getAttribute('content') !== originalViewportContent) {
-        viewportMeta.setAttribute('content', originalViewportContent)
-      }
-    }
-    // Observe head mutations and keep viewport stable
-    const headObserver = new MutationObserver(() => enforceViewport())
-    headObserver.observe(document.head, { childList: true, subtree: true, attributes: true })
-    // Run once in case something already changed it
-    enforceViewport()
+    // Visually anchor without affecting layout flow
+    iframe.style.position = 'fixed'
+    iframe.style.bottom = '0px'
+    iframe.style.right = '0px'
+    iframe.style.zIndex = '40'
+    iframe.style.border = '0'
+    iframe.style.background = 'transparent'
+    iframe.style.pointerEvents = 'auto'
+    iframe.allow = 'microphone; autoplay;'
 
-    // Store original viewport dimensions and prevent changes
-    const originalViewportWidth = window.innerWidth
-    const originalDocumentWidth = document.documentElement.clientWidth
-    const originalBodyOverflow = document.body.style.overflow
-    const originalBodyWidth = document.body.style.width
+    // Reasonable size for the embedded widget container
+    iframe.width = '420'
+    iframe.height = '640'
 
-    // (debug removed)
+    const idoc = iframe.contentDocument || iframe.contentWindow?.document
+    if (!idoc) return
 
-    // Do not modify global document/body styles so the page remains scrollable
+    const html = `<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+      html, body { margin: 0; padding: 0; background: transparent; }
+      body { overflow: hidden; }
+      vapi-widget { position: fixed; bottom: 0; right: 0; z-index: 2147483647; }
+    </style>
+  </head>
+  <body>
+    <script src="https://unpkg.com/@vapi-ai/client-sdk-react/dist/embed/widget.umd.js"></script>
+    <vapi-widget
+      public-key="8bb91407-0cab-4af1-a757-84aa8bebf9a0"
+      assistant-id="5e726eab-ad3f-4a8a-a4d0-1888cfab8cc3"
+      mode="${userChoice}"
+      theme="dark"
+      base-bg-color="#000000"
+      accent-color="#000000"
+      cta-button-color="#D4AF37"
+      cta-button-text-color="#FFFFFF"
+      border-radius="medium"
+      size="tiny"
+      position="bottom-right"
+      title="${userChoice === 'voice' ? 'Speak to Maya!' : 'Chat with Maya!'}"
+      start-button-text="Start"
+      end-button-text="End Call"
+      chat-first-message="Hey, How can I help you today?"
+      chat-placeholder="Type your message..."
+      voice-show-transcript="true"
+      consent-required="false"
+    ></vapi-widget>
+  </body>
+  </html>`
 
-    // Load VAPI script
-    const script = document.createElement('script')
-    script.src = 'https://unpkg.com/@vapi-ai/client-sdk-react/dist/embed/widget.umd.js'
-    script.async = true
-    script.type = 'text/javascript'
-    document.head.appendChild(script)
+    idoc.open()
+    idoc.write(html)
+    idoc.close()
 
-    // Create VAPI widget element with viewport protection
-    const vapiWidget = document.createElement('vapi-widget')
-    vapiWidget.setAttribute('public-key', '8bb91407-0cab-4af1-a757-84aa8bebf9a0')
-    vapiWidget.setAttribute('assistant-id', '5e726eab-ad3f-4a8a-a4d0-1888cfab8cc3')
-    vapiWidget.setAttribute('mode', userChoice)
-    vapiWidget.setAttribute('theme', 'dark')
-    vapiWidget.setAttribute('base-bg-color', '#000000')
-    vapiWidget.setAttribute('accent-color', '#000000')
-    vapiWidget.setAttribute('cta-button-color', '#D4AF37')
-    vapiWidget.setAttribute('cta-button-text-color', '#FFFFFF')
-    vapiWidget.setAttribute('border-radius', 'medium')
-    vapiWidget.setAttribute('size', 'tiny')
-    vapiWidget.setAttribute('position', 'bottom-right')
-    vapiWidget.setAttribute('title', userChoice === 'voice' ? 'Speak to Maya!' : 'Chat with Maya!')
-    vapiWidget.setAttribute('start-button-text', 'Start')
-    vapiWidget.setAttribute('end-button-text', 'End Call')
-    vapiWidget.setAttribute('chat-first-message', 'Hey, How can I help you today?')
-    vapiWidget.setAttribute('chat-placeholder', 'Type your message...')
-    vapiWidget.setAttribute('voice-show-transcript', 'true')
-    vapiWidget.setAttribute('consent-required', 'false')
-    
-    // Set widget styles to prevent viewport changes
-    vapiWidget.style.position = 'fixed'
-    vapiWidget.style.zIndex = '40'
-    vapiWidget.style.pointerEvents = 'auto'
-    vapiWidget.style.width = 'auto'
-    vapiWidget.style.height = 'auto'
-    vapiWidget.style.maxWidth = 'none'
-    vapiWidget.style.maxHeight = 'none'
+    // Nudge user to click the widget after load
+    const calloutOpenTimeout = window.setTimeout(() => setShowCallout(true), 800)
+    const calloutAutoHideTimeout = window.setTimeout(() => setShowCallout(false), 12000)
 
-    // Create a container to isolate the widget (no global side effects)
-    const widgetContainer = document.createElement('div')
-    widgetContainer.style.position = 'fixed'
-    widgetContainer.style.bottom = '0'
-    widgetContainer.style.right = '0'
-    widgetContainer.style.zIndex = '40'
-    widgetContainer.style.pointerEvents = 'auto'
-    
-    // Add container to body first
-    document.body.appendChild(widgetContainer)
-    
-    // Add widget to container instead of body
-    widgetContainer.appendChild(vapiWidget)
-    // Notify that the widget is open once appended
-    document.dispatchEvent(new CustomEvent('vapi-widget-open'))
-    
-    // No body/resize mutations
-
-    // Show callout after a short delay
-    setTimeout(() => {
-      setShowCallout(true)
-    }, 1000)
-
-    // Cleanup function
     return () => {
-      // Remove script and widget on unmount
-      if (script.parentNode) {
-        script.parentNode.removeChild(script)
+      const cleanupDoc = iframeRef.current?.contentDocument || iframeRef.current?.contentWindow?.document
+      if (cleanupDoc) {
+        cleanupDoc.open()
+        cleanupDoc.write('<!doctype html><html><head></head><body></body></html>')
+        cleanupDoc.close()
       }
-      const existingWidget = document.querySelector('vapi-widget')
-      if (existingWidget?.parentNode) {
-        existingWidget.parentNode.removeChild(existingWidget)
-      }
-      
-      // Remove widget container
-      const widgetContainer = document.querySelector('div[style*="z-index: 40"]')
-      if (widgetContainer?.parentNode) {
-        widgetContainer.parentNode.removeChild(widgetContainer)
-      }
-      // Notify that the widget is closed
-      document.dispatchEvent(new CustomEvent('vapi-widget-close'))
-      
-      // No global style restoration needed
-      // Stop observing and restore viewport if needed
-      headObserver.disconnect()
-      enforceViewport()
+      window.clearTimeout(calloutOpenTimeout)
+      window.clearTimeout(calloutAutoHideTimeout)
     }
   }, [userChoice])
 
   const handleShowChoice = (e: React.MouseEvent) => {
     e.preventDefault()
     e.stopPropagation()
-    
-    // (debug removed)
-    
     setShowChoice(true)
-    
-    // Dispatch custom event to notify navigation
-    document.dispatchEvent(new CustomEvent('vapi-widget-click'))
-    
-    // (debug removed)
   }
 
-  const handleModeSelection = (mode: 'voice' | 'chat') => {
-    // (debug removed)
-    
-    // Dispatch event before creating the VapiWidget to prevent navigation issues
-    document.dispatchEvent(new CustomEvent('vapi-widget-click'))
-    
-    setUserChoice(mode)
+  const handleModeSelection = (selected: 'voice' | 'chat') => {
+    setUserChoice(selected)
     setShowChoice(false)
   }
 
-  // Show mode selection modal
   if (showChoice) {
     return (
       <div className="fixed bottom-4 right-4 z-50">
-        <div className="bg-black rounded-lg shadow-lg border border-gray-700 p-4 w-64 animate-fade-in">
+        <div className="bg-black rounded-lg shadow-lg border border-gray-700 p-4 w-64">
           <h3 className="text-white font-semibold mb-3 text-center">How would you like to chat with Maya?</h3>
           <div className="space-y-2">
             <button
@@ -193,25 +139,6 @@ export function VapiWidget({ mode }: VapiWidgetProps) {
     )
   }
 
-  // Show callout when VAPI widget is loaded
-  if (userChoice && showCallout) {
-    return (
-      <div className="fixed bottom-20 right-4 z-50">
-        <div className="bg-discovery-gold text-discovery-charcoal px-4 py-2 rounded-lg shadow-lg animate-pulse">
-          <div className="flex items-center space-x-2">
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
-            <span className="text-sm font-medium">
-              Click to {userChoice === 'voice' ? 'start voice chat' : 'start text chat'} with Maya!
-            </span>
-          </div>
-        </div>
-      </div>
-    )
-  }
-
-  // Show bouncing button as the main initial state (only when no mode is selected)
   if (!userChoice) {
     return (
       <div className="fixed bottom-4 right-4 z-50">
@@ -228,6 +155,39 @@ export function VapiWidget({ mode }: VapiWidgetProps) {
     )
   }
 
-  // Return null when VAPI widget is active (no custom UI needed)
-  return null
-} 
+  // Render the isolated iframe when a mode is selected, with flashing callout above it
+  return (
+    <>
+      <iframe
+        ref={iframeRef}
+        title="Maya Assistant"
+        aria-label="Maya Assistant"
+        style={{ pointerEvents: 'auto' }}
+        sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-modals allow-downloads"
+      />
+      {showCallout && (
+        <div className="fixed bottom-20 right-4 z-50">
+          <div className="bg-discovery-gold text-discovery-charcoal px-4 py-2 rounded-lg shadow-lg animate-pulse">
+            <div className="flex items-center space-x-2">
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              <span className="text-sm font-medium">
+                Click the widget to start {userChoice === 'voice' ? 'voice' : 'text'} chat with Maya
+              </span>
+              <button
+                aria-label="Dismiss"
+                className="ml-2 text-discovery-charcoal/70 hover:text-discovery-charcoal"
+                onClick={() => setShowCallout(false)}
+              >
+                ×
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+    </>
+  )
+}
+
+
