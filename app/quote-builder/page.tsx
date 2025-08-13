@@ -13,9 +13,12 @@ interface FormData {
   // Step 2: Property Details
   location: string
   landStatus: string
+  // Property proximity (required Yes/No)
+  isWithin150kmOfLloydminster: string
   
   // Step 3: Intended Use
   intendedUse: string
+  intendedUseOther: string
   
   // Step 4: Model Selection
   model: string
@@ -46,10 +49,13 @@ interface FormData {
 
 export default function QuoteBuilderPage() {
   const [currentStep, setCurrentStep] = useState(1)
+  const [stepError, setStepError] = useState<string | null>(null)
   const [formData, setFormData] = useState<FormData>({
     name: '', email: '', phone: '',
     location: '', landStatus: '',
+    isWithin150kmOfLloydminster: '',
     intendedUse: '',
+    intendedUseOther: '',
     model: '',
     bedrooms: '', bathrooms: '', sqft: '',
     addons: [],
@@ -151,11 +157,76 @@ export default function QuoteBuilderPage() {
     return basePrice + addonCost
   }
 
+  const validateStep = (step: number): string | null => {
+    switch (step) {
+      case 1: {
+        if (!formData.name.trim()) return 'Please enter your full name.'
+        if (!formData.email.trim()) return 'Please enter your email address.'
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email.trim())) return 'Please enter a valid email address.'
+        if (!formData.phone.trim()) return 'Please enter your phone number.'
+        return null
+      }
+      case 2: {
+        if (!formData.location) return 'Please select your province.'
+        if (!formData.landStatus) return 'Please select your land status.'
+        if (!formData.isWithin150kmOfLloydminster) return 'Please indicate whether your property is within 150 km of Lloydminster.'
+        return null
+      }
+      case 3: {
+        if (!formData.intendedUse) return 'Please select the intended use.'
+        if (formData.intendedUse === 'other' && !formData.intendedUseOther.trim()) return 'Please specify the other intended use.'
+        return null
+      }
+      case 4: {
+        if (!formData.model) return 'Please choose a model.'
+        return null
+      }
+      case 5: {
+        if (formData.model === 'custom') {
+          if (!formData.bedrooms) return 'Please select the number of bedrooms.'
+          if (!formData.bathrooms) return 'Please select the number of bathrooms.'
+          if (!formData.sqft) return 'Please select square footage.'
+        } else {
+          if (!formData.bedrooms) return 'Please select the number of bedrooms.'
+          if (!formData.sqft) return 'Please select preferred square footage.'
+        }
+        return null
+      }
+      case 7: {
+        if (!formData.budget) return 'Please choose your budget range.'
+        return null
+      }
+      case 8: {
+        if (!formData.timeline) return 'Please select a project timeline.'
+        return null
+      }
+      case 9: {
+        if (!formData.isIndigenous) return 'Please indicate Indigenous community status.'
+        return null
+      }
+      case 10: {
+        if (!formData.numberOfHomes) return 'Please select the number of homes.'
+        return null
+      }
+      case 11: {
+        if (!formData.financing) return 'Please select a financing option.'
+        return null
+      }
+      default:
+        return null
+    }
+  }
+
   const handleNext = () => {
+    const error = validateStep(currentStep)
+    if (error) {
+      setStepError(error)
+      return
+    }
+    setStepError(null)
     if (currentStep < totalSteps) {
       setCurrentStep(currentStep + 1)
     } else {
-      // Final step - calculate price
       const price = calculatePrice()
       setEstimatedPrice(price)
     }
@@ -401,7 +472,8 @@ export default function QuoteBuilderPage() {
             </div>
           )}
 
-          {/* Step 2: Property Details */}
+          {/* Step 2: Property Details */
+          }
           {currentStep === 2 && (
             <div>
               <h2 className="text-2xl font-bold text-[#2D2D2D] mb-6">Property Details</h2>
@@ -444,6 +516,28 @@ export default function QuoteBuilderPage() {
                     ))}
                   </div>
                 </div>
+                {/* Within 150 km of Lloydminster (Required) */}
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-4">Is your property within 150 km of Lloydminster? *</label>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {[
+                      { value: 'yes', label: 'Yes' },
+                      { value: 'no', label: 'No' }
+                    ].map((option) => (
+                      <label key={option.value} className="flex items-center p-4 border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50">
+                        <input
+                          type="radio"
+                          name="isWithin150kmOfLloydminster"
+                          value={option.value}
+                          checked={formData.isWithin150kmOfLloydminster === option.value}
+                          onChange={(e) => updateFormData('isWithin150kmOfLloydminster', e.target.value)}
+                          className="mr-3"
+                        />
+                        <span>{option.label}</span>
+                      </label>
+                    ))}
+                  </div>
+                </div>
               </div>
             </div>
           )}
@@ -454,12 +548,12 @@ export default function QuoteBuilderPage() {
               <h2 className="text-2xl font-bold text-[#2D2D2D] mb-6">Intended Use</h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {[
-                  { value: 'family-home', label: 'Family Home', icon: 'ðŸ ' },
-                  { value: 'rental-property', label: 'Rental Property', icon: 'ðŸ˜ï¸' },
-                  { value: 'resort-cabin', label: 'Resort/Airbnb', icon: 'ðŸ•ï¸' },
-                  { value: 'workforce-housing', label: 'Workforce Housing', icon: 'ðŸ—ï¸' },
-                  { value: 'office-space', label: 'Office Space', icon: 'ðŸ’¼' },
-                  { value: 'other', label: 'Other', icon: 'â“' }
+                  { value: 'family-home', label: 'Family Home', icon: '=ƒÅá' },
+                  { value: 'rental-property', label: 'Rental Property', icon: '=ƒÅÿn+Å' },
+                  { value: 'resort-cabin', label: 'Resort/Airbnb', icon: '=ƒÅòn+Å' },
+                  { value: 'workforce-housing', label: 'Workforce Housing', icon: '=ƒÅùn+Å' },
+                  { value: 'office-space', label: 'Office Space', icon: '=ƒÆ+' },
+                  { value: 'other', label: 'Other', icon: 'G¥ô' }
                 ].map((option) => (
                   <label key={option.value} className="flex items-center p-4 border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50">
                     <input
@@ -475,32 +569,45 @@ export default function QuoteBuilderPage() {
                   </label>
                 ))}
               </div>
+              {formData.intendedUse === 'other' && (
+                <div className="mt-6">
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Please specify *</label>
+                  <input
+                    type="text"
+                    value={formData.intendedUseOther}
+                    onChange={(e) => updateFormData('intendedUseOther', e.target.value)}
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#D4AF37] focus:border-transparent"
+                    placeholder="Describe the intended use"
+                    required
+                  />
+                </div>
+              )}
             </div>
           )}
 
                      {/* Step 4: Model Selection */}
            {currentStep === 4 && (
              <div>
-               <h2 className="text-2xl font-bold text-[#2D2D2D] mb-6">Choose Your Model</h2>
+               <h2 className="text-2xl font-bold text-[#2D2D2D] mb-6">Choose Your Model *</h2>
                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                  {[
                    { 
                      value: 'pine1', 
                      name: 'Pine 1 - The Efficient One',
-                     specs: '504 sq ft â€¢ 1 Bedroom',
+                     specs: '504 sq ft GÇó 1 Bedroom',
                      price: '$174,000 CAD',
                      description: 'Perfect for singles, couples, or resort units',
                      features: ['Open concept living', 'Efficient kitchen design', 'Modern bathroom', 'Energy efficient'],
-                     icon: 'ðŸ '
+                     icon: '=ƒÅá'
                    },
                    { 
                      value: 'pine2', 
                      name: 'Pine 2 - The Versatile One',
-                     specs: '504 sq ft â€¢ 2 Bedroom with Loft',
+                     specs: '504 sq ft GÇó 2 Bedroom with Loft',
                      price: '$179,000 CAD',
                      description: 'Ideal for families or rental markets',
                      features: ['Two bedrooms', 'Loft space', 'Spacious living area', 'Storage solutions'],
-                     icon: 'ðŸ˜ï¸'
+                     icon: '=ƒÅÿn+Å'
                    },
                    { 
                      value: 'pine3', 
@@ -509,7 +616,7 @@ export default function QuoteBuilderPage() {
                      price: '$99,000 CAD',
                      description: 'Modern tiny home solution',
                      features: ['Compact design', 'Loft bedroom', 'Efficient layout', 'Portable'],
-                     icon: 'ðŸ•ï¸'
+                     icon: '=ƒÅòn+Å'
                    },
                    { 
                      value: 'custom', 
@@ -518,7 +625,7 @@ export default function QuoteBuilderPage() {
                      price: 'Quote on request',
                      description: 'Fully tailored to your needs',
                      features: ['Custom design', 'Flexible layout', 'Premium materials', 'Personal consultation'],
-                     icon: 'âœ¨'
+                     icon: 'G£¿'
                    }
                  ].map((model) => (
                    <label key={model.value} className={`block p-6 border-2 rounded-lg cursor-pointer transition-all duration-200 hover:shadow-lg ${
@@ -744,16 +851,16 @@ export default function QuoteBuilderPage() {
 
                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                  {[
-                   { value: 'solar', label: 'Solar Panels', price: '+$25,000', description: 'Reduce energy costs with solar power', icon: 'â˜€ï¸' },
-                   { value: 'net-zero', label: 'Net-Zero Package', price: '+$35,000', description: 'Complete energy independence', icon: 'ðŸŒ±' },
-                   { value: 'off-grid', label: 'Off-Grid Kit', price: '+$40,000', description: 'Water, power, and waste systems', icon: 'ðŸ•ï¸' },
-                   { value: 'loft', label: 'Loft (Additional Floor Space)', price: '+$15,000', description: 'Increase living space', icon: 'ðŸ ' },
-                   { value: 'garage', label: 'Garage (Additional Storage)', price: '+$30,000', description: 'Extra storage for vehicles or tools', icon: 'ðŸš—' },
-                   { value: 'deck', label: 'Deck (Outdoor Living Space)', price: '+$8,000', description: 'Extend your living area outdoors', icon: 'ðŸŒ³' },
-                   { value: 'appliances', label: 'Upgraded Appliances', price: '+$12,000', description: 'High-end kitchen and laundry appliances', icon: 'ðŸ³' },
-                   { value: 'smart-home', label: 'Smart Home Package', price: '+$5,000', description: 'Automated lighting, security, and climate control', icon: 'ðŸ“±' },
-                   { value: 'upgraded-finishes', label: 'Upgraded Finishes', price: '+$18,000', description: 'Higher-end materials and finishes', icon: 'âœ¨' },
-                   { value: 'foundation', label: 'Foundation Upgrade', price: '+$20,000', description: 'Strengthen the foundation for better stability', icon: 'ðŸ—ï¸' }
+                   { value: 'solar', label: 'Solar Panels', price: '+$25,000', description: 'Reduce energy costs with solar power', icon: 'GÿÇn+Å' },
+                   { value: 'net-zero', label: 'Net-Zero Package', price: '+$35,000', description: 'Complete energy independence', icon: '=ƒî¦' },
+                   { value: 'off-grid', label: 'Off-Grid Kit', price: '+$40,000', description: 'Water, power, and waste systems', icon: '=ƒÅòn+Å' },
+                   { value: 'loft', label: 'Loft (Additional Floor Space)', price: '+$15,000', description: 'Increase living space', icon: '=ƒÅá' },
+                   { value: 'garage', label: 'Garage (Additional Storage)', price: '+$30,000', description: 'Extra storage for vehicles or tools', icon: '=ƒÜù' },
+                   { value: 'deck', label: 'Deck (Outdoor Living Space)', price: '+$8,000', description: 'Extend your living area outdoors', icon: '=ƒî¦' },
+                   { value: 'appliances', label: 'Upgraded Appliances', price: '+$12,000', description: 'High-end kitchen and laundry appliances', icon: '=ƒì¦' },
+                   { value: 'smart-home', label: 'Smart Home Package', price: '+$5,000', description: 'Automated lighting, security, and climate control', icon: '=ƒô¦' },
+                   { value: 'upgraded-finishes', label: 'Upgraded Finishes', price: '+$18,000', description: 'Higher-end materials and finishes', icon: 'G£¿' },
+                   { value: 'foundation', label: 'Foundation Upgrade', price: '+$20,000', description: 'Strengthen the foundation for better stability', icon: '=ƒÅùn+Å' }
                  ].map((addon) => (
                    <label key={addon.value} className={`flex items-center p-4 border-2 rounded-lg cursor-pointer transition-all duration-200 hover:shadow-md ${
                      formData.addons.includes(addon.value) 
@@ -995,7 +1102,7 @@ export default function QuoteBuilderPage() {
                            
                            return (
                              <div key={addon} className="flex justify-between items-center text-sm">
-                               <span className="text-gray-600">â€¢ {addonInfo?.label}</span>
+                               <span className="text-gray-600">GÇó {addonInfo?.label}</span>
                                <span className="font-semibold">+${addonInfo?.price?.toLocaleString()} CAD</span>
                              </div>
                            )
@@ -1022,6 +1129,12 @@ export default function QuoteBuilderPage() {
            )}
 
           {/* Navigation Buttons */}
+          {stepError && (
+            <div className="mt-6 p-4 bg-red-50 border border-red-200 rounded-lg text-red-700">
+              {stepError}
+            </div>
+          )}
+
           <div className="flex justify-between items-center mt-8 pt-6 border-t border-gray-200">
             <button
               onClick={handlePrev}

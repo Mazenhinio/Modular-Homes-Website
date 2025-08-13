@@ -107,16 +107,16 @@ export default function ContactPage() {
               <script src="https://link.msgsndr.com/js/form_embed.js"></script>
             </div>
 
-                         {/* GHL Booking Calendar ONLY */}
+             {/* GHL Booking Calendar ONLY */}
              <div className="bg-white rounded-2xl p-8 shadow-lg">
                <h2 className="text-3xl font-bold text-[#2D2D2D] mb-0">Book a Consultation</h2>
-                               <iframe 
-                  src="https://api.leadconnectorhq.com/widget/booking/PTZ3zcQLwvLZ7CizfIdf" 
-                  style={{width: '100%', height: '800px', border: 'none', overflow: 'hidden'}} 
-                  scrolling="no" 
-                  id="PTZ3zcQLwvLZ7CizfIdf_1753871801578"
-                  className="w-full"
-                />
+               <iframe 
+                 src="https://api.leadconnectorhq.com/widget/booking/PTZ3zcQLwvLZ7CizfIdf" 
+                 style={{ width: '100%', height: '800px', border: 'none', overflow: 'auto' }} 
+                 scrolling="yes" 
+                 id="PTZ3zcQLwvLZ7CizfIdf_1753871801578"
+                 className="w-full"
+               />
                <script src="https://link.msgsndr.com/js/form_embed.js" type="text/javascript"></script>
              </div>
           </div>
