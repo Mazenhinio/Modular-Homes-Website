@@ -23,6 +23,9 @@ interface FormData {
   // Step 4: Model Selection
   model: string
   
+  // Step 5: Package Selection
+  packageType: string
+  
   // Step 5: Specifications
   bedrooms: string
   bathrooms: string
@@ -30,6 +33,19 @@ interface FormData {
   
   // Step 6: Add-ons
   addons: string[]
+
+  // Finishes & Options
+  siding: string
+  countertops: string
+  cabinets: string
+  headboard: string
+  flooring: string
+  blinds: boolean
+  faucets: string
+  addCeilingFans: boolean
+  addBedroomFixtures: boolean
+  wallsFinish: string
+  tongueAndGrooveCeiling: boolean
   
   // Step 7: Budget
   budget: string
@@ -50,6 +66,7 @@ interface FormData {
 export default function QuoteBuilderPage() {
   const [currentStep, setCurrentStep] = useState(1)
   const [stepError, setStepError] = useState<string | null>(null)
+  type PromoOffer = { title: string; code: string; description: string }
   const [formData, setFormData] = useState<FormData>({
     name: '', email: '', phone: '',
     location: '', landStatus: '',
@@ -57,8 +74,20 @@ export default function QuoteBuilderPage() {
     intendedUse: '',
     intendedUseOther: '',
     model: '',
+    packageType: '',
     bedrooms: '', bathrooms: '', sqft: '',
     addons: [],
+    siding: 'base-metal',
+    countertops: 'base-quartz',
+    cabinets: 'maple-shaker',
+    headboard: 'melamine',
+    flooring: 'vinyl-glue-down',
+    blinds: false,
+    faucets: 'black',
+    addCeilingFans: false,
+    addBedroomFixtures: false,
+    wallsFinish: 'plywood-base',
+    tongueAndGrooveCeiling: false,
     budget: '',
     timeline: '',
     isIndigenous: '',
@@ -69,22 +98,171 @@ export default function QuoteBuilderPage() {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isSubmitted, setIsSubmitted] = useState(false)
   const [submitError, setSubmitError] = useState<string | null>(null)
+  const [promo, setPromo] = useState<PromoOffer | null>(null)
 
-  const totalSteps = 11
+  const totalSteps = 13
 
   const steps = [
     { number: 1, title: 'Contact Info', icon: Users },
     { number: 2, title: 'Property Details', icon: MapPin },
     { number: 3, title: 'Intended Use', icon: Home },
     { number: 4, title: 'Model Selection', icon: Building },
-    { number: 5, title: 'Specifications', icon: Palette },
-    { number: 6, title: 'Add-ons', icon: Zap },
-    { number: 7, title: 'Budget Range', icon: DollarSign },
-    { number: 8, title: 'Timeline', icon: Calendar },
-    { number: 9, title: 'Indigenous Community', icon: Heart },
-    { number: 10, title: 'Number of Homes', icon: Home },
-    { number: 11, title: 'Financing', icon: CreditCard }
+    { number: 5, title: 'Package', icon: Zap },
+    { number: 6, title: 'Specifications', icon: Palette },
+    { number: 7, title: 'Finishes & Options', icon: Palette },
+    { number: 8, title: 'Add-ons', icon: Zap },
+    { number: 9, title: 'Budget Range', icon: DollarSign },
+    { number: 10, title: 'Timeline', icon: Calendar },
+    { number: 11, title: 'Indigenous Community', icon: Heart },
+    { number: 12, title: 'Number of Homes', icon: Home },
+    { number: 13, title: 'Financing', icon: CreditCard }
   ]
+
+  const formatCurrency = (n: number) => n.toLocaleString()
+
+  const clampRange = (min: number, max: number) => ({ min: Math.round(min), max: Math.round(max) })
+
+  const getModelBasePrice = () => {
+    switch (formData.model) {
+      case 'pine1': return 174000
+      case 'pine2': return 179000
+      case 'pine3': return 99000
+      case 'custom': {
+        const sqftNumber = parseInt(formData.sqft.replace(/\D/g, '')) || 800
+        if (sqftNumber <= 800) return 200000
+        if (sqftNumber <= 1200) return 280000
+        if (sqftNumber <= 1800) return 380000
+        if (sqftNumber <= 2400) return 480000
+        return 580000
+      }
+      default: return 0
+    }
+  }
+
+  const getModelRangeFor = (model: string) => {
+    let base = 0
+    switch (model) {
+      case 'pine1': base = 174000; break
+      case 'pine2': base = 179000; break
+      case 'pine3': base = 99000; break
+      default: base = 0
+    }
+    return clampRange(base * 0.95, base * 1.1)
+  }
+
+  const getModelRange = () => {
+    const base = getModelBasePrice()
+    // Reasonable ±10% envelope
+    return clampRange(base * 0.95, base * 1.1)
+  }
+
+  const isWoodGrainEligible = () => {
+    // Eligible when model is Pine 3 (studio) or when floor area equals approx 504 sq ft
+    if (formData.model === 'pine3') return true
+    const sqftNumber = parseInt((formData.sqft || '').replace(/\D/g, ''))
+    return sqftNumber >= 500 && sqftNumber <= 510
+  }
+
+  const getPackageRange = () => {
+    if (formData.packageType === 'net-zero') return clampRange(31500, 38500)
+    if (formData.packageType === 'off-grid') return clampRange(36000, 44000)
+    return clampRange(0, 0)
+  }
+
+  const addOnRanges: Record<string, { min: number; max: number }> = {
+    'solar': { min: 22500, max: 27500 },
+    'net-zero': { min: 31500, max: 38500 },
+    'off-grid': { min: 36000, max: 44000 },
+    'loft': { min: 13500, max: 16500 },
+    'deck': { min: 7200, max: 8800 },
+    'appliances': { min: 10800, max: 13200 },
+    'smart-home': { min: 4500, max: 5500 },
+  }
+
+  const getAddOnsRange = () => {
+    let min = 0
+    let max = 0
+    formData.addons.forEach((addon) => {
+      if (formData.packageType === 'net-zero' && addon === 'net-zero') return
+      if (formData.packageType === 'off-grid' && addon === 'off-grid') return
+      const r = addOnRanges[addon]
+      if (!r) return
+      min += r.min
+      max += r.max
+    })
+    return clampRange(min, max)
+  }
+
+  const getFinishesRange = () => {
+    let min = 0
+    let max = 0
+
+    // Siding
+    if (formData.siding === 'wood-grain' && isWoodGrainEligible()) {
+      if (formData.model === 'pine3') { min += 3600; max += 4400 } else { min += 5400; max += 6600 }
+    }
+
+    // Faucets
+    if (formData.faucets === 'bronze') { min += 450; max += 600 }
+    if (formData.faucets === 'stainless') { min += -300; max += -200 }
+
+    // Tongue & groove ceiling
+    if (formData.tongueAndGrooveCeiling) { min += 4050; max += 4950 }
+
+    // Bedroom counts for lighting
+    const bedroomCount = (() => {
+      if (formData.bedrooms === '4+') return 4
+      const n = parseInt(formData.bedrooms.replace(/\D/g, ''))
+      return isNaN(n) ? 0 : n
+    })()
+
+    if (formData.addCeilingFans) { min += 540 * bedroomCount; max += 660 * bedroomCount }
+    if (formData.addBedroomFixtures) { min += 450 * bedroomCount; max += 550 * bedroomCount }
+
+    // Items with pricing pending remain 0
+    return clampRange(min, max)
+  }
+
+  const getFinishItemsRange = () => {
+    const items: { label: string; min?: number; max?: number; tbd?: boolean }[] = []
+    // Siding
+    if (formData.siding === 'wood-grain' && isWoodGrainEligible()) {
+      if (formData.model === 'pine3') items.push({ label: 'Siding: Wood Grain', min: 3600, max: 4400 })
+      else items.push({ label: 'Siding: Wood Grain', min: 5400, max: 6600 })
+    }
+    // Faucets
+    if (formData.faucets === 'bronze') items.push({ label: 'Faucets: Bronze', min: 450, max: 600 })
+    else if (formData.faucets === 'stainless') items.push({ label: 'Faucets: Stainless', min: -300, max: -200 })
+    // Tongue & groove ceiling
+    if (formData.tongueAndGrooveCeiling) items.push({ label: 'Ceiling: Tongue & Groove', min: 4050, max: 4950 })
+    // Bedroom-dependent items
+    const brCount = (() => { if (formData.bedrooms === '4+') return 4; const n = parseInt(formData.bedrooms.replace(/\D/g, '')); return isNaN(n) ? 0 : n })()
+    if (formData.addCeilingFans && brCount > 0) items.push({ label: `Ceiling Fans (${brCount} BR)`, min: 540 * brCount, max: 660 * brCount })
+    if (formData.addBedroomFixtures && brCount > 0) items.push({ label: `Bedroom Fixtures (${brCount} BR)`, min: 450 * brCount, max: 550 * brCount })
+    // Items with pending pricing
+    if (formData.countertops === 'upgrade-quartz') items.push({ label: 'Countertops: Premium Quartz', tbd: true })
+    if (formData.cabinets === 'painted-thermo') items.push({ label: 'Cabinets: Painted / Thermo', tbd: true })
+    if (formData.cabinets === 'melamine') items.push({ label: 'Cabinets: Melamine (Downgrade)', tbd: true })
+    if (formData.headboard === 'maple-paint-thermo') items.push({ label: 'Headboard: Maple / Paint / Thermo', tbd: true })
+    if (formData.flooring === 'vinyl-upgrade') items.push({ label: 'Flooring: Better Vinyl / Click', tbd: true })
+    if (formData.flooring === 'engineered-hardwood') items.push({ label: 'Flooring: Engineered Hardwood + Vinyl Tile', tbd: true })
+    if (formData.blinds) items.push({ label: 'Blinds', tbd: true })
+    return items
+  }
+
+  const calculatePriceRange = () => {
+    const model = getModelRange()
+    const pkg = getPackageRange()
+    const addons = getAddOnsRange()
+    const finishes = getFinishesRange()
+    const homes = (() => {
+      const n = parseInt((formData.numberOfHomes || '1').replace(/\D/g, ''))
+      return isNaN(n) || n < 1 ? 1 : Math.min(n, 10)
+    })()
+    const min = (model.min + pkg.min + addons.min + finishes.min) * homes
+    const max = (model.max + pkg.max + addons.max + finishes.max) * homes
+    return clampRange(min, max)
+  }
 
   const calculatePrice = () => {
     let basePrice = 0
@@ -120,6 +298,9 @@ export default function QuoteBuilderPage() {
     // Add-on pricing
     let addonCost = 0
     formData.addons.forEach(addon => {
+      // Avoid double counting if package already includes these features
+      if (formData.packageType === 'net-zero' && addon === 'net-zero') return
+      if (formData.packageType === 'off-grid' && addon === 'off-grid') return
       switch (addon) {
         case 'solar':
           addonCost += 25000
@@ -154,7 +335,30 @@ export default function QuoteBuilderPage() {
       }
     })
     
-    return basePrice + addonCost
+    // Package pricing
+    let packageCost = 0
+    if (formData.packageType === 'net-zero') packageCost += 35000
+    if (formData.packageType === 'off-grid') packageCost += 40000
+    
+    // Finishes & options pricing
+    let finishesCost = 0
+    if (formData.siding === 'wood-grain') {
+      finishesCost += (formData.model === 'pine3') ? 4000 : 6000
+    }
+    if (formData.faucets === 'bronze') finishesCost += 500
+    if (formData.faucets === 'stainless') finishesCost -= 250
+    if (formData.tongueAndGrooveCeiling) finishesCost += 4500
+    const bedroomCount = (() => {
+      if (formData.bedrooms === '4+') return 4
+      const n = parseInt(formData.bedrooms.replace(/\D/g, ''))
+      return isNaN(n) ? 0 : n
+    })()
+    if (formData.addCeilingFans) finishesCost += 600 * bedroomCount
+    if (formData.addBedroomFixtures) finishesCost += 500 * bedroomCount
+    
+    // Midpoint for operations that require a single figure (e.g., PDF)
+    const range = calculatePriceRange()
+    return Math.round((range.min + range.max) / 2)
   }
 
   const validateStep = (step: number): string | null => {
@@ -182,6 +386,10 @@ export default function QuoteBuilderPage() {
         return null
       }
       case 5: {
+        if (!formData.packageType) return 'Please select a package option.'
+        return null
+      }
+      case 6: {
         if (formData.model === 'custom') {
           if (!formData.bedrooms) return 'Please select the number of bedrooms.'
           if (!formData.bathrooms) return 'Please select the number of bathrooms.'
@@ -192,23 +400,23 @@ export default function QuoteBuilderPage() {
         }
         return null
       }
-      case 7: {
+      case 9: {
         if (!formData.budget) return 'Please choose your budget range.'
         return null
       }
-      case 8: {
+      case 10: {
         if (!formData.timeline) return 'Please select a project timeline.'
         return null
       }
-      case 9: {
+      case 11: {
         if (!formData.isIndigenous) return 'Please indicate Indigenous community status.'
         return null
       }
-      case 10: {
+      case 12: {
         if (!formData.numberOfHomes) return 'Please select the number of homes.'
         return null
       }
-      case 11: {
+      case 13: {
         if (!formData.financing) return 'Please select a financing option.'
         return null
       }
@@ -276,6 +484,36 @@ export default function QuoteBuilderPage() {
       
       // Mark as successfully submitted
       setIsSubmitted(true)
+      // Random promotional message (temporary until finalized)
+      const offers: PromoOffer[] = [
+        {
+          title: 'Free Tongue & Groove Ceiling Upgrade',
+          code: 'BUILD-TG',
+          description: 'Book a call today and claim a complimentary ceiling upgrade on eligible builds.'
+        },
+        {
+          title: '$1,000 Design Credit',
+          code: 'DESIGN1000',
+          description: 'Apply this credit toward design enhancements when you book a call this week.'
+        },
+        {
+          title: 'Free Blinds Package',
+          code: 'COZYBLINDS',
+          description: 'Add a finishing touch—complimentary blinds package when you schedule a consultation.'
+        },
+        {
+          title: 'Priority Production Slot',
+          code: 'FASTTRACK',
+          description: 'Skip the queue with a priority production slot when you book your discovery call.'
+        },
+        {
+          title: 'Complimentary Site-Planning Session',
+          code: 'SITE500',
+          description: 'Get a $500 value site-planning session on us—available when you book now.'
+        }
+      ]
+      const pick = offers[Math.floor(Math.random() * offers.length)]
+      setPromo(pick)
       setIsSubmitting(false)
       
     } catch (error) {
@@ -317,10 +555,27 @@ export default function QuoteBuilderPage() {
               <div className="bg-[#68a71d]/10 border border-[#68a71d] rounded-lg p-6 mb-6">
                 <h2 className="text-xl font-bold text-[#2D2D2D] mb-2">Your Quote is Ready</h2>
                 <div className="text-2xl font-bold text-[#68a71d] mb-2">
-                  ${estimatedPrice.toLocaleString()} CAD
+                  {(() => { const r = calculatePriceRange(); return `$${formatCurrency(r.min)} - $${formatCurrency(r.max)} CAD` })()}
                 </div>
-                <p className="text-gray-600">Estimated total for your {formData.model} build</p>
+                <p className="text-gray-600">Estimated total range for your {formData.model} build</p>
               </div>
+
+              {promo && (
+                <div className="bg-gradient-to-r from-[#D4AF37]/15 to-[#68a71d]/15 border border-[#D4AF37] rounded-lg p-6 mb-6 text-left">
+                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                    <div>
+                      <h3 className="text-lg font-semibold text-[#2D2D2D]">Limited-Time Offer: {promo.title}</h3>
+                      <p className="text-gray-600">{promo.description}</p>
+                      <p className="mt-2 text-sm"><span className="font-semibold text-[#2D2D2D]">Promo Code:</span> <span className="font-mono bg-white/70 px-2 py-1 rounded border">{promo.code}</span> <span className="text-gray-500">— valid for 7 days</span></p>
+                    </div>
+                    <div className="shrink-0">
+                      <Link href="/contact#schedule" className="inline-block bg-[#D4AF37] text-[#2D2D2D] font-semibold px-6 py-3 rounded-lg hover:bg-[#B8941F] transition-colors">
+                        Book Your Promo Call
+                      </Link>
+                    </div>
+                  </div>
+                </div>
+              )}
               
               <div className="space-y-4 text-left max-w-2xl mx-auto mb-8">
                 <h3 className="text-lg font-semibold text-[#2D2D2D] mb-3">What happens next:</h3>
@@ -548,12 +803,12 @@ export default function QuoteBuilderPage() {
               <h2 className="text-2xl font-bold text-[#2D2D2D] mb-6">Intended Use</h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {[
-                  { value: 'family-home', label: 'Family Home', icon: '🏠' },
-                  { value: 'rental-property', label: 'Rental Property', icon: '🏘️' },
-                  { value: 'resort-cabin', label: 'Resort/Airbnb', icon: '🏕️' },
-                  { value: 'workforce-housing', label: 'Workforce Housing', icon: '🏗️' },
-                  { value: 'office-space', label: 'Office Space', icon: '💼' },
-                  { value: 'other', label: 'Other', icon: '❓' }
+                  { value: 'family-home', label: 'Family Home' },
+                  { value: 'rental-property', label: 'Rental Property' },
+                  { value: 'resort-cabin', label: 'Resort/Airbnb' },
+                  { value: 'workforce-housing', label: 'Workforce Housing' },
+                  { value: 'office-space', label: 'Office Space' },
+                  { value: 'other', label: 'Other' }
                 ].map((option) => (
                   <label key={option.value} className="flex items-center p-4 border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50">
                     <input
@@ -564,7 +819,6 @@ export default function QuoteBuilderPage() {
                       onChange={(e) => updateFormData('intendedUse', e.target.value)}
                       className="mr-3"
                     />
-                    <span className="text-2xl mr-3">{option.icon}</span>
                     <span>{option.label}</span>
                   </label>
                 ))}
@@ -591,11 +845,11 @@ export default function QuoteBuilderPage() {
                <h2 className="text-2xl font-bold text-[#2D2D2D] mb-6">Choose Your Model *</h2>
                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                  {[
-                   { 
+                    { 
                      value: 'pine1', 
                      name: 'Pine 1 - The Efficient One',
                      specs: '504 sq ft • 1 Bedroom',
-                     price: '$174,000 CAD',
+                      price: '',
                      description: 'Perfect for singles, couples, or resort units',
                      features: ['Open concept living', 'Efficient kitchen design', 'Modern bathroom', 'Energy efficient'],
                      icon: '🏠'
@@ -604,7 +858,7 @@ export default function QuoteBuilderPage() {
                      value: 'pine2', 
                      name: 'Pine 2 - The Versatile One',
                      specs: '504 sq ft • 2 Bedroom with Loft',
-                     price: '$179,000 CAD',
+                      price: '',
                      description: 'Ideal for families or rental markets',
                      features: ['Two bedrooms', 'Loft space', 'Spacious living area', 'Storage solutions'],
                      icon: '🏘️'
@@ -613,7 +867,7 @@ export default function QuoteBuilderPage() {
                      value: 'pine3', 
                      name: 'Pine 3 - The Minimalist',
                      specs: '240 sq ft with Loft',
-                     price: '$99,000 CAD',
+                      price: '',
                      description: 'Modern tiny home solution',
                      features: ['Compact design', 'Loft bedroom', 'Efficient layout', 'Portable'],
                      icon: '🏕️'
@@ -642,29 +896,34 @@ export default function QuoteBuilderPage() {
                        className="sr-only"
                      />
                      <div>
-                       <div className="flex items-center mb-3">
-                         <span className="text-3xl mr-3">{model.icon}</span>
-                         <div>
+                        <div className="flex items-center mb-3">
+                          <div>
                            <h3 className="text-lg font-bold text-[#2D2D2D]">{model.name}</h3>
                            <p className="text-gray-600 text-sm">{model.specs}</p>
                          </div>
                        </div>
                        <p className="text-sm text-gray-600 mb-4">{model.description}</p>
                        
-                       <div className="mb-4">
-                         <h4 className="font-semibold text-[#2D2D2D] mb-2">Key Features:</h4>
-                         <ul className="space-y-1">
-                           {model.features.map((feature, index) => (
-                             <li key={index} className="flex items-center text-sm text-gray-600">
-                               <span className="w-1.5 h-1.5 bg-[#D4AF37] rounded-full mr-2"></span>
-                               {feature}
-                             </li>
-                           ))}
-                         </ul>
-                       </div>
-                       
-                       <div className="flex items-center justify-between">
-                         <p className="text-xl font-bold text-[#D4AF37]">{model.price}</p>
+                        <div className="mb-4">
+                          <h4 className="font-semibold text-[#2D2D2D] mb-2">Key Features:</h4>
+                          <ul className="space-y-1">
+                            {model.features.map((feature, index) => (
+                              <li key={index} className="flex items-center text-sm text-gray-600">
+                                <span className="w-1.5 h-1.5 bg-[#D4AF37] rounded-full mr-2"></span>
+                                {feature}
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+
+                        <div className="flex items-center justify-between">
+                          <p className="text-xl font-bold text-[#D4AF37]">
+                            {model.value === 'custom' ? 'Quote on request' : (
+                              model.value === 'pine1' ? '$174,000 CAD' :
+                              model.value === 'pine2' ? '$179,000 CAD' :
+                              '$99,000 CAD'
+                            )}
+                          </p>
                          {formData.model === model.value && (
                            <div className="w-6 h-6 bg-[#D4AF37] rounded-full flex items-center justify-center">
                              <Check size={16} className="text-white" />
@@ -679,8 +938,45 @@ export default function QuoteBuilderPage() {
            )}
 
           {/* Continue with remaining steps... */}
-          {/* Step 5: Specifications */}
+          {/* Step 5: Package Selection */}
           {currentStep === 5 && (
+            <div>
+              <h2 className="text-2xl font-bold text-[#2D2D2D] mb-6">Choose Your Package</h2>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                {[{
+                  value: 'base',
+                  title: 'Base Model',
+                  description: 'Standard high-quality construction'
+                },{
+                  value: 'net-zero',
+                  title: 'Net Zero Ready',
+                  description: 'Energy efficiency package (+$35,000)'
+                },{
+                  value: 'off-grid',
+                  title: 'Off Grid',
+                  description: 'Self-sufficient systems (+$40,000)'
+                }].map((pkg) => (
+                  <label key={pkg.value} className={`p-6 border-2 rounded-lg cursor-pointer transition-all duration-200 hover:shadow-lg ${
+                    formData.packageType === pkg.value ? 'border-[#D4AF37] bg-[#D4AF37]/10 shadow-lg' : 'border-gray-300 hover:border-[#D4AF37]/50'
+                  }`}>
+                    <input
+                      type="radio"
+                      name="packageType"
+                      value={pkg.value}
+                      checked={formData.packageType === pkg.value}
+                      onChange={(e) => updateFormData('packageType', e.target.value)}
+                      className="sr-only"
+                    />
+                    <h3 className="text-lg font-bold text-[#2D2D2D] mb-1">{pkg.title}</h3>
+                    <p className="text-sm text-gray-600">{pkg.description}</p>
+                  </label>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Step 6: Specifications */}
+          {currentStep === 6 && (
             <div>
               <h2 className="text-2xl font-bold text-[#2D2D2D] mb-6">Specifications</h2>
               
@@ -826,8 +1122,163 @@ export default function QuoteBuilderPage() {
             </div>
           )}
 
-                     {/* Step 6: Add-ons */}
-           {currentStep === 6 && (
+          {/* Step 7: Finishes & Options */}
+          {currentStep === 7 && (
+            <div>
+              <h2 className="text-2xl font-bold text-[#2D2D2D] mb-6">Finishes & Options</h2>
+              <div className="space-y-6">
+                {/* Siding */}
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Siding</label>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <label className={`p-4 border rounded-lg cursor-pointer ${formData.siding==='base-metal'?'border-[#D4AF37] bg-[#D4AF37]/10':'border-gray-300'}`}>
+                      <input type="radio" name="siding" value="base-metal" className="sr-only" checked={formData.siding==='base-metal'} onChange={(e)=>updateFormData('siding', e.target.value)} />
+                      <div className="font-semibold">Base: Vertical Metal</div>
+                      <div className="text-sm text-gray-600">Selectable colors</div>
+                    </label>
+                    {isWoodGrainEligible() && (
+                      <label className={`p-4 border rounded-lg cursor-pointer ${formData.siding==='wood-grain'?'border-[#D4AF37] bg-[#D4AF37]/10':'border-gray-300'}`}>
+                        <input type="radio" name="siding" value="wood-grain" className="sr-only" checked={formData.siding==='wood-grain'} onChange={(e)=>updateFormData('siding', e.target.value)} />
+                        <div className="font-semibold">Upgrade: Wood Grain Siding</div>
+                        <div className="text-sm text-gray-600">
+                          {formData.model === 'pine3' ? '+$3,600 – $4,400' : '+$5,400 – $6,600'}
+                        </div>
+                      </label>
+                    )}
+                  </div>
+                </div>
+
+                {/* Countertops */}
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Countertops</label>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <label className={`p-4 border rounded-lg cursor-pointer ${formData.countertops==='base-quartz'?'border-[#D4AF37] bg-[#D4AF37]/10':'border-gray-300'}`}>
+                      <input type="radio" name="countertops" value="base-quartz" className="sr-only" checked={formData.countertops==='base-quartz'} onChange={(e)=>updateFormData('countertops', e.target.value)} />
+                      <div className="font-semibold">Base: Builder Grade Quartz</div>
+                    </label>
+                    <label className={`p-4 border rounded-lg cursor-pointer ${formData.countertops==='upgrade-quartz'?'border-[#D4AF37] bg-[#D4AF37]/10':'border-gray-300'}`}>
+                      <input type="radio" name="countertops" value="upgrade-quartz" className="sr-only" checked={formData.countertops==='upgrade-quartz'} onChange={(e)=>updateFormData('countertops', e.target.value)} />
+                      <div className="font-semibold">Upgrade: Premium Quartz</div>
+                      <div className="text-sm text-gray-600">Pricing/Colors: Coming soon</div>
+                    </label>
+                  </div>
+                </div>
+
+                {/* Cabinets */}
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Cabinets</label>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <label className={`p-4 border rounded-lg cursor-pointer ${formData.cabinets==='maple-shaker'?'border-[#D4AF37] bg-[#D4AF37]/10':'border-gray-300'}`}>
+                      <input type="radio" name="cabinets" value="maple-shaker" className="sr-only" checked={formData.cabinets==='maple-shaker'} onChange={(e)=>updateFormData('cabinets', e.target.value)} />
+                      <div className="font-semibold">Base: Maple Shaker Doors</div>
+                    </label>
+                    <label className={`p-4 border rounded-lg cursor-pointer ${formData.cabinets==='painted-thermo'?'border-[#D4AF37] bg-[#D4AF37]/10':'border-gray-300'}`}>
+                      <input type="radio" name="cabinets" value="painted-thermo" className="sr-only" checked={formData.cabinets==='painted-thermo'} onChange={(e)=>updateFormData('cabinets', e.target.value)} />
+                      <div className="font-semibold">Upgrades: Painted White/Black/Thermo</div>
+                    </label>
+                    <label className={`p-4 border rounded-lg cursor-pointer ${formData.cabinets==='melamine'?'border-[#D4AF37] bg-[#D4AF37]/10':'border-gray-300'}`}>
+                      <input type="radio" name="cabinets" value="melamine" className="sr-only" checked={formData.cabinets==='melamine'} onChange={(e)=>updateFormData('cabinets', e.target.value)} />
+                      <div className="font-semibold">Downgrade: Melamine</div>
+                    </label>
+                  </div>
+                </div>
+
+                {/* Headboard */}
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Custom Headboard</label>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <label className={`p-4 border rounded-lg cursor-pointer ${formData.headboard==='melamine'?'border-[#D4AF37] bg-[#D4AF37]/10':'border-gray-300'}`}>
+                      <input type="radio" name="headboard" value="melamine" className="sr-only" checked={formData.headboard==='melamine'} onChange={(e)=>updateFormData('headboard', e.target.value)} />
+                      <div className="font-semibold">Base: Melamine</div>
+                    </label>
+                    <label className={`p-4 border rounded-lg cursor-pointer ${formData.headboard==='maple-paint-thermo'?'border-[#D4AF37] bg-[#D4AF37]/10':'border-gray-300'}`}>
+                      <input type="radio" name="headboard" value="maple-paint-thermo" className="sr-only" checked={formData.headboard==='maple-paint-thermo'} onChange={(e)=>updateFormData('headboard', e.target.value)} />
+                      <div className="font-semibold">Upgrade: Maple / Paint / Thermo</div>
+                    </label>
+                  </div>
+                </div>
+
+                {/* Flooring */}
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Flooring</label>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <label className={`p-4 border rounded-lg cursor-pointer ${formData.flooring==='vinyl-glue-down'?'border-[#D4AF37] bg-[#D4AF37]/10':'border-gray-300'}`}>
+                      <input type="radio" name="flooring" value="vinyl-glue-down" className="sr-only" checked={formData.flooring==='vinyl-glue-down'} onChange={(e)=>updateFormData('flooring', e.target.value)} />
+                      <div className="font-semibold">Base: Vinyl Glue Down</div>
+                    </label>
+                    <label className={`p-4 border rounded-lg cursor-pointer ${formData.flooring==='vinyl-upgrade'?'border-[#D4AF37] bg-[#D4AF37]/10':'border-gray-300'}`}>
+                      <input type="radio" name="flooring" value="vinyl-upgrade" className="sr-only" checked={formData.flooring==='vinyl-upgrade'} onChange={(e)=>updateFormData('flooring', e.target.value)} />
+                      <div className="font-semibold">Upgrade: Better Vinyl / Click</div>
+                    </label>
+                    <label className={`p-4 border rounded-lg cursor-pointer ${formData.flooring==='engineered-hardwood'?'border-[#D4AF37] bg-[#D4AF37]/10':'border-gray-300'}`}>
+                      <input type="radio" name="flooring" value="engineered-hardwood" className="sr-only" checked={formData.flooring==='engineered-hardwood'} onChange={(e)=>updateFormData('flooring', e.target.value)} />
+                      <div className="font-semibold">Upgrade: Engineered Hardwood + Vinyl Tile</div>
+                    </label>
+                  </div>
+                </div>
+
+                {/* Blinds */}
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Blinds</label>
+                  <div className="flex items-center gap-3">
+                    <input type="checkbox" checked={formData.blinds} onChange={(e)=>updateFormData('blinds', e.target.checked)} className="w-5 h-5" />
+                    <span className="text-gray-700">Add blinds (none in base model)</span>
+                  </div>
+                </div>
+
+                {/* Faucets */}
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Plumbing Faucets</label>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <label className={`p-4 border rounded-lg cursor-pointer ${formData.faucets==='black'?'border-[#D4AF37] bg-[#D4AF37]/10':'border-gray-300'}`}>
+                      <input type="radio" name="faucets" value="black" className="sr-only" checked={formData.faucets==='black'} onChange={(e)=>updateFormData('faucets', e.target.value)} />
+                      <div className="font-semibold">Base: Black</div>
+                    </label>
+                    <label className={`p-4 border rounded-lg cursor-pointer ${formData.faucets==='bronze'?'border-[#D4AF37] bg-[#D4AF37]/10':'border-gray-300'}`}>
+                      <input type="radio" name="faucets" value="bronze" className="sr-only" checked={formData.faucets==='bronze'} onChange={(e)=>updateFormData('faucets', e.target.value)} />
+                      <div className="font-semibold">Upgrade: Bronze (+$450 – $600)</div>
+                    </label>
+                    <label className={`p-4 border rounded-lg cursor-pointer ${formData.faucets==='stainless'?'border-[#D4AF37] bg-[#D4AF37]/10':'border-gray-300'}`}>
+                      <input type="radio" name="faucets" value="stainless" className="sr-only" checked={formData.faucets==='stainless'} onChange={(e)=>updateFormData('faucets', e.target.value)} />
+                      <div className="font-semibold">Downgrade: Stainless (-$300 – -$200)</div>
+                    </label>
+                  </div>
+                </div>
+
+                {/* Lights */}
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Lighting</label>
+                  <div className="flex items-center gap-3 mb-2">
+                    <input type="checkbox" checked={formData.addCeilingFans} onChange={(e)=>updateFormData('addCeilingFans', e.target.checked)} className="w-5 h-5" />
+                    <span className="text-gray-700">Add bedroom ceiling fan (+$540 – $660 each bedroom)</span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <input type="checkbox" checked={formData.addBedroomFixtures} onChange={(e)=>updateFormData('addBedroomFixtures', e.target.checked)} className="w-5 h-5" />
+                    <span className="text-gray-700">Upgrade fixtures in bedroom (+$450 – $550 each bedroom)</span>
+                  </div>
+                </div>
+
+                {/* Walls & Ceiling */}
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Walls & Ceiling</label>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-2">
+                    <label className={`p-4 border rounded-lg cursor-pointer ${formData.wallsFinish==='plywood-base'?'border-[#D4AF37] bg-[#D4AF37]/10':'border-gray-300'}`}>
+                      <input type="radio" name="wallsFinish" value="plywood-base" className="sr-only" checked={formData.wallsFinish==='plywood-base'} onChange={(e)=>updateFormData('wallsFinish', e.target.value)} />
+                      <div className="font-semibold">Base: Plywood Walls & Ceiling</div>
+                      <div className="text-sm text-gray-600">Options: maple, oak, birch; painted, stained, clear coat</div>
+                    </label>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <input type="checkbox" checked={formData.tongueAndGrooveCeiling} onChange={(e)=>updateFormData('tongueAndGrooveCeiling', e.target.checked)} className="w-5 h-5" />
+                    <span className="text-gray-700">Upgrade ceiling to tongue and groove (+$4,050 – $4,950)</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Step 8: Add-ons */}
+          {currentStep === 8 && (
              <div>
                <h2 className="text-2xl font-bold text-[#2D2D2D] mb-6">Add-ons & Upgrades</h2>
                
@@ -840,7 +1291,7 @@ export default function QuoteBuilderPage() {
                    </div>
                    <div className="text-right">
                      <div className="text-3xl font-bold text-[#D4AF37]">
-                       ${calculatePrice().toLocaleString()} CAD
+                       {(() => { const r = calculatePriceRange(); return `$${formatCurrency(r.min)} - $${formatCurrency(r.max)} CAD` })()}
                      </div>
                      <div className="text-sm text-gray-600">
                        {formData.addons.length > 0 ? `${formData.addons.length} upgrade(s) selected` : 'No upgrades selected'}
@@ -849,18 +1300,14 @@ export default function QuoteBuilderPage() {
                  </div>
                </div>
 
-               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                  {[
-                   { value: 'solar', label: 'Solar Panels', price: '+$25,000', description: 'Reduce energy costs with solar power', icon: '☀️' },
-                   { value: 'net-zero', label: 'Net-Zero Package', price: '+$35,000', description: 'Complete energy independence', icon: '🌱' },
-                   { value: 'off-grid', label: 'Off-Grid Kit', price: '+$40,000', description: 'Water, power, and waste systems', icon: '🏕️' },
-                   { value: 'loft', label: 'Loft (Additional Floor Space)', price: '+$15,000', description: 'Increase living space', icon: '🏠' },
-                   { value: 'garage', label: 'Garage (Additional Storage)', price: '+$30,000', description: 'Extra storage for vehicles or tools', icon: '🚗' },
-                   { value: 'deck', label: 'Deck (Outdoor Living Space)', price: '+$8,000', description: 'Extend your living area outdoors', icon: '🌳' },
-                   { value: 'appliances', label: 'Upgraded Appliances', price: '+$12,000', description: 'High-end kitchen and laundry appliances', icon: '🍳' },
-                   { value: 'smart-home', label: 'Smart Home Package', price: '+$5,000', description: 'Automated lighting, security, and climate control', icon: '📱' },
-                   { value: 'upgraded-finishes', label: 'Upgraded Finishes', price: '+$18,000', description: 'Higher-end materials and finishes', icon: '✨' },
-                   { value: 'foundation', label: 'Foundation Upgrade', price: '+$20,000', description: 'Strengthen the foundation for better stability', icon: '🏗️' }
+                   { value: 'solar', label: 'Solar Panels', description: 'Reduce energy costs with solar power' },
+                   { value: 'loft', label: 'Loft (Additional Floor Space)', description: 'Increase living space' },
+                   { value: 'deck', label: 'Deck (Outdoor Living Space)', description: 'Extend your living area outdoors' },
+                   { value: 'appliances', label: 'Upgraded Appliances', description: 'High-end kitchen and laundry appliances' },
+                   { value: 'smart-home', label: 'Smart Home Package', description: 'Automated lighting, security, and climate control' },
+                    
                  ].map((addon) => (
                    <label key={addon.value} className={`flex items-center p-4 border-2 rounded-lg cursor-pointer transition-all duration-200 hover:shadow-md ${
                      formData.addons.includes(addon.value) 
@@ -873,13 +1320,14 @@ export default function QuoteBuilderPage() {
                        onChange={() => toggleAddon(addon.value)}
                        className="mr-4 w-5 h-5 text-[#D4AF37] focus:ring-[#D4AF37]"
                      />
-                     <div className="flex-1">
+                      <div className="flex-1">
                        <div className="flex items-center justify-between mb-2">
-                         <div className="flex items-center">
-                           <span className="text-2xl mr-3">{addon.icon}</span>
-                           <span className="font-semibold text-[#2D2D2D]">{addon.label}</span>
-                         </div>
-                         <span className="font-bold text-[#D4AF37] text-lg">{addon.price}</span>
+                          <div className="flex items-center">
+                            <span className="font-semibold text-[#2D2D2D]">{addon.label}</span>
+                          </div>
+                          <span className="font-bold text-[#D4AF37] text-lg">
+                            {(() => { const r = addOnRanges[addon.value]; return r ? `+$${formatCurrency(r.min)} - $${formatCurrency(r.max)}` : '' })()}
+                          </span>
                        </div>
                        <p className="text-sm text-gray-600 ml-11">{addon.description}</p>
                      </div>
@@ -892,34 +1340,30 @@ export default function QuoteBuilderPage() {
                  <div className="mt-6 p-4 bg-gray-50 rounded-lg">
                    <h4 className="font-semibold text-[#2D2D2D] mb-3">Selected Upgrades:</h4>
                    <div className="flex flex-wrap gap-2">
-                     {formData.addons.map((addon) => {
-                       const addonInfo = [
-                         { value: 'solar', label: 'Solar Panels', price: '+$25,000' },
-                         { value: 'net-zero', label: 'Net-Zero Package', price: '+$35,000' },
-                         { value: 'off-grid', label: 'Off-Grid Kit', price: '+$40,000' },
-                         { value: 'loft', label: 'Loft', price: '+$15,000' },
-                         { value: 'garage', label: 'Garage', price: '+$30,000' },
-                         { value: 'deck', label: 'Deck', price: '+$8,000' },
-                         { value: 'appliances', label: 'Upgraded Appliances', price: '+$12,000' },
-                         { value: 'smart-home', label: 'Smart Home Package', price: '+$5,000' },
-                         { value: 'upgraded-finishes', label: 'Upgraded Finishes', price: '+$18,000' },
-                         { value: 'foundation', label: 'Foundation Upgrade', price: '+$20,000' }
-                       ].find(a => a.value === addon)
-                       
-                       return (
-                         <span key={addon} className="inline-flex items-center px-3 py-1 rounded-full text-sm bg-[#D4AF37]/20 text-[#D4AF37] font-medium">
-                           {addonInfo?.label} {addonInfo?.price}
-                         </span>
-                       )
-                     })}
+                       {formData.addons.map((addon) => {
+                        const labels: Record<string, string> = {
+                          'solar': 'Solar Panels',
+                          'loft': 'Loft',
+                          'deck': 'Deck',
+                          'appliances': 'Upgraded Appliances',
+                          'smart-home': 'Smart Home Package',
+                        }
+                         const r = addOnRanges[addon]
+                         if (!r || !labels[addon]) return null
+                        return (
+                          <span key={addon} className="inline-flex items-center px-3 py-1 rounded-full text-sm bg-[#D4AF37]/20 text-[#D4AF37] font-medium">
+                            {labels[addon]} +${formatCurrency(r.min)} - $${formatCurrency(r.max)}
+                          </span>
+                        )
+                      })}
                    </div>
                  </div>
                )}
              </div>
            )}
 
-          {/* Step 7: Budget */}
-          {currentStep === 7 && (
+           {/* Step 9: Budget */}
+          {currentStep === 9 && (
             <div>
               <h2 className="text-2xl font-bold text-[#2D2D2D] mb-6">Budget Range</h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -947,8 +1391,8 @@ export default function QuoteBuilderPage() {
             </div>
           )}
 
-                     {/* Step 8: Timeline */}
-           {currentStep === 8 && (
+                     {/* Step 10: Timeline */}
+           {currentStep === 10 && (
              <div>
                <h2 className="text-2xl font-bold text-[#2D2D2D] mb-6">Project Timeline</h2>
                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -976,8 +1420,8 @@ export default function QuoteBuilderPage() {
              </div>
            )}
 
-          {/* Step 9: Indigenous Community */}
-          {currentStep === 9 && (
+            {/* Step 11: Indigenous Community */}
+          {currentStep === 11 && (
             <div>
               <h2 className="text-2xl font-bold text-[#2D2D2D] mb-6">Indigenous Community</h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -1001,8 +1445,8 @@ export default function QuoteBuilderPage() {
             </div>
           )}
 
-          {/* Step 10: Number of Homes */}
-          {currentStep === 10 && (
+           {/* Step 12: Number of Homes */}
+          {currentStep === 12 && (
             <div>
               <h2 className="text-2xl font-bold text-[#2D2D2D] mb-6">Number of Homes</h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -1034,8 +1478,8 @@ export default function QuoteBuilderPage() {
             </div>
           )}
 
-                     {/* Step 11: Financing */}
-           {currentStep === 11 && (
+                     {/* Step 13: Financing */}
+           {currentStep === 13 && (
              <div>
                <h2 className="text-2xl font-bold text-[#2D2D2D] mb-6">Financing</h2>
                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -1059,8 +1503,8 @@ export default function QuoteBuilderPage() {
                  ))}
                </div>
 
-               {/* Final Price Display */}
-               {estimatedPrice > 0 && (
+                {/* Final Price Display */}
+                {estimatedPrice > 0 && (
                  <div className="mt-8 p-6 bg-[#D4AF37]/10 rounded-lg border border-[#D4AF37]">
                    <h3 className="text-xl font-bold text-[#2D2D2D] mb-4">Your Estimated Quote</h3>
                    
@@ -1068,54 +1512,67 @@ export default function QuoteBuilderPage() {
                    <div className="space-y-3 mb-4">
                      <div className="flex justify-between items-center">
                        <span className="text-gray-600">Base Model ({formData.model})</span>
-                       <span className="font-semibold">
-                         ${(() => {
-                           switch (formData.model) {
-                             case 'pine1': return '174,000'
-                             case 'pine2': return '179,000'
-                             case 'pine3': return '99,000'
-                             case 'custom': return '200,000'
-                             default: return '0'
-                           }
-                         })()} CAD
-                       </span>
+                        <span className="font-semibold">{(() => { const r = getModelRange(); return `$${formatCurrency(r.min)} - $${formatCurrency(r.max)} CAD` })()}</span>
                      </div>
+                      {formData.packageType && formData.packageType !== 'base' && (
+                        <div className="flex justify-between items-center">
+                          <span className="text-gray-600">Package ({formData.packageType === 'net-zero' ? 'Net Zero Ready' : 'Off Grid'})</span>
+                           <span className="font-semibold">{(() => { const r = getPackageRange(); return `+$${formatCurrency(r.min)} - $${formatCurrency(r.max)} CAD` })()}</span>
+                        </div>
+                      )}
                      
-                     {formData.addons.length > 0 && (
+                      {formData.addons.length > 0 && (
                        <>
                          <div className="border-t border-gray-300 pt-2">
                            <span className="text-gray-600">Upgrades & Add-ons:</span>
                          </div>
                          {formData.addons.map((addon) => {
-                           const addonInfo = [
-                             { value: 'solar', label: 'Solar Panels', price: 25000 },
-                             { value: 'net-zero', label: 'Net-Zero Package', price: 35000 },
-                             { value: 'off-grid', label: 'Off-Grid Kit', price: 40000 },
-                             { value: 'loft', label: 'Loft', price: 15000 },
-                             { value: 'garage', label: 'Garage', price: 30000 },
-                             { value: 'deck', label: 'Deck', price: 8000 },
-                             { value: 'appliances', label: 'Upgraded Appliances', price: 12000 },
-                             { value: 'smart-home', label: 'Smart Home Package', price: 5000 },
-                             { value: 'upgraded-finishes', label: 'Upgraded Finishes', price: 18000 },
-                             { value: 'foundation', label: 'Foundation Upgrade', price: 20000 }
-                           ].find(a => a.value === addon)
-                           
+                            const labels: Record<string, string> = {
+                              'solar': 'Solar Panels',
+                              'loft': 'Loft',
+                              'deck': 'Deck',
+                              'appliances': 'Upgraded Appliances',
+                              'smart-home': 'Smart Home Package',
+                            }
+                             const r = addOnRanges[addon]
+                             if (!r || !labels[addon]) return null
                            return (
                              <div key={addon} className="flex justify-between items-center text-sm">
-                               <span className="text-gray-600">• {addonInfo?.label}</span>
-                               <span className="font-semibold">+${addonInfo?.price?.toLocaleString()} CAD</span>
+                                <span className="text-gray-600">• {labels[addon]}</span>
+                                <span className="font-semibold">+${formatCurrency(r.min)} - $${formatCurrency(r.max)} CAD</span>
                              </div>
                            )
                          })}
                        </>
                      )}
+
+                      {/* Finishes & Options */}
+                      {(() => {
+                        const items = getFinishItemsRange()
+                        if (items.length === 0) return null
+                        return (
+                          <>
+                            <div className="border-t border-gray-300 pt-2">
+                              <span className="text-gray-600">Finishes & Options:</span>
+                            </div>
+                            {items.map((it, idx) => (
+                              <div key={idx} className="flex justify-between items-center text-sm">
+                                <span className="text-gray-600">• {it.label}</span>
+                                {it.tbd ? (
+                                  <span className="font-semibold text-gray-500">TBD</span>
+                                ) : (
+                                  <span className="font-semibold">{it.min! < 0 ? '-' : '+'}${formatCurrency(Math.abs(it.min!))} - {it.max! < 0 ? '-' : '+'}${formatCurrency(Math.abs(it.max!))} CAD</span>
+                                )}
+                              </div>
+                            ))}
+                          </>
+                        )
+                      })()}
                      
                      <div className="border-t border-gray-300 pt-3">
                        <div className="flex justify-between items-center">
                          <span className="text-lg font-bold text-[#2D2D2D]">Total Estimated Cost</span>
-                         <span className="text-2xl font-bold text-[#D4AF37]">
-                           ${estimatedPrice.toLocaleString()} CAD
-                         </span>
+                          <span className="text-2xl font-bold text-[#D4AF37]">{(() => { const r = calculatePriceRange(); return `$${formatCurrency(r.min)} - $${formatCurrency(r.max)} CAD` })()}</span>
                        </div>
                      </div>
                    </div>

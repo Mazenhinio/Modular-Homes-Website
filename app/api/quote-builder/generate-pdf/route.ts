@@ -47,12 +47,10 @@ export async function POST(request: NextRequest) {
       'net-zero': 35000,
       'off-grid': 40000,
       'loft': 15000,
-      'garage': 30000,
       'deck': 8000,
       'appliances': 12000,
       'smart-home': 5000,
-      'upgraded-finishes': 18000,
-      'foundation': 20000
+      
     }
 
     addons.forEach((addon: string) => {

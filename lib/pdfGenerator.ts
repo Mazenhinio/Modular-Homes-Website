@@ -1,6 +1,7 @@
 // Discovery Homes PDF Quote Generator
-import chromium from '@sparticuz/chromium'
-import puppeteer from 'puppeteer-core'
+// We resolve browser at runtime to support both Vercel serverless and local dev
+// - On Vercel: puppeteer-core + @sparticuz/chromium
+// - Locally: full puppeteer (auto-downloads Chromium)
 
 interface QuoteData {
   name: string
@@ -44,12 +45,10 @@ export class PDFGeneratorService {
       'net-zero': 35000,
       'off-grid': 40000,
       'loft': 15000,
-      'garage': 30000,
       'deck': 8000,
       'appliances': 12000,
       'smart-home': 5000,
-      'upgraded-finishes': 18000,
-      'foundation': 20000
+      
     }
     return addOnPrices[addOn as keyof typeof addOnPrices] || 0
   }
@@ -60,37 +59,42 @@ export class PDFGeneratorService {
       'net-zero': 'Net-Zero Ready Package',
       'off-grid': 'Off-Grid Complete System',
       'loft': 'Additional Floor Space',
-      'garage': 'Attached Garage',
       'deck': 'Deck and Outdoor Space',
       'appliances': 'Upgraded Appliances',
       'smart-home': 'Smart Home Package',
-      'upgraded-finishes': 'Upgraded Interior Finishes',
-      'foundation': 'Foundation Upgrade'
+      
     }
     return addOnDescriptions[addOn as keyof typeof addOnDescriptions] || addOn
   }
 
   async createQuote(quoteData: QuoteData): Promise<Buffer> {
     const htmlContent = this.generateHTML(quoteData)
+    const delay = (ms: number) => new Promise<void>(resolve => setTimeout(resolve, ms))
     
     try {
-      // Launch browser
-      const isVercel = !!process.env.VERCEL
-      const executablePath = isVercel
-        ? await chromium.executablePath()
-        : undefined
-
-      const browser = await puppeteer.launch({
-        args: isVercel ? chromium.args : ['--no-sandbox', '--disable-setuid-sandbox'],
-        defaultViewport: chromium.defaultViewport,
-        executablePath,
-        headless: true
-      })
+      const isServerless = !!process.env.VERCEL || !!process.env.AWS_LAMBDA_FUNCTION_NAME
+      let browser: any
+      if (isServerless) {
+        const chromium = (await import('@sparticuz/chromium')).default
+        const puppeteer = (await import('puppeteer-core')).default
+        const executablePath = await chromium.executablePath()
+        browser = await puppeteer.launch({
+          args: chromium.args,
+          defaultViewport: chromium.defaultViewport,
+          executablePath,
+          headless: true
+        })
+      } else {
+        const puppeteer = (await import('puppeteer')).default
+        browser = await puppeteer.launch({ headless: 'new' as any })
+      }
       
       const page = await browser.newPage()
-      
-      // Set content and wait for it to load
-      await page.setContent(htmlContent, { waitUntil: 'networkidle0' })
+      // Be lenient with load conditions to avoid timeouts in serverless
+      page.setDefaultNavigationTimeout(60000)
+      await page.setContent(htmlContent, { waitUntil: 'domcontentloaded' })
+      await page.emulateMediaType('screen')
+      await delay(300)
       
       // Generate PDF
       const pdfBuffer = await page.pdf({
