@@ -373,7 +373,7 @@ export default function WebinarsPage() {
 
        {/* Trust Markers */}
        <section className="py-16 bg-gradient-to-br from-discovery-charcoal/5 to-discovery-sage/5">
-         <div className="max-w-6xl mx-auto px-4">
+        <div className="max-w-6xl mx-auto px-4">
            <div className="text-center mb-12">
              <h2 className="text-3xl md:text-4xl font-serif font-bold text-discovery-charcoal mb-4">
                Trusted by Communities Across Western Canada
@@ -430,12 +430,12 @@ export default function WebinarsPage() {
                    <span className="bg-discovery-gold text-discovery-charcoal px-4 py-2 rounded-full text-sm font-semibold">Rural Properties</span>
                    <span className="bg-discovery-gold text-discovery-charcoal px-4 py-2 rounded-full text-sm font-semibold">Resort Owners</span>
                    <span className="bg-discovery-gold text-discovery-charcoal px-4 py-2 rounded-full text-sm font-semibold">Investors</span>
-                 </div>
-               </div>
-             </div>
-           </div>
-         </div>
-       </section>
+                </div>
+                </div>
+              </div>
+          </div>
+        </div>
+      </section>
 
        {/* Meet Your Hosts */}
       <section className="py-20 bg-discovery-white">

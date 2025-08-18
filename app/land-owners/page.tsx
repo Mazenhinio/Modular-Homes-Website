@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Image from 'next/image'
 import { ArrowRight, Download, Calendar, MessageCircle, Star, Users, Home, Heart, Shield, Award, DollarSign, TrendingUp, Building, Calculator, MapPin, Leaf, Globe, Zap } from 'lucide-react'
 import { LeadCaptureForm } from '@/components/LeadCaptureForm'
@@ -8,6 +8,11 @@ import { CTABanner } from '@/components/CTABanner'
 
 export default function LandOwnersLandingPage() {
   const [isFormSubmitted, setIsFormSubmitted] = useState(false)
+  const [isClient, setIsClient] = useState(false)
+
+  useEffect(() => {
+    setIsClient(true)
+  }, [])
 
   const handleFormSubmit = async (formData: any) => {
     try {
@@ -45,7 +50,7 @@ export default function LandOwnersLandingPage() {
 
         {/* Hero Content */}
         <div className="relative z-10 text-center text-discovery-white px-4 max-w-6xl mx-auto">
-          <h1 className="text-5xl md:text-7xl font-serif font-bold mb-6 leading-tight">
+          <h1 className="text-5xl md:text-7xl font-serif font-bold mb-6 leading-tight text-discovery-white">
             Transform Your Land 
             <span className="block text-discovery-gold">Into Opportunity</span>
           </h1>
@@ -250,42 +255,46 @@ export default function LandOwnersLandingPage() {
             </div>
 
             <div className="bg-discovery-white p-8 rounded-2xl shadow-2xl">
-              <LeadCaptureForm
-                onSubmit={handleFormSubmit}
-                isSubmitted={isFormSubmitted}
-                title="Get Your Land Evaluation"
-                subtitle="Receive a comprehensive analysis of your property's development potential"
-                fields={[
-                  { name: 'firstName', label: 'First Name', type: 'text', required: true },
-                  { name: 'lastName', label: 'Last Name', type: 'text', required: true },
-                  { name: 'email', label: 'Email Address', type: 'email', required: true },
-                  { name: 'phone', label: 'Phone Number', type: 'tel', required: true },
-                  { name: 'propertyAddress', label: 'Property Address', type: 'text', required: true },
-                  { name: 'landSize', label: 'Land Size (Acres)', type: 'select', required: true, options: [
-                    'Under 5 acres',
-                    '5-20 acres',
-                    '20-50 acres',
-                    '50-100 acres',
-                    '100+ acres'
-                  ]},
-                  { name: 'currentUse', label: 'Current Land Use', type: 'select', required: true, options: [
-                    'Vacant/Unused',
-                    'Agricultural',
-                    'Residential',
-                    'Commercial',
-                    'Mixed Use'
-                  ]},
-                  { name: 'developmentGoals', label: 'Development Goals', type: 'select', required: true, options: [
-                    'Residential Community',
-                    'Mixed-Use Development',
-                    'Commercial/Retail',
-                    'Recreational/Tourism',
-                    'Other'
-                  ]}
-                ]}
-                submitText="Get Free Land Evaluation"
-                successMessage="Thank you! Your land evaluation is being prepared and our development specialist will contact you within 24 hours."
-              />
+              <div className="text-center mb-4">
+                <h3 className="text-2xl font-serif font-bold text-discovery-charcoal mb-2">
+                  Get Your Land Evaluation
+                </h3>
+                <p className="text-discovery-charcoal-light">
+                  Receive a comprehensive analysis of your property's development potential
+                </p>
+              </div>
+
+              <div className="h-[1050px] overflow-hidden">
+                {isClient && (
+                  <>
+                    <iframe
+                      src="https://api.leadconnectorhq.com/widget/form/jAErXjbmlpADpcQcmstH"
+                      style={{
+                        width: '100%',
+                        height: '100%',
+                        border: 'none',
+                        borderRadius: '0px',
+                        overflow: 'hidden',
+                      }}
+                      id="inline-jAErXjbmlpADpcQcmstH"
+                      data-layout="{'id':'INLINE'}"
+                      data-trigger-type="alwaysShow"
+                      data-trigger-value=""
+                      data-activation-type="alwaysActivated"
+                      data-activation-value=""
+                      data-deactivation-type="neverDeactivate"
+                      data-deactivation-value=""
+                      data-form-name="Land Owners"
+                      data-height="1050"
+                      data-layout-iframe-id="inline-jAErXjbmlpADpcQcmstH"
+                      data-form-id="jAErXjbmlpADpcQcmstH"
+                      title="Land Owners"
+                      scrolling="no"
+                    />
+                    <script src="https://link.msgsndr.com/js/form_embed.js"></script>
+                  </>
+                )}
+              </div>
             </div>
           </div>
         </div>

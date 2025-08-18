@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Image from 'next/image'
 import { ArrowRight, Download, Calendar, MessageCircle, Star, Users, Home, Heart, Shield, Award, DollarSign, TrendingUp, Building, Calculator, MapPin } from 'lucide-react'
 import { LeadCaptureForm } from '@/components/LeadCaptureForm'
@@ -10,6 +10,11 @@ import { CTABanner } from '@/components/CTABanner'
 
 export default function RealEstateRentalLandingPage() {
   const [isFormSubmitted, setIsFormSubmitted] = useState(false)
+  const [isClient, setIsClient] = useState(false)
+
+  useEffect(() => {
+    setIsClient(true)
+  }, [])
 
   const handleFormSubmit = async (formData: any) => {
     try {
@@ -48,7 +53,7 @@ export default function RealEstateRentalLandingPage() {
 
         {/* Hero Content */}
         <div className="relative z-10 text-center text-discovery-white px-4 max-w-6xl mx-auto">
-          <h1 className="text-5xl md:text-7xl font-serif font-bold mb-6 leading-tight">
+          <h1 className="text-5xl md:text-7xl font-serif font-bold mb-6 leading-tight text-discovery-white">
             Scale Your Rental 
             <span className="block text-discovery-gold">Portfolio Fast</span>
           </h1>
@@ -253,40 +258,46 @@ export default function RealEstateRentalLandingPage() {
             </div>
 
             <div className="bg-discovery-white p-8 rounded-2xl shadow-2xl">
-              <LeadCaptureForm
-                onSubmit={handleFormSubmit}
-                isSubmitted={isFormSubmitted}
-                title="Get Your ROI Calculator"
-                subtitle="Download our investment calculator and connect with our rental property specialists"
-                fields={[
-                  { name: 'firstName', label: 'First Name', type: 'text', required: true },
-                  { name: 'lastName', label: 'Last Name', type: 'text', required: true },
-                  { name: 'email', label: 'Email Address', type: 'email', required: true },
-                  { name: 'phone', label: 'Phone Number', type: 'tel', required: true },
-                  { name: 'company', label: 'Company Name', type: 'text', required: true },
-                  { name: 'portfolioSize', label: 'Current Portfolio Size', type: 'select', required: true, options: [
-                    '0-5 units',
-                    '6-20 units',
-                    '21-50 units',
-                    '51-100 units',
-                    '100+ units'
-                  ]},
-                  { name: 'investmentBudget', label: 'Investment Budget', type: 'select', required: true, options: [
-                    '$100K - $500K',
-                    '$500K - $1M',
-                    '$1M - $5M',
-                    '$5M+'
-                  ]},
-                  { name: 'timeline', label: 'Investment Timeline', type: 'select', required: true, options: [
-                    'Immediate (0-3 months)',
-                    'Short-term (3-6 months)',
-                    'Medium-term (6-12 months)',
-                    'Long-term (12+ months)'
-                  ]}
-                ]}
-                submitText="Download Calculator & Get Consultation"
-                successMessage="Thank you! Your ROI calculator is being prepared and our rental property specialist will contact you within 24 hours."
-              />
+              <div className="text-center mb-4">
+                <h3 className="text-2xl font-serif font-bold text-discovery-charcoal mb-2">
+                  Get Your ROI Calculator
+                </h3>
+                <p className="text-discovery-charcoal-light">
+                  Download our investment calculator and connect with our rental property specialists
+                </p>
+              </div>
+
+              <div className="h-[1050px] overflow-hidden">
+                {isClient && (
+                  <>
+                    <iframe
+                      src="https://api.leadconnectorhq.com/widget/form/nldT1N3iWuerAKgQHLAp"
+                      style={{
+                        width: '100%',
+                        height: '100%',
+                        border: 'none',
+                        borderRadius: '0px',
+                        overflow: 'hidden',
+                      }}
+                      id="inline-nldT1N3iWuerAKgQHLAp"
+                      data-layout="{'id':'INLINE'}"
+                      data-trigger-type="alwaysShow"
+                      data-trigger-value=""
+                      data-activation-type="alwaysActivated"
+                      data-activation-value=""
+                      data-deactivation-type="neverDeactivate"
+                      data-deactivation-value=""
+                      data-form-name="Real Estate Rental"
+                      data-height="1050"
+                      data-layout-iframe-id="inline-nldT1N3iWuerAKgQHLAp"
+                      data-form-id="nldT1N3iWuerAKgQHLAp"
+                      title="Real Estate Rental"
+                      scrolling="no"
+                    />
+                    <script src="https://link.msgsndr.com/js/form__embed.js"></script>
+                  </>
+                )}
+              </div>
             </div>
           </div>
         </div>

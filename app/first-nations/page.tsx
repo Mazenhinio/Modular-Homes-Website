@@ -1,15 +1,23 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Image from 'next/image'
 import { ArrowRight, Download, Calendar, MessageCircle, Star, Users, Home, Heart, Shield, Award } from 'lucide-react'
 import { LeadCaptureForm } from '@/components/LeadCaptureForm'
 
 
 import { CTABanner } from '@/components/CTABanner'
+import { FirstNationsScheduler } from '@/components/FirstNationsScheduler'
+import { FirstNationsAnalytics } from '@/components/FirstNationsAnalytics'
+import { FirstNationsChatbot } from '@/components/FirstNationsChatbot'
 
 export default function FirstNationsLandingPage() {
   const [isFormSubmitted, setIsFormSubmitted] = useState(false)
+  const [isClient, setIsClient] = useState(false)
+
+  useEffect(() => {
+    setIsClient(true)
+  }, [])
 
   const handleFormSubmit = async (formData: any) => {
     try {
@@ -47,7 +55,7 @@ export default function FirstNationsLandingPage() {
 
         {/* Hero Content */}
         <div className="relative z-10 text-center text-discovery-white px-4 max-w-6xl mx-auto">
-          <h1 className="text-5xl md:text-7xl font-serif font-bold mb-6 leading-tight">
+          <h1 className="text-5xl md:text-7xl font-serif font-bold mb-6 leading-tight text-discovery-white">
             Building Homes, 
             <span className="block text-discovery-gold">Building Communities</span>
           </h1>
@@ -252,38 +260,48 @@ export default function FirstNationsLandingPage() {
               </div>
             </div>
 
-            <div className="bg-discovery-white p-8 rounded-2xl shadow-2xl">
-              <LeadCaptureForm
-                onSubmit={handleFormSubmit}
-                isSubmitted={isFormSubmitted}
-                title="Get Your Free Guide"
-                subtitle="Download our First Nations Housing Guide and connect with our specialists"
-                fields={[
-                  { name: 'firstName', label: 'First Name', type: 'text', required: true },
-                  { name: 'lastName', label: 'Last Name', type: 'text', required: true },
-                  { name: 'email', label: 'Email Address', type: 'email', required: true },
-                  { name: 'phone', label: 'Phone Number', type: 'tel', required: true },
-                  { name: 'community', label: 'Community Name', type: 'text', required: true },
-                  { name: 'projectType', label: 'Project Type', type: 'select', required: true, options: [
-                    'Residential Homes',
-                    'Community Center',
-                    'Elder Housing',
-                    'Youth Housing',
-                    'Mixed Development',
-                    'Other'
-                  ]},
-                  { name: 'timeline', label: 'Project Timeline', type: 'select', required: true, options: [
-                    'Immediate (0-6 months)',
-                    'Short-term (6-12 months)',
-                    'Medium-term (1-2 years)',
-                    'Long-term (2+ years)',
-                    'Just exploring options'
-                  ]}
-                ]}
-                submitText="Download Guide & Get Consultation"
-                successMessage="Thank you! Your guide is being prepared and our First Nations housing specialist will contact you within 24 hours."
-              />
-            </div>
+                         <div className="bg-discovery-white p-8 rounded-2xl shadow-2xl">
+               <div className="text-center mb-2">
+                 <h3 className="text-2xl font-serif font-bold text-discovery-charcoal mb-2">
+                   Get Your Free Guide
+                 </h3>
+                 <p className="text-discovery-charcoal-light">
+                   Download our First Nations Housing Guide and connect with our specialists
+                 </p>
+               </div>
+               
+               <div className="h-[885px] overflow-hidden">
+                 {isClient && (
+                   <>
+                     <iframe
+                       src="https://api.leadconnectorhq.com/widget/form/99ypDto4R7rOYSh3hG8V"
+                       style={{
+                         width: '100%',
+                         height: '100%',
+                         border: 'none',
+                         borderRadius: '0px',
+                         overflow: 'hidden',
+                       }}
+                       id="inline-99ypDto4R7rOYSh3hG8V"
+                       data-layout="{'id':'INLINE'}"
+                       data-trigger-type="alwaysShow"
+                       data-trigger-value=""
+                       data-activation-type="alwaysActivated"
+                       data-activation-value=""
+                       data-deactivation-type="neverDeactivate"
+                       data-deactivation-value=""
+                       data-form-name="First Nations"
+                       data-height="885"
+                       data-layout-iframe-id="inline-99ypDto4R7rOYSh3hG8V"
+                       data-form-id="99ypDto4R7rOYSh3hG8V"
+                       title="First Nations"
+                       scrolling="no"
+                     />
+                     <script src="https://link.msgsndr.com/js/form_embed.js"></script>
+                   </>
+                 )}
+               </div>
+             </div>
           </div>
         </div>
       </section>
