@@ -6,13 +6,13 @@ import { CTABanner } from '@/components/CTABanner'
 
 export const metadata: Metadata = {
   title: 'Our Builds | Discovery Homes Modular Housing',
-  description: 'Explore Pine 1, Pine 2, Pine 3, and Custom modular home options. Quality builds starting at $99,000 CAD with flexible layouts and energy-efficient designs.',
+  description: 'Explore Pine, Spruce, Willow, and Custom modular home options. Quality builds starting at $99,000 CAD with flexible layouts and energy-efficient designs.',
 }
 
 const builds = [
   {
     id: 'pine-1',
-    name: 'Pine 1',
+    name: 'Pine',
     subtitle: 'The Efficient One',
     sqft: '504 sq/ft',
     bedrooms: '1 Bedroom',
@@ -34,17 +34,17 @@ const builds = [
     ],
     floorPlan: '/images/pine1/Floor Plan.pdf',
     gallery: [
-      { src: '/images/pine1/exterior-1.webp', alt: 'Pine 1 Exterior' },
-      { src: '/images/pine1/exterior-2.webp', alt: 'Pine 1 Side View' },
-      { src: '/images/pine1/kitchen.webp', alt: 'Pine 1 Kitchen' },
-      { src: '/images/pine1/bedroom.webp', alt: 'Pine 1 Bedroom' },
-      { src: '/images/pine1/living-room.webp', alt: 'Pine 1 Living Room' },
-      { src: '/images/pine1/Loft.webp', alt: 'Pine 1 Loft Space' }
+      { src: '/images/pine1/exterior-1.webp', alt: 'Pine Exterior' },
+      { src: '/images/pine1/exterior-2.webp', alt: 'Pine Side View' },
+      { src: '/images/pine1/kitchen.webp', alt: 'Pine Kitchen' },
+      { src: '/images/pine1/bedroom.webp', alt: 'Pine Bedroom' },
+      { src: '/images/pine1/living-room.webp', alt: 'Pine Living Room' },
+      { src: '/images/pine1/Loft.webp', alt: 'Pine Loft Space' }
     ]
   },
   {
     id: 'pine-2',
-    name: 'Pine 2',
+    name: 'Spruce',
     subtitle: 'The Versatile One',
     sqft: '504 sq/ft',
     bedrooms: '2 Bedroom with Loft',
@@ -66,17 +66,17 @@ const builds = [
     ],
     floorPlan: '/images/pine2/Main Floor and Loft Plan.pdf',
     gallery: [
-      { src: '/images/pine2/Front Elevation.webp', alt: 'Pine 2 Front Elevation' },
-      { src: '/images/pine2/Rear Elevation.webp', alt: 'Pine 2 Rear Elevation' },
-      { src: '/images/pine2/Kitchen.webp', alt: 'Pine 2 Kitchen' },
-      { src: '/images/pine2/Primary Bedroom.webp', alt: 'Pine 2 Primary Bedroom' },
-      { src: '/images/pine2/Living Room.webp', alt: 'Pine 2 Living Room' },
-      { src: '/images/pine2/Upper Floor.webp', alt: 'Pine 2 Upper Floor' }
+      { src: '/images/pine2/Front Elevation.webp', alt: 'Spruce Front Elevation' },
+      { src: '/images/pine2/Rear Elevation.webp', alt: 'Spruce Rear Elevation' },
+      { src: '/images/pine2/Kitchen.webp', alt: 'Spruce Kitchen' },
+      { src: '/images/pine2/Primary Bedroom.webp', alt: 'Spruce Primary Bedroom' },
+      { src: '/images/pine2/Living Room.webp', alt: 'Spruce Living Room' },
+      { src: '/images/pine2/Upper Floor.webp', alt: 'Spruce Upper Floor' }
     ]
   },
   {
     id: 'pine-3',
-    name: 'Pine 3',
+    name: 'Willow',
     subtitle: 'The Minimalist',
     sqft: '240 sq/ft with Loft',
     bedrooms: 'Loft Bedroom',
@@ -98,12 +98,12 @@ const builds = [
     ],
     floorPlan: '/images/pine3/Loft Bedroom Modular Floorplan.pdf',
     gallery: [
-      { src: '/images/pine3/exterior-front.webp', alt: 'Pine 3 Front Exterior' },
-      { src: '/images/pine3/exterior-front-alt.webp', alt: 'Pine 3 Alternative View' },
-      { src: '/images/pine3/exterior-rear.webp', alt: 'Pine 3 Rear View' },
-      { src: '/images/pine3/kitchen.webp', alt: 'Pine 3 Kitchen' },
-      { src: '/images/pine3/living-room.webp', alt: 'Pine 3 Living Room' },
-      { src: '/images/pine3/loft.webp', alt: 'Pine 3 Loft Bedroom' }
+      { src: '/images/pine3/exterior-front.webp', alt: 'Willow Front Exterior' },
+      { src: '/images/pine3/exterior-front-alt.webp', alt: 'Willow Alternative View' },
+      { src: '/images/pine3/exterior-rear.webp', alt: 'Willow Rear View' },
+      { src: '/images/pine3/kitchen.webp', alt: 'Willow Kitchen' },
+      { src: '/images/pine3/living-room.webp', alt: 'Willow Living Room' },
+      { src: '/images/pine3/loft.webp', alt: 'Willow Loft Bedroom' }
     ]
   }
 ]

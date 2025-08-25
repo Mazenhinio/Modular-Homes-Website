@@ -30,13 +30,13 @@ export function Pine1Client() {
   ]
 
   const gallery = [
-    { src: '/images/pine1/exterior-1.webp', alt: 'Pine 1 Front Exterior View' },
-    { src: '/images/pine1/exterior-2.webp', alt: 'Pine 1 Side Exterior View' },
-    { src: '/images/pine1/kitchen.webp', alt: 'Pine 1 Modern Kitchen' },
-    { src: '/images/pine1/bedroom.webp', alt: 'Pine 1 Spacious Bedroom' },
-    { src: '/images/pine1/living-room.webp', alt: 'Pine 1 Living Room' },
-    { src: '/images/pine1/Loft.webp', alt: 'Pine 1 Loft Space' },
-    { src: '/images/pine1/Main Floor.webp', alt: 'Pine 1 Main Floor Layout' }
+          { src: '/images/pine1/exterior-1.webp', alt: 'Pine Front Exterior View' },
+      { src: '/images/pine1/exterior-2.webp', alt: 'Pine Side Exterior View' },
+      { src: '/images/pine1/kitchen.webp', alt: 'Pine Modern Kitchen' },
+      { src: '/images/pine1/bedroom.webp', alt: 'Pine Spacious Bedroom' },
+      { src: '/images/pine1/living-room.webp', alt: 'Pine Living Room' },
+      { src: '/images/pine1/Loft.webp', alt: 'Pine Loft Space' },
+      { src: '/images/pine1/Main Floor.webp', alt: 'Pine Main Floor Layout' }
   ]
 
   const pdfDownloads = [
@@ -97,12 +97,12 @@ export function Pine1Client() {
             
             <div className="text-center">
               <div className="flex items-center justify-center gap-3 mb-4">
-                <span className="text-discovery-gold font-semibold text-xl">Pine 1</span>
+                <span className="text-discovery-gold font-semibold text-xl">Pine</span>
                 <span className="text-discovery-white-soft">•</span>
                 <span className="text-discovery-white-soft">The Efficient One</span>
               </div>
               <h1 className="text-4xl md:text-6xl font-serif font-bold mb-6 text-discovery-lime nature-shimmer">
-                Pine 1 — The Efficient One
+                Pine — The Efficient One
               </h1>
               <p className="text-xl md:text-2xl leading-relaxed mb-8 text-discovery-sage">
                 Ideal for singles, couples, or resort units — blending simplicity with style in a compact footprint.
@@ -117,7 +117,7 @@ export function Pine1Client() {
                   href="/quote-builder"
                   className="card-item btn-eco text-lg px-8 py-4 shadow-lime glow-lime growth-pulse micro-interaction"
                 >
-                  Get My Pine 1 Quote
+                  Get My Pine Quote
                 </Link>
                 <Link
                   href="/contact"
@@ -169,22 +169,22 @@ export function Pine1Client() {
       {/* Interactive Gallery */}
       <section className="section bg-neutral-50 animate-section">
         <div className="container-custom">
-          <ImageCarousel images={gallery} title="Pine 1 Photo Gallery" />
+          <ImageCarousel images={gallery} title="Pine Photo Gallery" />
         </div>
       </section>
 
       {/* PDF Downloads */}
-      <PDFDownloads downloads={pdfDownloads} modelName="Pine 1" />
+      <PDFDownloads downloads={pdfDownloads} modelName="Pine" />
 
       {/* CTA Section */}
       <section className="section bg-discovery-charcoal text-discovery-white animate-section">
         <div className="container-custom">
           <div className="max-w-4xl mx-auto text-center scale-on-scroll">
             <h2 className="text-3xl md:text-4xl font-serif font-bold mb-6">
-              Ready to Build Your Pine 1?
+              Ready to Build Your Pine?
             </h2>
             <p className="text-xl mb-8 text-discovery-white-soft">
-              Get a personalized quote for your Pine 1 modular home, including delivery to your location.
+              Get a personalized quote for your Pine modular home, including delivery to your location.
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center animate-cards">
@@ -192,7 +192,7 @@ export function Pine1Client() {
                 href="/quote-builder"
                 className="card-item btn-eco text-lg px-8 py-4 shadow-lime glow-lime growth-pulse micro-interaction"
               >
-                Get My Pine 1 Quote
+                Get My Pine Quote
               </Link>
               <Link
                 href="/contact"

@@ -157,7 +157,7 @@ export default function QuoteBuilderPage() {
   }
 
   const isWoodGrainEligible = () => {
-    // Eligible when model is Pine 3 (studio) or when floor area equals approx 504 sq ft
+    // Eligible when model is Willow (studio) or when floor area equals approx 504 sq ft
     if (formData.model === 'pine3') return true
     const sqftNumber = parseInt((formData.sqft || '').replace(/\D/g, ''))
     return sqftNumber >= 500 && sqftNumber <= 510
@@ -847,7 +847,7 @@ export default function QuoteBuilderPage() {
                  {[
                     { 
                      value: 'pine1', 
-                     name: 'Pine 1 - The Efficient One',
+                     name: 'Pine - The Efficient One',
                      specs: '504 sq ft • 1 Bedroom',
                       price: '',
                      description: 'Perfect for singles, couples, or resort units',
@@ -856,7 +856,7 @@ export default function QuoteBuilderPage() {
                    },
                    { 
                      value: 'pine2', 
-                     name: 'Pine 2 - The Versatile One',
+                     name: 'Spruce - The Versatile One',
                      specs: '504 sq ft • 2 Bedroom with Loft',
                       price: '',
                      description: 'Ideal for families or rental markets',
@@ -865,7 +865,7 @@ export default function QuoteBuilderPage() {
                    },
                    { 
                      value: 'pine3', 
-                     name: 'Pine 3 - The Minimalist',
+                     name: 'Willow - The Minimalist',
                      specs: '240 sq ft with Loft',
                       price: '',
                      description: 'Modern tiny home solution',

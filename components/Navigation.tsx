@@ -95,8 +95,8 @@ export function Navigation() {
                     >
                       <div className="flex items-center space-x-3">
                         <div>
-                          <div className="font-semibold">Pine 1</div>
-                          <div className="text-xs text-gray-500">504 sq/ft • 1 Bedroom • $174,000</div>
+                                                <div className="font-semibold">Pine</div>
+                      <div className="text-xs text-gray-500">504 sq/ft • 1 Bedroom • $174,000</div>
                         </div>
                       </div>
                     </Link>
@@ -107,8 +107,8 @@ export function Navigation() {
                     >
                       <div className="flex items-center space-x-3">
                         <div>
-                          <div className="font-semibold">Pine 2</div>
-                          <div className="text-xs text-gray-500">504 sq/ft • 2 Bedroom + Loft • $179,000</div>
+                                                <div className="font-semibold">Spruce</div>
+                      <div className="text-xs text-gray-500">504 sq/ft • 2 Bedroom + Loft • $179,000</div>
                         </div>
                       </div>
                     </Link>
@@ -119,8 +119,8 @@ export function Navigation() {
                     >
                       <div className="flex items-center space-x-3">
                         <div>
-                          <div className="font-semibold">Pine 3</div>
-                          <div className="text-xs text-gray-500">240 sq/ft + Loft • $99,000</div>
+                                                <div className="font-semibold">Willow</div>
+                      <div className="text-xs text-gray-500">240 sq/ft + Loft • $99,000</div>
                         </div>
                       </div>
                     </Link>
@@ -232,21 +232,21 @@ export function Navigation() {
                       className="block px-4 py-2 text-sm text-discovery-white/80 hover:text-discovery-gold transition-colors duration-300 rounded-lg hover:bg-white/5"
                       onClick={() => setIsOpen(false)}
                     >
-                      Pine 1 - The Efficient One
+                      Pine - The Efficient One
                     </Link>
                     <Link 
                       href="/our-builds/pine-2" 
                       className="block px-4 py-2 text-sm text-discovery-white/80 hover:text-discovery-gold transition-colors duration-300 rounded-lg hover:bg-white/5"
                       onClick={() => setIsOpen(false)}
                     >
-                      Pine 2 - The Versatile One
+                      Spruce - The Versatile One
                     </Link>
                     <Link 
                       href="/our-builds/pine-3" 
                       className="block px-4 py-2 text-sm text-discovery-white/80 hover:text-discovery-gold transition-colors duration-300 rounded-lg hover:bg-white/5"
                       onClick={() => setIsOpen(false)}
                     >
-                      Pine 3 - The Minimalist
+                      Willow - The Minimalist
                     </Link>
                     <Link 
                       href="/our-builds/custom" 

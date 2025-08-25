@@ -104,7 +104,7 @@ export function HeroSection() {
             key={slide.image}
             className={`absolute inset-0 transition-all duration-1000 ease-out ${
               index === currentSlide ? 'opacity-100' : 'opacity-0'
-            } ${showText ? 'blur-sm' : 'blur-none'}`}
+            }`}
           >
             <img
               src={slide.image}
@@ -160,7 +160,7 @@ export function HeroSection() {
           showText ? 'scale-100' : 'scale-95'
         }`}>
           {/* Dark backdrop for better contrast */}
-          <div className="absolute inset-0 bg-black/14 backdrop-blur-md rounded-3xl -z-10 -m-6"></div>
+          <div className="absolute inset-0 bg-black/14 rounded-3xl -z-10 -m-6"></div>
           
           <h1 className={`text-6xl font-black mb-6 leading-tight transition-all duration-600 ease-out drop-shadow-2xl text-discovery-lime nature-shimmer ${
             showText ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4'

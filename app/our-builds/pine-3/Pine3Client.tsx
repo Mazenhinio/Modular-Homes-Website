@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { ArrowLeft } from 'lucide-react'
+import { ArrowLeft, Building2, DollarSign, Mountain } from 'lucide-react'
 import { ImageCarousel } from '@/components/ImageCarousel'
 import { PDFDownloads } from '@/components/PDFDownloads'
 
@@ -30,14 +30,14 @@ export function Pine3Client() {
   ]
 
   const gallery = [
-    { src: '/images/pine3/exterior-front.webp', alt: 'Pine 3 Front Exterior View' },
-    { src: '/images/pine3/exterior-front-alt.webp', alt: 'Pine 3 Alternative Front View' },
-    { src: '/images/pine3/exterior-rear.webp', alt: 'Pine 3 Rear Exterior View' },
-    { src: '/images/pine3/kitchen.webp', alt: 'Pine 3 Compact Kitchen' },
-    { src: '/images/pine3/living-room.webp', alt: 'Pine 3 Living Room' },
-    { src: '/images/pine3/loft.webp', alt: 'Pine 3 Loft Bedroom' },
-    { src: '/images/pine3/main-floor-plan.webp', alt: 'Pine 3 Main Floor Plan' },
-    { src: '/images/pine3/loft-floor-plan.webp', alt: 'Pine 3 Loft Floor Plan' }
+          { src: '/images/pine3/exterior-front.webp', alt: 'Willow Front Exterior View' },
+      { src: '/images/pine3/exterior-front-alt.webp', alt: 'Willow Alternative Front View' },
+      { src: '/images/pine3/exterior-rear.webp', alt: 'Willow Rear Exterior View' },
+      { src: '/images/pine3/kitchen.webp', alt: 'Willow Compact Kitchen' },
+      { src: '/images/pine3/living-room.webp', alt: 'Willow Living Room' },
+      { src: '/images/pine3/loft.webp', alt: 'Willow Loft Bedroom' },
+      { src: '/images/pine3/main-floor-plan.webp', alt: 'Willow Main Floor Plan' },
+      { src: '/images/pine3/loft-floor-plan.webp', alt: 'Willow Loft Floor Plan' }
   ]
 
   const pdfDownloads = [
@@ -98,12 +98,12 @@ export function Pine3Client() {
             
             <div className="text-center">
               <div className="flex items-center justify-center gap-3 mb-4">
-                <span className="text-discovery-gold font-semibold text-xl">Pine 3</span>
+                <span className="text-discovery-gold font-semibold text-xl">Willow</span>
                 <span className="text-discovery-white-soft">•</span>
                 <span className="text-discovery-white-soft">The Minimalist</span>
               </div>
               <h1 className="text-4xl md:text-6xl font-serif font-bold mb-6 text-discovery-lime nature-shimmer">
-                Pine 3 — The Minimalist
+                Willow — The Minimalist
               </h1>
               <p className="text-xl md:text-2xl leading-relaxed mb-8 text-discovery-sage">
                 A modern, tiny‑home solution — perfect as an office, rental, or weekend retreat.
@@ -118,7 +118,7 @@ export function Pine3Client() {
                   href="/quote-builder"
                   className="card-item btn-eco text-lg px-8 py-4 shadow-lime glow-lime growth-pulse micro-interaction"
                 >
-                  Get My Pine 3 Quote
+                  Get My Willow Quote
                 </Link>
                 <Link
                   href="/contact"
@@ -175,21 +175,27 @@ export function Pine3Client() {
           </h2>
           <div className="grid md:grid-cols-3 gap-8 animate-cards">
             <div className="bg-discovery-white rounded-2xl p-8 text-center shadow-luxury card-item micro-interaction">
-              <div className="text-4xl mb-4">🏢</div>
+              <div className="text-4xl mb-4 flex justify-center">
+                <Building2 className="w-12 h-12 text-discovery-gold" />
+              </div>
               <h3 className="text-xl font-semibold text-discovery-charcoal mb-4">Home Office</h3>
               <p className="text-neutral-600">
                 Create the perfect remote work environment with a dedicated office space separate from your main home.
               </p>
             </div>
             <div className="bg-discovery-white rounded-2xl p-8 text-center shadow-luxury card-item micro-interaction">
-              <div className="text-4xl mb-4">💰</div>
+              <div className="text-4xl mb-4 flex justify-center">
+                <DollarSign className="w-12 h-12 text-discovery-gold" />
+              </div>
               <h3 className="text-xl font-semibold text-discovery-charcoal mb-4">Rental Income</h3>
               <p className="text-neutral-600">
                 Generate passive income with an attractive tiny home rental perfect for short-term or long-term guests.
               </p>
             </div>
             <div className="bg-discovery-white rounded-2xl p-8 text-center shadow-luxury card-item micro-interaction">
-              <div className="text-4xl mb-4">🏔️</div>
+              <div className="text-4xl mb-4 flex justify-center">
+                <Mountain className="w-12 h-12 text-discovery-gold" />
+              </div>
               <h3 className="text-xl font-semibold text-discovery-charcoal mb-4">Weekend Retreat</h3>
               <p className="text-neutral-600">
                 Your perfect getaway cabin with all the essentials for comfortable weekend and vacation stays.
@@ -202,19 +208,19 @@ export function Pine3Client() {
       {/* Interactive Gallery */}
       <section className="section bg-discovery-white animate-section">
         <div className="container-custom">
-          <ImageCarousel images={gallery} title="Pine 3 Photo Gallery" />
+          <ImageCarousel images={gallery} title="Willow Photo Gallery" />
         </div>
       </section>
 
       {/* PDF Downloads */}
-      <PDFDownloads downloads={pdfDownloads} modelName="Pine 3" />
+      <PDFDownloads downloads={pdfDownloads} modelName="Willow" />
 
       {/* CTA Section */}
       <section className="section bg-discovery-charcoal text-discovery-white animate-section">
         <div className="container-custom">
           <div className="max-w-4xl mx-auto text-center scale-on-scroll">
             <h2 className="text-3xl md:text-4xl font-serif font-bold mb-6">
-              Ready to Build Your Pine 3?
+              Ready to Build Your Willow?
             </h2>
             <p className="text-xl mb-8 text-discovery-white-soft">
               Start with our most affordable option — perfect for testing the waters or creating your ideal tiny space.
@@ -225,7 +231,7 @@ export function Pine3Client() {
                 href="/quote-builder"
                 className="card-item btn-eco text-lg px-8 py-4 shadow-lime glow-lime growth-pulse micro-interaction"
               >
-                Get My Pine 3 Quote
+                Get My Willow Quote
               </Link>
               <Link
                 href="/contact"

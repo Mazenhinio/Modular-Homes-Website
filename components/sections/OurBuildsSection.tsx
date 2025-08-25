@@ -3,7 +3,7 @@ import Link from 'next/link'
 export function OurBuildsSection() {
   const builds = [
     {
-      name: "Pine 1",
+      name: "Pine",
       subtitle: "The Efficient One",
       description: "Ideal for singles, couples, or resort units — blending simplicity with style in a compact footprint.",
       specs: "504 sq ft • 1 Bedroom",
@@ -13,7 +13,7 @@ export function OurBuildsSection() {
       features: ["Compact design", "Energy efficient", "Perfect for couples"]
     },
     {
-      name: "Pine 2", 
+      name: "Spruce", 
       subtitle: "The Versatile One",
       description: "Perfect for families or rental markets, with extra space and a flexible layout.",
       specs: "504 sq ft • 2 Bedroom with Loft",
@@ -23,7 +23,7 @@ export function OurBuildsSection() {
       features: ["Flexible layout", "Family friendly", "Loft space"]
     },
     {
-      name: "Pine 3",
+      name: "Willow",
       subtitle: "The Minimalist",
       description: "A modern, tiny-home solution — perfect as an office, rental, or weekend retreat.",
       specs: "240 sq ft with Loft",

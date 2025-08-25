@@ -31,9 +31,9 @@ interface QuoteData {
 export class PDFGeneratorService {
   private getModelName(model: string): string {
     const modelNames = {
-      'pine1': 'Pine 1',
-      'pine2': 'Pine 2', 
-      'pine3': 'Pine 3',
+        'pine1': 'Pine',
+  'pine2': 'Spruce',
+  'pine3': 'Willow',
       'custom': 'Custom Build'
     }
     return modelNames[model as keyof typeof modelNames] || 'Custom Build'

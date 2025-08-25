@@ -30,17 +30,17 @@ export function Pine2Client() {
   ]
 
   const gallery = [
-    { src: '/images/pine2/Front Elevation.webp', alt: 'Pine 2 Front Elevation View' },
-    { src: '/images/pine2/Rear Elevation.webp', alt: 'Pine 2 Rear Elevation View' },
-    { src: '/images/pine2/Kitchen.webp', alt: 'Pine 2 Modern Kitchen' },
-    { src: '/images/pine2/Primary Bedroom.webp', alt: 'Pine 2 Primary Bedroom' },
-    { src: '/images/pine2/Living Room.webp', alt: 'Pine 2 Living Room' },
-    { src: '/images/pine2/Upper Floor.webp', alt: 'Pine 2 Upper Floor Loft' },
-    { src: '/images/pine2/Main Floor.webp', alt: 'Pine 2 Main Floor Layout' },
-    { src: '/images/pine2/Main Floor Detailed.webp', alt: 'Pine 2 Detailed Main Floor' },
-    { src: '/images/pine2/Loft Plan.webp', alt: 'Pine 2 Loft Plan Overview' },
-    { src: '/images/pine2/Loft Plan Detailed.webp', alt: 'Pine 2 Detailed Loft Plan' },
-    { src: '/images/pine2/Floor plan.webp', alt: 'Pine 2 Complete Floor Plan' }
+    { src: '/images/pine2/Front Elevation.webp', alt: 'Spruce Front Elevation View' },
+    { src: '/images/pine2/Rear Elevation.webp', alt: 'Spruce Rear Elevation View' },
+    { src: '/images/pine2/Kitchen.webp', alt: 'Spruce Modern Kitchen' },
+    { src: '/images/pine2/Primary Bedroom.webp', alt: 'Spruce Primary Bedroom' },
+    { src: '/images/pine2/Living Room.webp', alt: 'Spruce Living Room' },
+    { src: '/images/pine2/Upper Floor.webp', alt: 'Spruce Upper Floor Loft' },
+    { src: '/images/pine2/Main Floor.webp', alt: 'Spruce Main Floor Layout' },
+    { src: '/images/pine2/Main Floor Detailed.webp', alt: 'Spruce Detailed Main Floor' },
+    { src: '/images/pine2/Loft Plan.webp', alt: 'Spruce Loft Plan Overview' },
+    { src: '/images/pine2/Loft Plan Detailed.webp', alt: 'Spruce Detailed Loft Plan' },
+    { src: '/images/pine2/Floor plan.webp', alt: 'Spruce Complete Floor Plan' }
   ]
 
   const pdfDownloads = [
@@ -108,12 +108,12 @@ export function Pine2Client() {
             
             <div className="text-center">
               <div className="flex items-center justify-center gap-3 mb-4">
-                <span className="text-discovery-gold font-semibold text-xl">Pine 2</span>
+                <span className="text-discovery-gold font-semibold text-xl">Spruce</span>
                 <span className="text-discovery-white-soft">•</span>
                 <span className="text-discovery-white-soft">The Versatile One</span>
               </div>
               <h1 className="text-4xl md:text-6xl font-serif font-bold mb-6 text-discovery-lime nature-shimmer">
-                Pine 2 — The Versatile One
+                Spruce — The Versatile One
               </h1>
               <p className="text-xl md:text-2xl leading-relaxed mb-8 text-discovery-sage">
                 Perfect for families or rental markets, with extra space and a flexible layout.
@@ -128,7 +128,7 @@ export function Pine2Client() {
                   href="/quote-builder"
                   className="card-item btn-eco text-lg px-8 py-4 shadow-lime glow-lime growth-pulse micro-interaction"
                 >
-                  Get My Pine 2 Quote
+                  Get My Spruce Quote
                 </Link>
                 <Link
                   href="/contact"
@@ -180,22 +180,22 @@ export function Pine2Client() {
       {/* Interactive Gallery */}
       <section className="section bg-neutral-50 animate-section">
         <div className="container-custom">
-          <ImageCarousel images={gallery} title="Pine 2 Photo Gallery" />
+          <ImageCarousel images={gallery} title="Spruce Photo Gallery" />
         </div>
       </section>
 
       {/* PDF Downloads */}
-      <PDFDownloads downloads={pdfDownloads} modelName="Pine 2" />
+      <PDFDownloads downloads={pdfDownloads} modelName="Spruce" />
 
       {/* CTA Section */}
       <section className="section bg-discovery-charcoal text-discovery-white animate-section">
         <div className="container-custom">
           <div className="max-w-4xl mx-auto text-center scale-on-scroll">
             <h2 className="text-3xl md:text-4xl font-serif font-bold mb-6">
-              Ready to Build Your Pine 2?
+              Ready to Build Your Spruce?
             </h2>
             <p className="text-xl mb-8 text-discovery-white-soft">
-              Get a personalized quote for your Pine 2 modular home, perfect for growing families or rental income.
+              Get a personalized quote for your Spruce modular home, perfect for growing families or rental income.
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center animate-cards">
@@ -203,7 +203,7 @@ export function Pine2Client() {
                 href="/quote-builder"
                 className="card-item btn-eco text-lg px-8 py-4 shadow-lime glow-lime growth-pulse micro-interaction"
               >
-                Get My Pine 2 Quote
+                Get My Spruce Quote
               </Link>
               <Link
                 href="/contact"
