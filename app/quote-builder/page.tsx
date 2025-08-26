@@ -68,7 +68,6 @@ interface FormData {
 export default function QuoteBuilderPage() {
   const [currentStep, setCurrentStep] = useState(1)
   const [stepError, setStepError] = useState<string | null>(null)
-  type PromoOffer = { title: string; code: string; description: string }
   const [formData, setFormData] = useState<FormData>({
     name: '', email: '', phone: '',
     location: '', landStatus: '',
@@ -103,7 +102,7 @@ export default function QuoteBuilderPage() {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isSubmitted, setIsSubmitted] = useState(false)
   const [submitError, setSubmitError] = useState<string | null>(null)
-  const [promo, setPromo] = useState<PromoOffer | null>(null)
+
 
   const totalSteps = 13
 
@@ -516,36 +515,6 @@ export default function QuoteBuilderPage() {
       
       // Mark as successfully submitted
       setIsSubmitted(true)
-      // Random promotional message (temporary until finalized)
-      const offers: PromoOffer[] = [
-        {
-          title: 'Free Tongue & Groove Ceiling Upgrade',
-          code: 'BUILD-TG',
-          description: 'Book a call today and claim a complimentary ceiling upgrade on eligible builds.'
-        },
-        {
-          title: '$1,000 Design Credit',
-          code: 'DESIGN1000',
-          description: 'Apply this credit toward design enhancements when you book a call this week.'
-        },
-        {
-          title: 'Free Blinds Package',
-          code: 'COZYBLINDS',
-          description: 'Add a finishing touch—complimentary blinds package when you schedule a consultation.'
-        },
-        {
-          title: 'Priority Production Slot',
-          code: 'FASTTRACK',
-          description: 'Skip the queue with a priority production slot when you book your discovery call.'
-        },
-        {
-          title: 'Complimentary Site-Planning Session',
-          code: 'SITE500',
-          description: 'Get a $500 value site-planning session on us—available when you book now.'
-        }
-      ]
-      const pick = offers[Math.floor(Math.random() * offers.length)]
-      setPromo(pick)
       setIsSubmitting(false)
       
     } catch (error) {
@@ -618,22 +587,7 @@ export default function QuoteBuilderPage() {
                 <p className="text-gray-600">Estimated total range for your {formData.model} build</p>
               </div>
 
-              {promo && (
-                <div className="bg-gradient-to-r from-[#D4AF37]/15 to-[#68a71d]/15 border border-[#D4AF37] rounded-lg p-6 mb-6 text-left">
-                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-                    <div>
-                      <h3 className="text-lg font-semibold text-[#2D2D2D]">Limited-Time Offer: {promo.title}</h3>
-                      <p className="text-gray-600">{promo.description}</p>
-                      <p className="mt-2 text-sm"><span className="font-semibold text-[#2D2D2D]">Promo Code:</span> <span className="font-mono bg-white/70 px-2 py-1 rounded border">{promo.code}</span> <span className="text-gray-500">— valid for 7 days</span></p>
-                    </div>
-                    <div className="shrink-0">
-                      <Link href="/contact#schedule" className="inline-block bg-[#D4AF37] text-[#2D2D2D] font-semibold px-6 py-3 rounded-lg hover:bg-[#B8941F] transition-colors">
-                        Book Your Promo Call
-                      </Link>
-                    </div>
-                  </div>
-                </div>
-              )}
+
               
               <div className="space-y-4 text-left max-w-2xl mx-auto mb-8">
                 <h3 className="text-lg font-semibold text-[#2D2D2D] mb-3">What happens next:</h3>
@@ -668,7 +622,7 @@ export default function QuoteBuilderPage() {
                 </div>
               </div>
               
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
                 <Link
                   href="/contact"
                   className="bg-[#68a71d] text-white px-8 py-3 rounded-lg hover:bg-[#5a8f1a] transition-colors font-semibold"
@@ -681,6 +635,44 @@ export default function QuoteBuilderPage() {
                 >
                   Explore More Models
                 </Link>
+              </div>
+
+              {/* Limited Time Offer & Call to Action */}
+              <div className="mt-8 bg-gradient-to-r from-[#D4AF37] to-[#B8941F] rounded-2xl p-8 text-center text-white">
+                <div className="flex items-center justify-center mb-4">
+                  <div className="bg-white/20 backdrop-blur-sm rounded-full p-3 mr-3">
+                    <Zap className="text-white w-8 h-8" />
+                  </div>
+                  <h2 className="text-3xl md:text-4xl font-bold">
+                    LIMITED TIME OFFER
+                  </h2>
+                </div>
+                <div className="text-2xl md:text-3xl font-bold mb-6">
+                  Save $2,000 - Book Your Call Now!
+                </div>
+                <p className="text-lg mb-8 opacity-90">
+                  Schedule your consultation today and lock in exclusive pricing. Our experts are ready to help you start your modular home journey.
+                </p>
+                
+                {/* GoHighLevel Calendar Integration */}
+                <div className="bg-white rounded-xl p-6 max-w-4xl mx-auto">
+                  <div className="flex items-center justify-center mb-4">
+                    <div className="bg-[#D4AF37] rounded-full p-2 mr-3">
+                      <Calendar className="text-white w-6 h-6" />
+                    </div>
+                    <h3 className="text-xl font-bold text-[#2D2D2D]">
+                      Book Your Free Consultation
+                    </h3>
+                  </div>
+                  <iframe 
+                    src="https://api.leadconnectorhq.com/widget/booking/PTZ3zcQLwvLZ7CizfIdf" 
+                    style={{ width: '100%', height: '600px', border: 'none', overflow: 'auto' }} 
+                    scrolling="yes" 
+                    id="PTZ3zcQLwvLZ7CizfIdf_quote_builder"
+                    className="w-full rounded-lg"
+                  />
+                  <script src="https://link.msgsndr.com/js/form_embed.js" type="text/javascript"></script>
+                </div>
               </div>
             </div>
           </div>
@@ -1889,6 +1881,8 @@ export default function QuoteBuilderPage() {
             )}
           </div>
         </div>
+
+
 
         {/* Bottom CTA */}
         <div className="text-center mt-8">
