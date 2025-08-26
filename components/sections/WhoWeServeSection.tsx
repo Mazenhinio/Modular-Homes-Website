@@ -1,52 +1,26 @@
 import Link from 'next/link'
+import Image from 'next/image'
 
 export function WhoWeServeSection() {
   const segments = [
     {
       title: "Indigenous Communities",
       description: "Culturally-aligned, grant-ready housing solutions with dedicated support and funding guidance for First Nations across Western Canada.",
-      href: "/indigenous-communities",
-      icon: "🏘️",
+      href: "/first-nations",
       features: ["Cultural respect", "Grant assistance", "Community partnerships"],
       color: "bg-blue-100 text-blue-800 border-blue-200"
     },
     {
       title: "Resort & Airbnb Owners", 
       description: "High-ROI cabins and rental units designed to enhance guest experiences and maximize revenue potential.",
-      href: "/resort-owners",
-      icon: "🏕️",
+      href: "/real-estate-rental",
       features: ["Revenue optimization", "Guest experience", "Quick deployment"],
       color: "bg-green-100 text-green-800 border-green-200"
     },
     {
-      title: "Acreage & Rural Buyers",
-      description: "Affordable homes for private land, perfect for those seeking peaceful rural living with modern conveniences.",
-      href: "/rural-buyers", 
-      icon: "🌲",
-      features: ["Off-grid ready", "Land development", "Rural lifestyle"],
-      color: "bg-purple-100 text-purple-800 border-purple-200"
-    },
-    {
-      title: "Industrial Camps",
-      description: "Workforce housing delivered fast — durable, comfortable accommodations for remote work sites and camps.",
-      href: "/industrial-camps",
-      icon: "🏗️", 
-      features: ["Fast delivery", "Durable construction", "Worker comfort"],
-      color: "bg-orange-100 text-orange-800 border-orange-200"
-    },
-    {
-      title: "Eco-Conscious Buyers",
-      description: "Net-zero and off-grid enthusiasts seeking sustainable, energy-smart modular housing solutions.",
-      href: "/eco-conscious",
-      icon: "🌱",
-      features: ["Net-zero ready", "Sustainable materials", "Energy efficient"],
-      color: "bg-teal-100 text-teal-800 border-teal-200"
-    },
-    {
-      title: "Developers & Builders",
-      description: "Scalable housing solutions for new developments, subdivisions, and large-scale residential projects.",
-      href: "/developers",
-      icon: "🏘️",
+      title: "Developers & Landowners",
+      description: "Scalable housing solutions for landowners, developers, and large-scale residential projects.",
+      href: "/land-owners",
       features: ["Scalable solutions", "Project management", "Timeline certainty"],
       color: "bg-indigo-100 text-indigo-800 border-indigo-200"
     }
@@ -69,7 +43,9 @@ export function WhoWeServeSection() {
           {segments.map((segment) => (
             <div key={segment.title} className="bg-white rounded-2xl p-8 hover:shadow-xl transition-all duration-300 hover:transform hover:-translate-y-2 border border-gray-200">
               <div className="text-center mb-6">
-                <div className="text-4xl mb-4">{segment.icon}</div>
+                <div className="flex justify-center mb-4">
+                  <Image src="/images/logo/logo-header.webp" alt="Discovery Homes" width={64} height={64} className="h-16 w-16 object-contain" />
+                </div>
                 <div className={`inline-block px-4 py-2 rounded-full text-sm font-medium mb-4 border ${segment.color}`}>
                   {segment.title}
                 </div>

@@ -1,6 +1,7 @@
 'use client'
 
 import { Phone, Mail, MapPin, Calendar } from 'lucide-react'
+import { ContactMayaWidget } from '@/components/ContactMayaWidget'
 
 export default function ContactPage() {
 
@@ -78,47 +79,24 @@ export default function ContactPage() {
         </div>
       </section>
 
-      {/* Contact Form & Booking */}
+      {/* Embedded Maya Widget + Booking */}
       <section className="py-16 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-            
-                         {/* GHL Contact Form */}
-             <div className="bg-white rounded-2xl p-8 shadow-lg">
-               <h2 className="text-3xl font-bold text-[#2D2D2D] mb-0">Send Us a Message</h2>
-              <iframe
-                src="https://api.leadconnectorhq.com/widget/form/YhVFMsmHW8sz26gUbqdJ"
-                style={{width: '100%', height: '100%', border: 'none', borderRadius: '3px'}}
-                id="inline-YhVFMsmHW8sz26gUbqdJ" 
-                data-layout="{'id':'INLINE'}"
-                data-trigger-type="alwaysShow"
-                data-trigger-value=""
-                data-activation-type="alwaysActivated"
-                data-activation-value=""
-                data-deactivation-type="neverDeactivate"
-                data-deactivation-value=""
-                data-form-name="Contact Form"
-                data-height="758"
-                data-layout-iframe-id="inline-YhVFMsmHW8sz26gUbqdJ"
-                data-form-id="YhVFMsmHW8sz26gUbqdJ"
-                title="Contact Form"
-                className="w-full min-h-[758px]"
-              />
-              <script src="https://link.msgsndr.com/js/form_embed.js"></script>
+            <div>
+              <ContactMayaWidget />
             </div>
-
-             {/* GHL Booking Calendar ONLY */}
-             <div className="bg-white rounded-2xl p-8 shadow-lg">
-               <h2 className="text-3xl font-bold text-[#2D2D2D] mb-0">Book a Consultation</h2>
-               <iframe 
-                 src="https://api.leadconnectorhq.com/widget/booking/PTZ3zcQLwvLZ7CizfIdf" 
-                 style={{ width: '100%', height: '800px', border: 'none', overflow: 'auto' }} 
-                 scrolling="yes" 
-                 id="PTZ3zcQLwvLZ7CizfIdf_1753871801578"
-                 className="w-full"
-               />
-               <script src="https://link.msgsndr.com/js/form_embed.js" type="text/javascript"></script>
-             </div>
+            <div className="bg-white rounded-2xl p-8 shadow-lg">
+              <h2 className="text-3xl font-bold text-[#2D2D2D] mb-0">Book a Consultation</h2>
+              <iframe 
+                src="https://api.leadconnectorhq.com/widget/booking/PTZ3zcQLwvLZ7CizfIdf" 
+                style={{ width: '100%', height: '800px', border: 'none', overflow: 'auto' }} 
+                scrolling="yes" 
+                id="PTZ3zcQLwvLZ7CizfIdf_1753871801578"
+                className="w-full"
+              />
+              <script src="https://link.msgsndr.com/js/form_embed.js" type="text/javascript"></script>
+            </div>
           </div>
         </div>
       </section>

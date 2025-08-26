@@ -21,7 +21,9 @@ export async function POST(request: NextRequest) {
       timeline,
       isIndigenous,
       numberOfHomes,
-      financing
+      customNumberOfHomes,
+      financing,
+      needsFinancingHelp
     } = body
 
     // Calculate base price and add-ons cost
@@ -88,21 +90,35 @@ export async function POST(request: NextRequest) {
       budget,
       isIndigenous,
       numberOfHomes,
-      financing
+      customNumberOfHomes,
+      financing,
+      needsFinancingHelp
     }
 
-    // Generate PDF
-    const pdfBuffer = await pdfGenerator.createQuote(quoteData)
-
-    // Return PDF as response
-    return new NextResponse(pdfBuffer, {
-      status: 200,
-      headers: {
-        'Content-Type': 'application/pdf',
-        'Content-Disposition': `attachment; filename="discovery-homes-quote-${quoteNumber}.pdf"`,
-        'Content-Length': pdfBuffer.length.toString()
+    // TODO: Implement template PDF generation
+    // For now, return a placeholder response
+    return NextResponse.json({
+      success: true,
+      message: 'PDF generation temporarily disabled - waiting for template implementation',
+      quoteData: {
+        ...quoteData,
+        estimatedPrice,
+        basePrice,
+        addOnsCost,
+        totalCost: estimatedPrice
       }
     })
+
+    // TODO: Uncomment when template PDF is ready
+    // const pdfBuffer = await pdfGenerator.createQuote(quoteData)
+    // return new NextResponse(pdfBuffer, {
+    //   status: 200,
+    //   headers: {
+    //     'Content-Type': 'application/pdf',
+    //     'Content-Disposition': `attachment; filename="discovery-homes-quote-${quoteNumber}.pdf"`,
+    //     'Content-Length': pdfBuffer.length.toString()
+    //   }
+    // })
 
   } catch (error) {
     console.error('PDF generation error:', error)

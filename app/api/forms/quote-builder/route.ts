@@ -64,41 +64,45 @@ export async function POST(request: NextRequest) {
     // Send to CRM with quote-specific tagging
     const crmResult = await crmClient.createLead(leadData)
     
-    // Generate branded PDF quote
-    const pdfBuffer = await pdfGenerator.createQuote({
-      name,
-      email,
-      phone,
-      model,
-      estimatedPrice: pricing.total,
-      basePrice: pricing.base,
-      addOnsCost: pricing.addOns,
-      addOns: Array.isArray(addOns) ? addOns : [],
-      propertyLocation: propertyLocation || '',
-      timeline: timeline || '',
-      quoteNumber: `DH-${Date.now()}`,
-      leadId: crmResult.id,
-      validUntil: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000), // 30 days
-      landStatus: landStatus || '',
-      intendedUse: intendedUse || '',
-      bedrooms: bedPreferences || '',
-      bathrooms: body.bathrooms || '',
-      sqft: sqftPreferences || '',
-      budget: budgetRange || '',
-      isIndigenous: body.isIndigenous || '',
-      numberOfHomes: body.numberOfHomes || '',
-      financing: body.financing || ''
-    })
+    // TODO: Implement template PDF generation
+    // For now, skip PDF generation and email sending
+    // const pdfBuffer = await pdfGenerator.createQuote({
+    //   name,
+    //   email,
+    //   phone,
+    //   model,
+    //   estimatedPrice: pricing.total,
+    //   basePrice: pricing.base,
+    //   addOnsCost: pricing.addOns,
+    //   addOns: Array.isArray(addOns) ? addOns : [],
+    //   propertyLocation: propertyLocation || '',
+    //   timeline: timeline || '',
+    //   quoteNumber: `DH-${Date.now()}`,
+    //   leadId: crmResult.id,
+    //   validUntil: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000), // 30 days
+    //   landStatus: landStatus || '',
+    //   intendedUse: intendedUse || '',
+    //   bedrooms: bedPreferences || '',
+    //   bathrooms: body.bathrooms || '',
+    //   sqft: sqftPreferences || '',
+    //   budget: budgetRange || '',
+    //   isIndigenous: body.isIndigenous || '',
+    //   numberOfHomes: body.numberOfHomes || '',
+    //   customNumberOfHomes: body.customNumberOfHomes || '',
+    //   financing: body.financing || '',
+    //   needsFinancingHelp: body.needsFinancingHelp || ''
+    // })
     
+    // TODO: Uncomment when template PDF is ready
     // Send quote via email
-    await mailer.sendQuote({
-      to: email,
-      name,
-      model,
-      estimatedPrice: pricing.total,
-      pdfBuffer,
-      quoteNumber: `DH-${Date.now()}`
-    })
+    // await mailer.sendQuote({
+    //   to: email,
+    //   name,
+    //   model,
+    //   estimatedPrice: pricing.total,
+    //   pdfBuffer,
+    //   quoteNumber: `DH-${Date.now()}`
+    // })
     
     // Send notification to sales team
     await mailer.sendNotification({
@@ -115,11 +119,11 @@ export async function POST(request: NextRequest) {
       leadId: crmResult.id,
       estimatedPrice: pricing.total,
       priceBreakdown: pricing,
-      message: 'Your custom quote has been generated and sent to your email!',
+      message: 'Your quote request has been submitted! PDF generation will be available soon.',
       nextSteps: [
-        'Check your email for the detailed PDF quote',
         'A Discovery Homes specialist will contact you within 24 hours',
-        'Schedule a consultation to discuss your project in detail'
+        'Schedule a consultation to discuss your project in detail',
+        'PDF quotes will be available once our new template system is ready'
       ]
     })
 

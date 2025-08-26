@@ -45,7 +45,7 @@ interface FormData {
   addCeilingFans: boolean
   addBedroomFixtures: boolean
   wallsFinish: string
-  tongueAndGrooveCeiling: boolean
+  floorToCeilingWindows: boolean
   
   // Step 7: Budget
   budget: string
@@ -58,9 +58,11 @@ interface FormData {
   
   // Step 10: Number of Homes
   numberOfHomes: string
+  customNumberOfHomes: string
   
   // Step 11: Financing
   financing: string
+  needsFinancingHelp: string
 }
 
 export default function QuoteBuilderPage() {
@@ -86,13 +88,16 @@ export default function QuoteBuilderPage() {
     faucets: 'black',
     addCeilingFans: false,
     addBedroomFixtures: false,
-    wallsFinish: 'plywood-base',
-    tongueAndGrooveCeiling: false,
+    wallsFinish: 'drywall',
+    floorToCeilingWindows: false,
+
     budget: '',
     timeline: '',
     isIndigenous: '',
     numberOfHomes: '',
-    financing: ''
+    customNumberOfHomes: '',
+    financing: '',
+    needsFinancingHelp: ''
   })
   const [estimatedPrice, setEstimatedPrice] = useState(0)
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -177,6 +182,8 @@ export default function QuoteBuilderPage() {
     'deck': { min: 7200, max: 8800 },
     'appliances': { min: 10800, max: 13200 },
     'smart-home': { min: 4500, max: 5500 },
+    'ac': { min: 3600, max: 4400 },
+    'fireplace': { min: 2700, max: 3300 },
   }
 
   const getAddOnsRange = () => {
@@ -199,15 +206,23 @@ export default function QuoteBuilderPage() {
 
     // Siding
     if (formData.siding === 'wood-grain' && isWoodGrainEligible()) {
-      if (formData.model === 'pine3') { min += 3600; max += 4400 } else { min += 5400; max += 6600 }
+      const sqftNumber = parseInt((formData.sqft || '').replace(/\D/g, ''))
+      if (sqftNumber <= 240) { 
+        min += 4000; max += 4400 
+      } else { 
+        min += 6000; max += 6600 
+      }
     }
 
     // Faucets
     if (formData.faucets === 'bronze') { min += 450; max += 600 }
     if (formData.faucets === 'stainless') { min += -300; max += -200 }
 
-    // Tongue & groove ceiling
-    if (formData.tongueAndGrooveCeiling) { min += 4050; max += 4950 }
+    // Walls upgrade
+    if (formData.wallsFinish === 'woodboard-stained') { min += 4050; max += 4950 }
+    
+    // Windows upgrade
+    if (formData.floorToCeilingWindows) { min += 2700; max += 3300 }
 
     // Bedroom counts for lighting
     const bedroomCount = (() => {
@@ -227,14 +242,21 @@ export default function QuoteBuilderPage() {
     const items: { label: string; min?: number; max?: number; tbd?: boolean }[] = []
     // Siding
     if (formData.siding === 'wood-grain' && isWoodGrainEligible()) {
-      if (formData.model === 'pine3') items.push({ label: 'Siding: Wood Grain', min: 3600, max: 4400 })
-      else items.push({ label: 'Siding: Wood Grain', min: 5400, max: 6600 })
+      const sqftNumber = parseInt((formData.sqft || '').replace(/\D/g, ''))
+      if (sqftNumber <= 240) {
+        items.push({ label: 'Siding: Wood Grain', min: 4000, max: 4400 })
+      } else {
+        items.push({ label: 'Siding: Wood Grain', min: 6000, max: 6600 })
+      }
     }
     // Faucets
     if (formData.faucets === 'bronze') items.push({ label: 'Faucets: Bronze', min: 450, max: 600 })
     else if (formData.faucets === 'stainless') items.push({ label: 'Faucets: Stainless', min: -300, max: -200 })
-    // Tongue & groove ceiling
-    if (formData.tongueAndGrooveCeiling) items.push({ label: 'Ceiling: Tongue & Groove', min: 4050, max: 4950 })
+    // Walls upgrade
+    if (formData.wallsFinish === 'woodboard-stained') items.push({ label: 'Walls: Woodboard or Stained', min: 4050, max: 4950 })
+    
+    // Windows upgrade
+    if (formData.floorToCeilingWindows) items.push({ label: 'Windows: Floor-to-Ceiling', min: 2700, max: 3300 })
     // Bedroom-dependent items
     const brCount = (() => { if (formData.bedrooms === '4+') return 4; const n = parseInt(formData.bedrooms.replace(/\D/g, '')); return isNaN(n) ? 0 : n })()
     if (formData.addCeilingFans && brCount > 0) items.push({ label: `Ceiling Fans (${brCount} BR)`, min: 540 * brCount, max: 660 * brCount })
@@ -256,8 +278,12 @@ export default function QuoteBuilderPage() {
     const addons = getAddOnsRange()
     const finishes = getFinishesRange()
     const homes = (() => {
+      if (formData.numberOfHomes === '4+') {
+        const customNumber = parseInt(formData.customNumberOfHomes || '4')
+        return isNaN(customNumber) || customNumber < 4 ? 4 : Math.min(customNumber, 100)
+      }
       const n = parseInt((formData.numberOfHomes || '1').replace(/\D/g, ''))
-      return isNaN(n) || n < 1 ? 1 : Math.min(n, 10)
+      return isNaN(n) || n < 1 ? 1 : Math.min(n, 3)
     })()
     const min = (model.min + pkg.min + addons.min + finishes.min) * homes
     const max = (model.max + pkg.max + addons.max + finishes.max) * homes
@@ -347,7 +373,9 @@ export default function QuoteBuilderPage() {
     }
     if (formData.faucets === 'bronze') finishesCost += 500
     if (formData.faucets === 'stainless') finishesCost -= 250
-    if (formData.tongueAndGrooveCeiling) finishesCost += 4500
+    if (formData.wallsFinish === 'woodboard-stained') finishesCost += 4500
+    if (formData.floorToCeilingWindows) finishesCost += 3000
+
     const bedroomCount = (() => {
       if (formData.bedrooms === '4+') return 4
       const n = parseInt(formData.bedrooms.replace(/\D/g, ''))
@@ -414,10 +442,14 @@ export default function QuoteBuilderPage() {
       }
       case 12: {
         if (!formData.numberOfHomes) return 'Please select the number of homes.'
+        if (formData.numberOfHomes === '4+' && (!formData.customNumberOfHomes || parseInt(formData.customNumberOfHomes) < 4)) {
+          return 'Please enter a valid number of homes (4 or more).'
+        }
         return null
       }
       case 13: {
         if (!formData.financing) return 'Please select a financing option.'
+        if (!formData.needsFinancingHelp) return 'Please indicate whether you need help with financing.'
         return null
       }
       default:
@@ -533,6 +565,32 @@ export default function QuoteBuilderPage() {
       updateFormData('addons', currentAddons.filter(a => a !== addon))
     } else {
       updateFormData('addons', [...currentAddons, addon])
+    }
+  }
+
+  // Helper: sqft options constrained by bedrooms
+  const getSqftOptionsForBedrooms = (bedrooms: string): string[] => {
+    switch (bedrooms) {
+      case '1':
+        return ['240 sq ft', '504 sq ft']
+      case '2':
+        return ['504 sq ft', '800 sq ft']
+      case '3':
+        return ['800 sq ft', '1200 sq ft']
+      case '4+':
+        return ['1200+ sq ft']
+      default:
+        return ['240 sq ft', '504 sq ft', '800 sq ft', '1200+ sq ft']
+    }
+  }
+
+  // When bedrooms change, auto-pick appropriate sqft
+  const handleBedroomsChange = (value: string) => {
+    updateFormData('bedrooms', value)
+    const options = getSqftOptionsForBedrooms(value)
+    // If current sqft isn't allowed, or empty, auto-select the first option
+    if (!options.includes(formData.sqft)) {
+      updateFormData('sqft', options[0])
     }
   }
 
@@ -851,7 +909,17 @@ export default function QuoteBuilderPage() {
                      specs: '504 sq ft • 1 Bedroom',
                       price: '',
                      description: 'Perfect for singles, couples, or resort units',
-                     features: ['Open concept living', 'Efficient kitchen design', 'Modern bathroom', 'Energy efficient'],
+                     features: [
+                       'Quartz countertops',
+                       'Maple cabinetry (White, Black, or Wood Grain)',
+                       'Drywall walls with tongue-and-groove plank ceiling',
+                       'Vinyl glue-down flooring',
+                       'Pot lights throughout',
+                       'Tile shower surround + kitchen/bath backsplash',
+                       'Black kitchen sink & faucet (stainless option available)',
+                       'Triple-glaze windows; all paint colors included',
+                       'Hidden-fastener metal roof and metal board-and-batten siding'
+                     ],
                      icon: '🏠'
                    },
                    { 
@@ -860,7 +928,17 @@ export default function QuoteBuilderPage() {
                      specs: '504 sq ft • 2 Bedroom with Loft',
                       price: '',
                      description: 'Ideal for families or rental markets',
-                     features: ['Two bedrooms', 'Loft space', 'Spacious living area', 'Storage solutions'],
+                     features: [
+                       'Quartz countertops',
+                       'Maple cabinetry (White, Black, or Wood Grain)',
+                       'Drywall walls with tongue-and-groove plank ceiling',
+                       'Vinyl glue-down flooring',
+                       'Pot lights throughout',
+                       'Tile shower surround + kitchen/bath backsplash',
+                       'Black kitchen sink & faucet (stainless option available)',
+                       'Triple-glaze windows; all paint colors included',
+                       'Hidden-fastener metal roof and metal board-and-batten siding'
+                     ],
                      icon: '🏘️'
                    },
                    { 
@@ -869,7 +947,17 @@ export default function QuoteBuilderPage() {
                      specs: '240 sq ft with Loft',
                       price: '',
                      description: 'Modern tiny home solution',
-                     features: ['Compact design', 'Loft bedroom', 'Efficient layout', 'Portable'],
+                     features: [
+                       'Quartz countertops',
+                       'Maple cabinetry (White, Black, or Wood Grain)',
+                       'Drywall walls with tongue-and-groove plank ceiling',
+                       'Vinyl glue-down flooring',
+                       'Pot lights throughout',
+                       'Tile shower surround + kitchen/bath backsplash',
+                       'Black kitchen sink & faucet (stainless option available)',
+                       'Triple-glaze windows; all paint colors included',
+                       'Hidden-fastener metal roof and metal board-and-batten siding'
+                     ],
                      icon: '🏕️'
                    },
                    { 
@@ -878,7 +966,17 @@ export default function QuoteBuilderPage() {
                      specs: 'Your specifications',
                      price: 'Quote on request',
                      description: 'Fully tailored to your needs',
-                     features: ['Custom design', 'Flexible layout', 'Premium materials', 'Personal consultation'],
+                     features: [
+                       'Quartz countertops',
+                       'Maple cabinetry (White, Black, or Wood Grain)',
+                       'Drywall walls with tongue-and-groove plank ceiling',
+                       'Vinyl glue-down flooring',
+                       'Pot lights throughout',
+                       'Tile shower surround + kitchen/bath backsplash',
+                       'Black kitchen sink & faucet (stainless option available)',
+                       'Triple-glaze windows; all paint colors included',
+                       'Hidden-fastener metal roof and metal board-and-batten siding'
+                     ],
                      icon: '✨'
                    }
                  ].map((model) => (
@@ -950,27 +1048,37 @@ export default function QuoteBuilderPage() {
                 },{
                   value: 'net-zero',
                   title: 'Net Zero Ready',
-                  description: 'Energy efficiency package (+$35,000)'
+                                     description: 'Energy efficiency package'
                 },{
                   value: 'off-grid',
                   title: 'Off Grid',
-                  description: 'Self-sufficient systems (+$40,000)'
-                }].map((pkg) => (
-                  <label key={pkg.value} className={`p-6 border-2 rounded-lg cursor-pointer transition-all duration-200 hover:shadow-lg ${
-                    formData.packageType === pkg.value ? 'border-[#D4AF37] bg-[#D4AF37]/10 shadow-lg' : 'border-gray-300 hover:border-[#D4AF37]/50'
-                  }`}>
-                    <input
-                      type="radio"
-                      name="packageType"
-                      value={pkg.value}
-                      checked={formData.packageType === pkg.value}
-                      onChange={(e) => updateFormData('packageType', e.target.value)}
-                      className="sr-only"
-                    />
-                    <h3 className="text-lg font-bold text-[#2D2D2D] mb-1">{pkg.title}</h3>
-                    <p className="text-sm text-gray-600">{pkg.description}</p>
-                  </label>
-                ))}
+                                     description: 'Self-sufficient systems'
+                                 }].map((pkg) => {
+                   const isComingSoon = pkg.value === 'net-zero' || pkg.value === 'off-grid'
+                   return (
+                     <label key={pkg.value} className={`p-6 border-2 rounded-lg transition-all duration-200 ${
+                       isComingSoon ? 'opacity-60 cursor-not-allowed' : 'cursor-pointer hover:shadow-lg'
+                     } ${
+                       formData.packageType === pkg.value ? 'border-[#D4AF37] bg-[#D4AF37]/10 shadow-lg' : 'border-gray-300 ' + (isComingSoon ? '' : 'hover:border-[#D4AF37]/50')
+                     }`}>
+                       <input
+                         type="radio"
+                         name="packageType"
+                         value={pkg.value}
+                         checked={formData.packageType === pkg.value}
+                         onChange={(e) => { if (!isComingSoon) updateFormData('packageType', e.target.value) }}
+                         disabled={isComingSoon}
+                         aria-disabled={isComingSoon}
+                         className="sr-only"
+                       />
+                       <h3 className="text-lg font-bold text-[#2D2D2D] mb-1">{pkg.title}</h3>
+                       {isComingSoon && (
+                         <span className="inline-block mb-2 px-2 py-0.5 text-xs font-semibold rounded-full bg-yellow-100 text-yellow-800 border border-yellow-200">Coming Soon</span>
+                       )}
+                       <p className="text-sm text-gray-600">{pkg.description}</p>
+                     </label>
+                   )
+                 })}
               </div>
             </div>
           )}
@@ -996,7 +1104,7 @@ export default function QuoteBuilderPage() {
                             name="bedrooms"
                             value={bed}
                             checked={formData.bedrooms === bed}
-                            onChange={(e) => updateFormData('bedrooms', e.target.value)}
+                            onChange={(e) => handleBedroomsChange(e.target.value)}
                             className="sr-only"
                           />
                           <span className="font-semibold">{bed}</span>
@@ -1031,14 +1139,7 @@ export default function QuoteBuilderPage() {
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-4">Square Footage</label>
                     <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                      {[
-                        '800 sq ft',
-                        '1200 sq ft', 
-                        '1500 sq ft',
-                        '1800 sq ft',
-                        '2400 sq ft',
-                        '3000+ sq ft'
-                      ].map((sqft) => (
+                      {getSqftOptionsForBedrooms(formData.bedrooms).map((sqft) => (
                         <label key={sqft} className={`text-center p-4 border rounded-lg cursor-pointer ${
                           formData.sqft === sqft ? 'border-[#D4AF37] bg-[#D4AF37]/10' : 'border-gray-300'
                         }`}>
@@ -1089,7 +1190,7 @@ export default function QuoteBuilderPage() {
                             name="bedrooms"
                             value={bed}
                             checked={formData.bedrooms === bed}
-                            onChange={(e) => updateFormData('bedrooms', e.target.value)}
+                            onChange={(e) => handleBedroomsChange(e.target.value)}
                             className="sr-only"
                           />
                           <span className="font-semibold">{bed}</span>
@@ -1100,7 +1201,7 @@ export default function QuoteBuilderPage() {
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-4">Preferred Square Footage</label>
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                      {['240 sq ft', '500 sq ft', '800 sq ft', '1200+ sq ft'].map((sqft) => (
+                      {getSqftOptionsForBedrooms(formData.bedrooms).map((sqft) => (
                         <label key={sqft} className={`text-center p-4 border rounded-lg cursor-pointer ${
                           formData.sqft === sqft ? 'border-[#D4AF37] bg-[#D4AF37]/10' : 'border-gray-300'
                         }`}>
@@ -1116,6 +1217,22 @@ export default function QuoteBuilderPage() {
                         </label>
                       ))}
                     </div>
+                  </div>
+
+                  {/* Included Base Features (from Base Units & Upgrades) */}
+                  <div className="mt-8 border rounded-lg p-5 bg-gray-50">
+                    <h3 className="text-md font-semibold text-[#2D2D2D] mb-3">Included Base Features</h3>
+                    <ul className="text-sm text-gray-700 grid md:grid-cols-2 gap-y-2 gap-x-6">
+                      <li className="flex items-start"><span className="w-1.5 h-1.5 bg-[#D4AF37] rounded-full mt-2 mr-2"></span> Quartz countertops</li>
+                      <li className="flex items-start"><span className="w-1.5 h-1.5 bg-[#D4AF37] rounded-full mt-2 mr-2"></span> Maple cabinetry (White / Black / Wood Grain)</li>
+                      <li className="flex items-start"><span className="w-1.5 h-1.5 bg-[#D4AF37] rounded-full mt-2 mr-2"></span> Drywall walls with tongue-and-groove ceiling</li>
+                      <li className="flex items-start"><span className="w-1.5 h-1.5 bg-[#D4AF37] rounded-full mt-2 mr-2"></span> Vinyl glue-down flooring</li>
+                      <li className="flex items-start"><span className="w-1.5 h-1.5 bg-[#D4AF37] rounded-full mt-2 mr-2"></span> Pot lights throughout</li>
+                      <li className="flex items-start"><span className="w-1.5 h-1.5 bg-[#D4AF37] rounded-full mt-2 mr-2"></span> Tile shower surround + kitchen/bath backsplash</li>
+                      <li className="flex items-start"><span className="w-1.5 h-1.5 bg-[#D4AF37] rounded-full mt-2 mr-2"></span> Black kitchen sink & faucet (stainless option available)</li>
+                      <li className="flex items-start"><span className="w-1.5 h-1.5 bg-[#D4AF37] rounded-full mt-2 mr-2"></span> Triple-glaze windows; all paint colors included</li>
+                      <li className="flex items-start md:col-span-2"><span className="w-1.5 h-1.5 bg-[#D4AF37] rounded-full mt-2 mr-2"></span> Exterior: Hidden-fastener metal roof and metal board-and-batten siding</li>
+                    </ul>
                   </div>
                 </div>
               )}
@@ -1133,15 +1250,22 @@ export default function QuoteBuilderPage() {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <label className={`p-4 border rounded-lg cursor-pointer ${formData.siding==='base-metal'?'border-[#D4AF37] bg-[#D4AF37]/10':'border-gray-300'}`}>
                       <input type="radio" name="siding" value="base-metal" className="sr-only" checked={formData.siding==='base-metal'} onChange={(e)=>updateFormData('siding', e.target.value)} />
-                      <div className="font-semibold">Base: Vertical Metal</div>
-                      <div className="text-sm text-gray-600">Selectable colors</div>
+                      <div className="font-semibold">Base: Hidden-Fastener Metal</div>
+                      <div className="text-sm text-gray-600">Board-and-batten siding with color selections</div>
                     </label>
                     {isWoodGrainEligible() && (
                       <label className={`p-4 border rounded-lg cursor-pointer ${formData.siding==='wood-grain'?'border-[#D4AF37] bg-[#D4AF37]/10':'border-gray-300'}`}>
                         <input type="radio" name="siding" value="wood-grain" className="sr-only" checked={formData.siding==='wood-grain'} onChange={(e)=>updateFormData('siding', e.target.value)} />
                         <div className="font-semibold">Upgrade: Wood Grain Siding</div>
                         <div className="text-sm text-gray-600">
-                          {formData.model === 'pine3' ? '+$3,600 – $4,400' : '+$5,400 – $6,600'}
+                          {(() => {
+                            const sqftNumber = parseInt((formData.sqft || '').replace(/\D/g, ''))
+                            if (sqftNumber <= 240) {
+                              return '+$4,000 – $4,400'
+                            } else {
+                              return '+$6,000 – $6,600'
+                            }
+                          })()}
                         </div>
                       </label>
                     )}
@@ -1154,12 +1278,13 @@ export default function QuoteBuilderPage() {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <label className={`p-4 border rounded-lg cursor-pointer ${formData.countertops==='base-quartz'?'border-[#D4AF37] bg-[#D4AF37]/10':'border-gray-300'}`}>
                       <input type="radio" name="countertops" value="base-quartz" className="sr-only" checked={formData.countertops==='base-quartz'} onChange={(e)=>updateFormData('countertops', e.target.value)} />
-                      <div className="font-semibold">Base: Builder Grade Quartz</div>
+                      <div className="font-semibold">Base: Quartz Counters</div>
+                      <div className="text-sm text-gray-600">Premium quartz countertops included</div>
                     </label>
                     <label className={`p-4 border rounded-lg cursor-pointer ${formData.countertops==='upgrade-quartz'?'border-[#D4AF37] bg-[#D4AF37]/10':'border-gray-300'}`}>
                       <input type="radio" name="countertops" value="upgrade-quartz" className="sr-only" checked={formData.countertops==='upgrade-quartz'} onChange={(e)=>updateFormData('countertops', e.target.value)} />
-                      <div className="font-semibold">Upgrade: Premium Quartz</div>
-                      <div className="text-sm text-gray-600">Pricing/Colors: Coming soon</div>
+                      <div className="font-semibold">Upgrade: Expanded Quartz Options</div>
+                      <div className="text-sm text-gray-600">Multiple color and style selections</div>
                     </label>
                   </div>
                 </div>
@@ -1170,30 +1295,46 @@ export default function QuoteBuilderPage() {
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <label className={`p-4 border rounded-lg cursor-pointer ${formData.cabinets==='maple-shaker'?'border-[#D4AF37] bg-[#D4AF37]/10':'border-gray-300'}`}>
                       <input type="radio" name="cabinets" value="maple-shaker" className="sr-only" checked={formData.cabinets==='maple-shaker'} onChange={(e)=>updateFormData('cabinets', e.target.value)} />
-                      <div className="font-semibold">Base: Maple Shaker Doors</div>
+                      <div className="font-semibold">Base: Maple Cabinets</div>
+                      <div className="text-sm text-gray-600">White, Black, or Wood Grain options</div>
                     </label>
                     <label className={`p-4 border rounded-lg cursor-pointer ${formData.cabinets==='painted-thermo'?'border-[#D4AF37] bg-[#D4AF37]/10':'border-gray-300'}`}>
                       <input type="radio" name="cabinets" value="painted-thermo" className="sr-only" checked={formData.cabinets==='painted-thermo'} onChange={(e)=>updateFormData('cabinets', e.target.value)} />
-                      <div className="font-semibold">Upgrades: Painted White/Black/Thermo</div>
+                      <div className="font-semibold">Upgrade: Painted/Thermo Options</div>
+                      <div className="text-sm text-gray-600">Additional styles and finishes</div>
                     </label>
                     <label className={`p-4 border rounded-lg cursor-pointer ${formData.cabinets==='melamine'?'border-[#D4AF37] bg-[#D4AF37]/10':'border-gray-300'}`}>
                       <input type="radio" name="cabinets" value="melamine" className="sr-only" checked={formData.cabinets==='melamine'} onChange={(e)=>updateFormData('cabinets', e.target.value)} />
                       <div className="font-semibold">Downgrade: Melamine</div>
+                      <div className="text-sm text-gray-600">Cost-saving alternative</div>
                     </label>
                   </div>
                 </div>
 
-                {/* Headboard */}
+                {/* Walls */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Custom Headboard</label>
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <label className={`p-4 border rounded-lg cursor-pointer ${formData.headboard==='melamine'?'border-[#D4AF37] bg-[#D4AF37]/10':'border-gray-300'}`}>
-                      <input type="radio" name="headboard" value="melamine" className="sr-only" checked={formData.headboard==='melamine'} onChange={(e)=>updateFormData('headboard', e.target.value)} />
-                      <div className="font-semibold">Base: Melamine</div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Walls</label>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <label className={`p-4 border rounded-lg cursor-pointer ${formData.wallsFinish==='drywall'?'border-[#D4AF37] bg-[#D4AF37]/10':'border-gray-300'}`}>
+                      <input type="radio" name="wallsFinish" value="drywall" className="sr-only" checked={formData.wallsFinish==='drywall'} onChange={(e)=>updateFormData('wallsFinish', e.target.value)} />
+                      <div className="font-semibold">Base: Drywall</div>
+                      <div className="text-sm text-gray-600">Standard drywall with paint options</div>
                     </label>
-                    <label className={`p-4 border rounded-lg cursor-pointer ${formData.headboard==='maple-paint-thermo'?'border-[#D4AF37] bg-[#D4AF37]/10':'border-gray-300'}`}>
-                      <input type="radio" name="headboard" value="maple-paint-thermo" className="sr-only" checked={formData.headboard==='maple-paint-thermo'} onChange={(e)=>updateFormData('headboard', e.target.value)} />
-                      <div className="font-semibold">Upgrade: Maple / Paint / Thermo</div>
+                    <label className={`p-4 border rounded-lg cursor-pointer ${formData.wallsFinish==='woodboard-stained'?'border-[#D4AF37] bg-[#D4AF37]/10':'border-gray-300'}`}>
+                      <input type="radio" name="wallsFinish" value="woodboard-stained" className="sr-only" checked={formData.wallsFinish==='woodboard-stained'} onChange={(e)=>updateFormData('wallsFinish', e.target.value)} />
+                      <div className="font-semibold">Upgrade: Woodboard or Stained</div>
+                      <div className="text-sm text-gray-600">Premium wood finish options</div>
+                    </label>
+                  </div>
+                </div>
+
+                {/* Ceilings */}
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Ceilings</label>
+                  <div className="grid grid-cols-1 gap-4">
+                    <label className="p-4 border border-gray-300 rounded-lg bg-gray-50">
+                      <div className="font-semibold">Base: Tongue & Groove Ceiling</div>
+                      <div className="text-sm text-gray-600">Included in base package</div>
                     </label>
                   </div>
                 </div>
@@ -1204,25 +1345,35 @@ export default function QuoteBuilderPage() {
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <label className={`p-4 border rounded-lg cursor-pointer ${formData.flooring==='vinyl-glue-down'?'border-[#D4AF37] bg-[#D4AF37]/10':'border-gray-300'}`}>
                       <input type="radio" name="flooring" value="vinyl-glue-down" className="sr-only" checked={formData.flooring==='vinyl-glue-down'} onChange={(e)=>updateFormData('flooring', e.target.value)} />
-                      <div className="font-semibold">Base: Vinyl Glue Down</div>
+                      <div className="font-semibold">Base: Vinyl Glue-Down</div>
+                      <div className="text-sm text-gray-600">Various color and price points</div>
                     </label>
                     <label className={`p-4 border rounded-lg cursor-pointer ${formData.flooring==='vinyl-upgrade'?'border-[#D4AF37] bg-[#D4AF37]/10':'border-gray-300'}`}>
                       <input type="radio" name="flooring" value="vinyl-upgrade" className="sr-only" checked={formData.flooring==='vinyl-upgrade'} onChange={(e)=>updateFormData('flooring', e.target.value)} />
-                      <div className="font-semibold">Upgrade: Better Vinyl / Click</div>
+                      <div className="font-semibold">Upgrade: Better Vinyl/Click</div>
+                      <div className="text-sm text-gray-600">Enhanced vinyl options</div>
                     </label>
                     <label className={`p-4 border rounded-lg cursor-pointer ${formData.flooring==='engineered-hardwood'?'border-[#D4AF37] bg-[#D4AF37]/10':'border-gray-300'}`}>
                       <input type="radio" name="flooring" value="engineered-hardwood" className="sr-only" checked={formData.flooring==='engineered-hardwood'} onChange={(e)=>updateFormData('flooring', e.target.value)} />
-                      <div className="font-semibold">Upgrade: Engineered Hardwood + Vinyl Tile</div>
+                      <div className="font-semibold">Upgrade: Engineered Hardwood</div>
+                      <div className="text-sm text-gray-600">Premium hardwood + vinyl tile</div>
                     </label>
                   </div>
                 </div>
 
-                {/* Blinds */}
+                {/* Lighting */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Blinds</label>
-                  <div className="flex items-center gap-3">
-                    <input type="checkbox" checked={formData.blinds} onChange={(e)=>updateFormData('blinds', e.target.checked)} className="w-5 h-5" />
-                    <span className="text-gray-700">Add blinds (none in base model)</span>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Lighting</label>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <label className="p-4 border border-gray-300 rounded-lg bg-gray-50">
+                      <div className="font-semibold">Base: Pot Lights</div>
+                      <div className="text-sm text-gray-600">Throughout the home</div>
+                    </label>
+                    <label className={`p-4 border rounded-lg cursor-pointer ${formData.addCeilingFans?'border-[#D4AF37] bg-[#D4AF37]/10':'border-gray-300'}`}>
+                      <input type="checkbox" checked={formData.addCeilingFans} onChange={(e)=>updateFormData('addCeilingFans', e.target.checked)} className="sr-only" />
+                      <div className="font-semibold">Upgrade: Ceiling Fans</div>
+                      <div className="text-sm text-gray-600">+$540 – $660 per bedroom</div>
+                    </label>
                   </div>
                 </div>
 
@@ -1232,45 +1383,89 @@ export default function QuoteBuilderPage() {
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <label className={`p-4 border rounded-lg cursor-pointer ${formData.faucets==='black'?'border-[#D4AF37] bg-[#D4AF37]/10':'border-gray-300'}`}>
                       <input type="radio" name="faucets" value="black" className="sr-only" checked={formData.faucets==='black'} onChange={(e)=>updateFormData('faucets', e.target.value)} />
-                      <div className="font-semibold">Base: Black</div>
+                      <div className="font-semibold">Base: Black Fixtures</div>
+                      <div className="text-sm text-gray-600">Kitchen faucets & sinks in black</div>
                     </label>
                     <label className={`p-4 border rounded-lg cursor-pointer ${formData.faucets==='bronze'?'border-[#D4AF37] bg-[#D4AF37]/10':'border-gray-300'}`}>
                       <input type="radio" name="faucets" value="bronze" className="sr-only" checked={formData.faucets==='bronze'} onChange={(e)=>updateFormData('faucets', e.target.value)} />
-                      <div className="font-semibold">Upgrade: Bronze (+$450 – $600)</div>
+                      <div className="font-semibold">Upgrade: Bronze</div>
+                      <div className="text-sm text-gray-600">+$450 – $600</div>
                     </label>
                     <label className={`p-4 border rounded-lg cursor-pointer ${formData.faucets==='stainless'?'border-[#D4AF37] bg-[#D4AF37]/10':'border-gray-300'}`}>
                       <input type="radio" name="faucets" value="stainless" className="sr-only" checked={formData.faucets==='stainless'} onChange={(e)=>updateFormData('faucets', e.target.value)} />
-                      <div className="font-semibold">Downgrade: Stainless (-$300 – -$200)</div>
+                      <div className="font-semibold">Downgrade: Stainless</div>
+                      <div className="text-sm text-gray-600">-$300 – -$200 credit</div>
                     </label>
                   </div>
                 </div>
 
-                {/* Lights */}
+                {/* Kitchen & Bath Tile */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Lighting</label>
-                  <div className="flex items-center gap-3 mb-2">
-                    <input type="checkbox" checked={formData.addCeilingFans} onChange={(e)=>updateFormData('addCeilingFans', e.target.checked)} className="w-5 h-5" />
-                    <span className="text-gray-700">Add bedroom ceiling fan (+$540 – $660 each bedroom)</span>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <input type="checkbox" checked={formData.addBedroomFixtures} onChange={(e)=>updateFormData('addBedroomFixtures', e.target.checked)} className="w-5 h-5" />
-                    <span className="text-gray-700">Upgrade fixtures in bedroom (+$450 – $550 each bedroom)</span>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Kitchen & Bath Tile</label>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <label className="p-4 border border-gray-300 rounded-lg bg-gray-50">
+                      <div className="font-semibold">Base: Tile Features</div>
+                      <div className="text-sm text-gray-600">Shower surround + kitchen/bath backsplash</div>
+                    </label>
+                    <label className={`p-4 border rounded-lg cursor-pointer ${formData.addBedroomFixtures?'border-[#D4AF37] bg-[#D4AF37]/10':'border-gray-300'}`}>
+                      <input type="checkbox" checked={formData.addBedroomFixtures} onChange={(e)=>updateFormData('addBedroomFixtures', e.target.checked)} className="sr-only" />
+                      <div className="font-semibold">Upgrade: Enhanced Tile</div>
+                      <div className="text-sm text-gray-600">+$450 – $550 per bedroom</div>
+                    </label>
                   </div>
                 </div>
 
-                {/* Walls & Ceiling */}
+                {/* Windows */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Walls & Ceiling</label>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-2">
-                    <label className={`p-4 border rounded-lg cursor-pointer ${formData.wallsFinish==='plywood-base'?'border-[#D4AF37] bg-[#D4AF37]/10':'border-gray-300'}`}>
-                      <input type="radio" name="wallsFinish" value="plywood-base" className="sr-only" checked={formData.wallsFinish==='plywood-base'} onChange={(e)=>updateFormData('wallsFinish', e.target.value)} />
-                      <div className="font-semibold">Base: Plywood Walls & Ceiling</div>
-                      <div className="text-sm text-gray-600">Options: maple, oak, birch; painted, stained, clear coat</div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Windows</label>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <label className="p-4 border border-gray-300 rounded-lg bg-gray-50">
+                      <div className="font-semibold">Base: Triple-Glaze Windows</div>
+                      <div className="text-sm text-gray-600">Black windows with paint/stain options</div>
+                    </label>
+                    <label className={`p-4 border rounded-lg cursor-pointer ${formData.floorToCeilingWindows?'border-[#D4AF37] bg-[#D4AF37]/10':'border-gray-300'}`}>
+                      <input type="checkbox" checked={formData.floorToCeilingWindows} onChange={(e)=>updateFormData('floorToCeilingWindows', e.target.checked)} className="sr-only" />
+                      <div className="font-semibold">Upgrade: Floor-to-Ceiling</div>
+                      <div className="text-sm text-gray-600">Large opening options available</div>
                     </label>
                   </div>
-                  <div className="flex items-center gap-3">
-                    <input type="checkbox" checked={formData.tongueAndGrooveCeiling} onChange={(e)=>updateFormData('tongueAndGrooveCeiling', e.target.checked)} className="w-5 h-5" />
-                    <span className="text-gray-700">Upgrade ceiling to tongue and groove (+$4,050 – $4,950)</span>
+                </div>
+
+                {/* Paint */}
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Paint</label>
+                  <div className="grid grid-cols-1 gap-4">
+                    <label className="p-4 border border-gray-300 rounded-lg bg-gray-50">
+                      <div className="font-semibold">Base: All Colors Included</div>
+                      <div className="text-sm text-gray-600">Complete paint selection at no extra cost</div>
+                    </label>
+                  </div>
+                </div>
+
+                {/* Appliances */}
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Appliances</label>
+                  <div className="grid grid-cols-1 gap-4">
+                    <label className="p-4 border border-gray-300 rounded-lg bg-gray-50">
+                      <div className="font-semibold">Base: Not Included</div>
+                      <div className="text-sm text-gray-600">Appliances can be added as upgrades</div>
+                    </label>
+                  </div>
+                </div>
+
+                {/* Additional Options */}
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Additional Options</label>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <label className={`p-4 border rounded-lg cursor-pointer ${formData.blinds?'border-[#D4AF37] bg-[#D4AF37]/10':'border-gray-300'}`}>
+                      <input type="checkbox" checked={formData.blinds} onChange={(e)=>updateFormData('blinds', e.target.checked)} className="sr-only" />
+                      <div className="font-semibold">Window Coverings</div>
+                      <div className="text-sm text-gray-600">Blinds and shades (multiple options)</div>
+                    </label>
+                    <label className="p-4 border border-gray-300 rounded-lg bg-gray-50">
+                      <div className="font-semibold">Feature Surfaces</div>
+                      <div className="text-sm text-gray-600">Accent walls, barnwood, specialty boards</div>
+                    </label>
                   </div>
                 </div>
               </div>
@@ -1304,26 +1499,35 @@ export default function QuoteBuilderPage() {
                  {[
                    { value: 'solar', label: 'Solar Panels', description: 'Reduce energy costs with solar power' },
                    { value: 'loft', label: 'Loft (Additional Floor Space)', description: 'Increase living space' },
-                   { value: 'deck', label: 'Deck (Outdoor Living Space)', description: 'Extend your living area outdoors' },
+                   { value: 'deck', label: 'Deck (Outdoor Living Space) (within the range of 150km)', description: 'Extend your living area outdoors' },
                    { value: 'appliances', label: 'Upgraded Appliances', description: 'High-end kitchen and laundry appliances' },
                    { value: 'smart-home', label: 'Smart Home Package', description: 'Automated lighting, security, and climate control' },
+                   { value: 'off-grid', label: 'Off-Grid Package', description: 'Self-sufficient systems', comingSoon: true },
+                   { value: 'ac', label: 'Air Conditioning (range 150 km)', description: 'Climate control for your home' },
+                   { value: 'fireplace', label: 'Fireplace (Gas / Electric / Wood)', description: 'Select type during consultation' },
                     
                  ].map((addon) => (
-                   <label key={addon.value} className={`flex items-center p-4 border-2 rounded-lg cursor-pointer transition-all duration-200 hover:shadow-md ${
+                   <label key={addon.value} className={`flex items-center p-4 border-2 rounded-lg transition-all duration-200 ${
+                     addon.comingSoon ? 'opacity-60 cursor-not-allowed' : 'cursor-pointer hover:shadow-md'
+                   } ${
                      formData.addons.includes(addon.value) 
                        ? 'border-[#D4AF37] bg-[#D4AF37]/10 shadow-md' 
-                       : 'border-gray-300 hover:border-[#D4AF37]/50'
+                       : 'border-gray-300 ' + (addon.comingSoon ? '' : 'hover:border-[#D4AF37]/50')
                    }`}>
                      <input
                        type="checkbox"
                        checked={formData.addons.includes(addon.value)}
-                       onChange={() => toggleAddon(addon.value)}
+                       onChange={() => { if (!addon.comingSoon) toggleAddon(addon.value) }}
+                       disabled={addon.comingSoon}
                        className="mr-4 w-5 h-5 text-[#D4AF37] focus:ring-[#D4AF37]"
                      />
                       <div className="flex-1">
                        <div className="flex items-center justify-between mb-2">
                           <div className="flex items-center">
                             <span className="font-semibold text-[#2D2D2D]">{addon.label}</span>
+                            {addon.comingSoon && (
+                              <span className="ml-2 inline-block px-2 py-0.5 text-xs font-semibold rounded-full bg-yellow-100 text-yellow-800 border border-yellow-200">Coming Soon</span>
+                            )}
                           </div>
                           <span className="font-bold text-[#D4AF37] text-lg">
                             {(() => { const r = addOnRanges[addon.value]; return r ? `+$${formatCurrency(r.min)} - $${formatCurrency(r.max)}` : '' })()}
@@ -1347,6 +1551,9 @@ export default function QuoteBuilderPage() {
                           'deck': 'Deck',
                           'appliances': 'Upgraded Appliances',
                           'smart-home': 'Smart Home Package',
+                          'off-grid': 'Off-Grid Package',
+                          'ac': 'Air Conditioning',
+                          'fireplace': 'Fireplace',
                         }
                          const r = addOnRanges[addon]
                          if (!r || !labels[addon]) return null
@@ -1368,7 +1575,7 @@ export default function QuoteBuilderPage() {
               <h2 className="text-2xl font-bold text-[#2D2D2D] mb-6">Budget Range</h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {[
-                  '$75,000 - $125,000',
+                  '$99,000 - $125,000',
                   '$125,000 - $200,000',
                   '$200,000 - $300,000',
                   '$300,000+'
@@ -1454,13 +1661,7 @@ export default function QuoteBuilderPage() {
                   { value: '1', label: '1 Home' },
                   { value: '2', label: '2 Homes' },
                   { value: '3', label: '3 Homes' },
-                  { value: '4', label: '4 Homes' },
-                  { value: '5', label: '5 Homes' },
-                  { value: '6', label: '6 Homes' },
-                  { value: '7', label: '7 Homes' },
-                  { value: '8', label: '8 Homes' },
-                  { value: '9', label: '9 Homes' },
-                  { value: '10', label: '10 Homes' }
+                  { value: '4+', label: '4+ Homes' }
                 ].map((option) => (
                   <label key={option.value} className="flex items-center p-4 border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50">
                     <input
@@ -1468,13 +1669,40 @@ export default function QuoteBuilderPage() {
                       name="numberOfHomes"
                       value={option.value}
                       checked={formData.numberOfHomes === option.value}
-                      onChange={(e) => updateFormData('numberOfHomes', e.target.value)}
+                      onChange={(e) => {
+                        updateFormData('numberOfHomes', e.target.value)
+                        // Clear custom number if not selecting 4+
+                        if (e.target.value !== '4+') {
+                          updateFormData('customNumberOfHomes', '')
+                        }
+                      }}
                       className="mr-3"
                     />
                     <span>{option.label}</span>
                   </label>
                 ))}
               </div>
+              
+              {/* Custom Number Input for 4+ Homes */}
+              {formData.numberOfHomes === '4+' && (
+                <div className="mt-6 p-4 border border-gray-300 rounded-lg bg-gray-50">
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    How many homes do you intend to purchase?
+                  </label>
+                  <input
+                    type="number"
+                    min="4"
+                    max="100"
+                    value={formData.customNumberOfHomes || ''}
+                    onChange={(e) => updateFormData('customNumberOfHomes', e.target.value)}
+                    placeholder="Enter number of homes (4 or more)"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#D4AF37] focus:border-transparent"
+                  />
+                  <p className="text-sm text-gray-500 mt-1">
+                    Please enter a number between 4 and 100
+                  </p>
+                </div>
+              )}
             </div>
           )}
 
@@ -1482,7 +1710,7 @@ export default function QuoteBuilderPage() {
            {currentStep === 13 && (
              <div>
                <h2 className="text-2xl font-bold text-[#2D2D2D] mb-6">Financing</h2>
-               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
                  {[
                    { value: 'cash', label: 'Cash Payment' },
                    { value: 'bank-financing', label: 'Bank Financing' },
@@ -1501,6 +1729,31 @@ export default function QuoteBuilderPage() {
                      <span>{option.label}</span>
                    </label>
                  ))}
+               </div>
+
+               {/* Financing Help Question */}
+               <div className="mt-6">
+                 <label className="block text-sm font-medium text-gray-700 mb-3">
+                   Do you need help getting financing?
+                 </label>
+                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                   {[
+                     { value: 'yes', label: 'Yes, I need help with financing' },
+                     { value: 'no', label: 'No, I can handle financing myself' }
+                   ].map((option) => (
+                     <label key={option.value} className="flex items-center p-4 border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50">
+                       <input
+                         type="radio"
+                         name="needsFinancingHelp"
+                         value={option.value}
+                         checked={formData.needsFinancingHelp === option.value}
+                         onChange={(e) => updateFormData('needsFinancingHelp', e.target.value)}
+                         className="mr-3"
+                       />
+                       <span>{option.label}</span>
+                     </label>
+                   ))}
+                 </div>
                </div>
 
                 {/* Final Price Display */}

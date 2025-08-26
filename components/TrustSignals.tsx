@@ -1,16 +1,17 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
+import { Home, Users, Award, Heart } from 'lucide-react'
 
 export function TrustSignals() {
   const [isVisible, setIsVisible] = useState(false)
   const sectionRef = useRef<HTMLElement>(null)
 
   const stats = [
-    { number: "500+", label: "Homes Delivered", icon: "🏠" },
-    { number: "25+", label: "Communities Served", icon: "🏘️" },
-    { number: "15+", label: "Years Experience", icon: "⭐" },
-    { number: "99%", label: "Customer Satisfaction", icon: "❤️" }
+    { number: "100+", label: "Homes Delivered", icon: <Home className="w-6 h-6" /> },
+    { number: "10+", label: "Communities Served", icon: <Users className="w-6 h-6" /> },
+    { number: "15+", label: "Years Experience", icon: <Award className="w-6 h-6" /> },
+    { number: "99%", label: "Customer Satisfaction", icon: <Heart className="w-6 h-6" /> }
   ]
 
   useEffect(() => {
@@ -50,7 +51,7 @@ export function TrustSignals() {
               style={{animationDelay: `${index * 0.1}s`}}
             >
               <div className="card-body text-center">
-                <div className="text-2xl mb-2 group-hover:scale-110 transition-transform duration-300">
+                <div className="text-2xl mb-2 group-hover:scale-110 transition-transform duration-300 flex items-center justify-center text-discovery-white">
                   {stat.icon}
                 </div>
                 <div className={`text-3xl md:text-4xl font-bold text-gradient mb-2 transition-all duration-1000 ${
