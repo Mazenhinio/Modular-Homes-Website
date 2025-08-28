@@ -1,5 +1,6 @@
 import { Metadata } from 'next'
 import Link from 'next/link'
+import Image from 'next/image'
 import { ArrowLeft, Check } from 'lucide-react'
 import CustomBuildsCarousel from '@/components/CustomBuildsCarousel'
 
@@ -10,6 +11,30 @@ export const metadata: Metadata = {
 
 export default function CustomBuildsPage() {
   const customImages = [
+    {
+      src: '/images/new-content/Custom Builds/CB-ResortCluster-Hero__Resort Cluster – Hero__Resort Cluster__v01.webp',
+      alt: 'Resort Cluster Custom Build',
+      title: 'Resort Cluster Development',
+      description: 'Multiple modular units designed for resort and rental properties'
+    },
+    {
+      src: '/images/new-content/Custom Builds/CB-LakesideRetreat-Hero__Lakeside-Retreat–Hero__CustomBuild__v01.webp',
+      alt: 'Lakeside Retreat Custom Build',
+      title: 'Lakeside Retreat',
+      description: 'Custom modular home designed for lakeside living and relaxation'
+    },
+    {
+      src: '/images/new-content/Custom Builds/cb lakeside.webp',
+      alt: 'Lakeside Custom Build',
+      title: 'Lakeside Custom Home',
+      description: 'Beautiful lakeside custom modular home with scenic views'
+    },
+    {
+      src: '/images/new-content/Custom Builds/cb coastal.webp',
+      alt: 'Coastal Custom Build',
+      title: 'Coastal Custom Home',
+      description: 'Custom modular home designed for coastal environments'
+    },
     {
       src: '/images/custom/1000017133.webp',
       alt: 'Custom Modular Home Design 1',
@@ -195,25 +220,37 @@ export default function CustomBuildsPage() {
   return (
     <>
       {/* Hero Section */}
-      <section className="relative py-20 bg-gradient-to-br from-discovery-charcoal via-discovery-charcoal-light to-discovery-charcoal text-discovery-white">
-        <div className="container-custom">
+      <section className="relative py-20 sm:py-24 md:py-28 text-discovery-white overflow-hidden">
+        {/* Background Image */}
+        <div className="absolute inset-0 z-0">
+          <Image
+            src="/images/new-content/Custom Builds/CB-LakesideRetreat-Front__Lakeside-Retreat__CustomBuild__v01.webp"
+            alt="Lakeside Retreat Front View - Custom Modular Home"
+            fill
+            className="object-cover"
+            priority
+          />
+          <div className="absolute inset-0 bg-gradient-to-br from-discovery-charcoal/90 via-discovery-charcoal/80 to-discovery-charcoal/90" />
+        </div>
+        
+        <div className="container-custom relative z-10 px-4 sm:px-6 py-8">
           <div className="max-w-4xl mx-auto">
             <Link 
               href="/our-builds"
-              className="inline-flex items-center text-discovery-gold hover:text-discovery-gold-light mb-8 transition-colors"
+              className="inline-flex items-center text-discovery-gold hover:text-discovery-gold-light mb-8 sm:mb-10 transition-colors"
             >
               <ArrowLeft className="mr-2" size={20} />
               Back to Our Builds
             </Link>
             
             <div className="text-center">
-              <h1 className="text-4xl md:text-6xl font-serif font-bold mb-6 text-discovery-lime nature-shimmer">
+              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-serif font-bold mb-6 sm:mb-8 text-discovery-lime nature-shimmer leading-normal pt-4 pb-2">
                 Custom Build Options
               </h1>
-              <p className="text-xl md:text-2xl leading-relaxed mb-8 text-discovery-sage">
+              <p className="text-lg sm:text-xl md:text-2xl leading-relaxed mb-6 sm:mb-8 text-discovery-sage max-w-3xl mx-auto">
                 Fully tailored modular homes crafted to fit your unique needs, land, and vision.
               </p>
-              <p className="text-lg text-discovery-forest max-w-3xl mx-auto">
+              <p className="text-base sm:text-lg text-discovery-forest max-w-3xl mx-auto leading-relaxed">
                 From larger family compounds to off-grid retreats, net-zero energy homes to culturally-specific Indigenous designs — we bring your dream home to life.
               </p>
             </div>
@@ -237,11 +274,11 @@ export default function CustomBuildsPage() {
             <CustomBuildsCarousel images={customImages} />
           </div>
 
-          <div className="text-center mt-8">
-            <p className="text-discovery-gold font-semibold">
-              ✨ Interactive 3D Carousel • Click to Enlarge • Auto-Advancing Gallery
-            </p>
-          </div>
+                     <div className="text-center mt-8">
+             <p className="text-discovery-gold font-semibold">
+               ✨ Interactive 3D Carousel • Click to Enlarge • Full Gallery
+             </p>
+           </div>
         </div>
       </section>
 

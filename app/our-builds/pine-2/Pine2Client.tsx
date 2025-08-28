@@ -30,17 +30,13 @@ export function Pine2Client() {
   ]
 
   const gallery = [
-    { src: '/images/pine2/Front Elevation.webp', alt: 'Spruce Front Elevation View' },
-    { src: '/images/pine2/Rear Elevation.webp', alt: 'Spruce Rear Elevation View' },
-    { src: '/images/pine2/Kitchen.webp', alt: 'Spruce Modern Kitchen' },
-    { src: '/images/pine2/Primary Bedroom.webp', alt: 'Spruce Primary Bedroom' },
-    { src: '/images/pine2/Living Room.webp', alt: 'Spruce Living Room' },
-    { src: '/images/pine2/Upper Floor.webp', alt: 'Spruce Upper Floor Loft' },
-    { src: '/images/pine2/Main Floor.webp', alt: 'Spruce Main Floor Layout' },
-    { src: '/images/pine2/Main Floor Detailed.webp', alt: 'Spruce Detailed Main Floor' },
-    { src: '/images/pine2/Loft Plan.webp', alt: 'Spruce Loft Plan Overview' },
-    { src: '/images/pine2/Loft Plan Detailed.webp', alt: 'Spruce Detailed Loft Plan' },
-    { src: '/images/pine2/Floor plan.webp', alt: 'Spruce Complete Floor Plan' }
+    { src: '/images/new-content/Pine 2- Spruce/XF pine 2 cedar front right .webp', alt: 'Spruce Cedar Front Right View' },
+    { src: '/images/new-content/Pine 2- Spruce/XF pine 2 cedar front left.webp', alt: 'Spruce Cedar Front Left View' },
+    { src: '/images/new-content/Pine 2- Spruce/IF pine1-kitchen-E&S.webp', alt: 'Spruce Earth & Sky Kitchen' },
+    { src: '/images/new-content/Pine 2- Spruce/IF pine1-bedroom-E&S.webp', alt: 'Spruce Earth & Sky Bedroom' },
+    { src: '/images/new-content/Pine 2- Spruce/IF pine1-bedroom-IC.webp', alt: 'Spruce Indigenous Collection Bedroom' },
+    { src: '/images/new-content/Pine 2- Spruce/IFpine1-living-E&S.webp', alt: 'Spruce Earth & Sky Living Room' },
+    { src: '/images/new-content/Pine 2- Spruce/IF Pine1-bathrrom-IC.webp', alt: 'Spruce Indigenous Collection Bathroom' }
   ]
 
   const pdfDownloads = [
@@ -112,7 +108,7 @@ export function Pine2Client() {
                 <span className="text-discovery-white-soft">•</span>
                 <span className="text-discovery-white-soft">The Versatile One</span>
               </div>
-              <h1 className="text-4xl md:text-6xl font-serif font-bold mb-6 text-discovery-lime nature-shimmer">
+              <h1 className="text-4xl md:text-6xl font-serif font-bold mb-6 text-discovery-lime nature-shimmer leading-normal pt-4 pb-2">
                 Spruce — The Versatile One
               </h1>
               <p className="text-xl md:text-2xl leading-relaxed mb-8 text-discovery-sage">

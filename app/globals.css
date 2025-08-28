@@ -743,6 +743,17 @@
   100% { background-position: 200% 0; }
 }
 
+@keyframes fadeIn {
+  0% { 
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  100% { 
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
 .leaf-sway {
   animation: leafSway 15s ease-in-out infinite;
 }
@@ -758,6 +769,10 @@
   -webkit-text-fill-color: transparent;
   background-clip: text;
   animation: natureShimmer 15s infinite;
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.5s ease-out;
 }
 
 /* Green accent utilities */

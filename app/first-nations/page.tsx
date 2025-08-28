@@ -44,7 +44,7 @@ export default function FirstNationsLandingPage() {
         {/* Background Image */}
         <div className="absolute inset-0">
           <Image
-            src="/images/hero-carousel/hero-slide-1.webp"
+            src="/images/new-content/Landing Page - Indigenous/CB indegen1_bloom_low_6x.webp"
             alt="First Nations Community Housing"
             fill
             className="object-cover"
@@ -184,17 +184,17 @@ export default function FirstNationsLandingPage() {
               {
                 title: "Nak'azdli Whut'en First Nation",
                 description: "20 sustainable modular homes built with cultural consultation",
-                image: "/images/hero-carousel/hero-slide-2.webp"
+                image: "/images/new-content/Landing Page - Indigenous/LP-IND-4__Cultural touch – mural__Indigenous Communities__v01.webp"
               },
               {
                 title: "Tla'amin Nation",
                 description: "Community center and residential complex with traditional design elements",
-                image: "/images/hero-carousel/hero-slide-3.webp"
+                image: "/images/new-content/Landing Page - Indigenous/LP-IND-6__Interior lifestyle—Grandmother baking bannock__Indigenous Communities__v01.webp"
               },
               {
                 title: "Ktunaxa Nation",
                 description: "Energy-efficient homes incorporating local materials and cultural motifs",
-                image: "/images/hero-carousel/hero-slide-4.webp"
+                image: "/images/new-content/Landing Page - Indigenous/CB indegen.webp"
               }
             ].map((story, index) => (
               <div key={index} className="bg-discovery-charcoal-light rounded-2xl overflow-hidden shadow-2xl">

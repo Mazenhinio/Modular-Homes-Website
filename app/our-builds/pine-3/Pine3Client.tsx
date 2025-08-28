@@ -30,14 +30,11 @@ export function Pine3Client() {
   ]
 
   const gallery = [
-          { src: '/images/pine3/exterior-front.webp', alt: 'Willow Front Exterior View' },
-      { src: '/images/pine3/exterior-front-alt.webp', alt: 'Willow Alternative Front View' },
-      { src: '/images/pine3/exterior-rear.webp', alt: 'Willow Rear Exterior View' },
-      { src: '/images/pine3/kitchen.webp', alt: 'Willow Compact Kitchen' },
-      { src: '/images/pine3/living-room.webp', alt: 'Willow Living Room' },
-      { src: '/images/pine3/loft.webp', alt: 'Willow Loft Bedroom' },
-      { src: '/images/pine3/main-floor-plan.webp', alt: 'Willow Main Floor Plan' },
-      { src: '/images/pine3/loft-floor-plan.webp', alt: 'Willow Loft Floor Plan' }
+    { src: '/images/new-content/Pine 3- Willow/XF pine 3 scandanavian front right .webp', alt: 'Willow Scandinavian Front Right View' },
+    { src: '/images/new-content/Pine 3- Willow/IF pine 3 Nordic Whitw.webp', alt: 'Willow Nordic White Exterior' },
+    { src: '/images/new-content/Pine 3- Willow/IF Pine3-kitchen-E&S.webp', alt: 'Willow Earth & Sky Kitchen' },
+    { src: '/images/new-content/Pine 3- Willow/IF Pine3-kitchen-NW.webp', alt: 'Willow Nordic White Kitchen' },
+    { src: '/images/new-content/Pine 3- Willow/IF Pine3-room-E&S.webp', alt: 'Willow Earth & Sky Living Room' }
   ]
 
   const pdfDownloads = [

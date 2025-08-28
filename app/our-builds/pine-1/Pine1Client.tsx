@@ -30,13 +30,12 @@ export function Pine1Client() {
   ]
 
   const gallery = [
-          { src: '/images/pine1/exterior-1.webp', alt: 'Pine Front Exterior View' },
-      { src: '/images/pine1/exterior-2.webp', alt: 'Pine Side Exterior View' },
-      { src: '/images/pine1/kitchen.webp', alt: 'Pine Modern Kitchen' },
-      { src: '/images/pine1/bedroom.webp', alt: 'Pine Spacious Bedroom' },
-      { src: '/images/pine1/living-room.webp', alt: 'Pine Living Room' },
-      { src: '/images/pine1/Loft.webp', alt: 'Pine Loft Space' },
-      { src: '/images/pine1/Main Floor.webp', alt: 'Pine Main Floor Layout' }
+    { src: '/images/new-content/PIne 1 - Pine/xf pine 1 front right scandanavian.webp', alt: 'Pine Front Right Scandinavian View' },
+    { src: '/images/new-content/PIne 1 - Pine/XF pien 1 and 2 charcoal.webp', alt: 'Pine and Spruce Charcoal Exterior' },
+    { src: '/images/new-content/PIne 1 - Pine/IF Pine 1 - nordic white - living room.webp', alt: 'Pine Nordic White Living Room' },
+    { src: '/images/new-content/PIne 1 - Pine/IF pine1-kitchen-NW.webp', alt: 'Pine Nordic White Kitchen' },
+    { src: '/images/new-content/PIne 1 - Pine/IF pine1-bedroom-NW.webp', alt: 'Pine Nordic White Bedroom' },
+    { src: '/images/new-content/PIne 1 - Pine/IF Pine1-bathroom-NW.webp', alt: 'Pine Nordic White Bathroom' }
   ]
 
   const pdfDownloads = [

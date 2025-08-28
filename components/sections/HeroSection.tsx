@@ -11,12 +11,12 @@ export function HeroSection() {
   
   const slides = [
     {
-      image: '/images/hero-carousel/hero-slide-1.webp',
+      image: '/images/new-content/Home Page Hero Carousel/H1__Forest Sunrise__Pine 1__v01.webp',
       title: 'Smart, Sustainable Modular Homes',
       subtitle: 'Built for Western Canada'
     },
     {
-      image: '/images/hero-carousel/hero-slide-2.webp',
+      image: '/images/new-content/Home Page Hero Carousel/H3.webp',
       title: 'Culturally-Respectful Design',
       subtitle: 'Honoring Indigenous Communities'
     },
@@ -151,20 +151,20 @@ export function HeroSection() {
       </button>
 
       {/* Text Content - Smooth animation */}
-      <div className={`absolute inset-0 flex items-center justify-center z-10 transition-all duration-700 ease-out overflow-visible ${
+      <div className={`absolute inset-0 flex items-center justify-center z-10 transition-all duration-700 ease-out overflow-visible pt-16 sm:pt-20 ${
         showText 
           ? 'opacity-100 translate-y-0' 
           : 'opacity-0 translate-y-8 pointer-events-none'
       }`}>
-        <div className={`text-center text-yellow-400 max-w-4xl px-4 sm:px-6 py-8 sm:py-12 md:py-16 mb-8 sm:mb-12 md:mb-16 transition-all duration-500 ease-out delay-100 relative ${
+        <div className={`text-center text-yellow-400 max-w-4xl px-6 sm:px-8 py-12 sm:py-16 md:py-20 transition-all duration-500 ease-out delay-100 relative mx-4 sm:mx-6 ${
           showText ? 'scale-100' : 'scale-95'
         }`}>
           {/* Dark backdrop for better contrast */}
-          <div className="absolute inset-0 bg-black/14 rounded-3xl -z-10 -m-6"></div>
+          <div className="absolute inset-0 bg-black/14 rounded-3xl -z-10 -m-2 sm:-m-4 md:-m-6"></div>
           
-          <h1 className={`text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black mb-4 sm:mb-6 leading-tight transition-all duration-600 ease-out drop-shadow-2xl text-discovery-lime nature-shimmer ${
-            showText ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4'
-          }`}>
+                                  <h1 className={`text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black mb-4 sm:mb-6 leading-[1.1] sm:leading-tight transition-all duration-600 ease-out drop-shadow-2xl text-discovery-lime nature-shimmer leading-normal pt-4 pb-2 ${
+                          showText ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4'
+                        }`}>
             {slides[currentSlide].title}
           </h1>
           <p className={`text-lg sm:text-xl md:text-2xl mb-3 sm:mb-4 font-bold transition-all duration-600 ease-out delay-100 text-discovery-sage ${

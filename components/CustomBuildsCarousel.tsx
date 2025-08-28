@@ -69,7 +69,7 @@ export default function CustomBuildsCarousel({ images }: CustomBuildsCarouselPro
   return (
     <>
       {/* 3D Carousel */}
-      <div className="relative w-full h-[600px] overflow-hidden rounded-2xl bg-gradient-to-br from-discovery-charcoal to-discovery-charcoal-light">
+      <div className="relative w-full h-[500px] sm:h-[600px] md:h-[700px] overflow-hidden rounded-2xl bg-gradient-to-br from-discovery-charcoal to-discovery-charcoal-light">
         {/* Background Pattern */}
         <div className="absolute inset-0 opacity-10">
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(212,175,55,0.1)_0%,transparent_50%)]" />
@@ -80,18 +80,20 @@ export default function CustomBuildsCarousel({ images }: CustomBuildsCarouselPro
           {/* Previous Button */}
           <button
             onClick={prevImage}
-            className="absolute left-4 z-20 p-3 bg-discovery-gold/20 backdrop-blur-sm rounded-full text-discovery-white hover:bg-discovery-gold/40 transition-all duration-300 hover:scale-110"
+            className="absolute left-2 sm:left-4 z-20 p-2 sm:p-3 bg-discovery-gold/20 backdrop-blur-sm rounded-full text-discovery-white hover:bg-discovery-gold/40 transition-all duration-300 hover:scale-110 focus:outline-none focus:ring-2 focus:ring-discovery-gold focus:ring-offset-2 focus:ring-offset-discovery-charcoal"
           >
-            <ChevronLeft size={24} />
+            <ChevronLeft size={20} className="sm:w-6 sm:h-6" />
           </button>
 
           {/* Next Button */}
           <button
             onClick={nextImage}
-            className="absolute right-4 z-20 p-3 bg-discovery-gold/20 backdrop-blur-sm rounded-full text-discovery-white hover:bg-discovery-gold/40 transition-all duration-300 hover:scale-110"
+            className="absolute right-2 sm:right-4 z-20 p-2 sm:p-3 bg-discovery-gold/20 backdrop-blur-sm rounded-full text-discovery-white hover:bg-discovery-gold/40 transition-all duration-300 hover:scale-110 focus:outline-none focus:ring-2 focus:ring-discovery-gold focus:ring-offset-2 focus:ring-offset-discovery-charcoal"
           >
-            <ChevronRight size={24} />
+            <ChevronRight size={20} className="sm:w-6 sm:h-6" />
           </button>
+
+
 
           {/* Images */}
           {images.map((image, index) => {
@@ -107,14 +109,14 @@ export default function CustomBuildsCarousel({ images }: CustomBuildsCarouselPro
                   isActive
                     ? 'z-10 scale-100 opacity-100 translate-x-0'
                     : isAdjacent
-                    ? 'z-5 scale-75 opacity-60 translate-x-12'
+                    ? 'z-5 scale-75 opacity-60 translate-x-8 sm:translate-x-12 md:translate-x-16'
                     : isFar
-                    ? 'z-0 scale-50 opacity-20 translate-x-24'
-                    : 'z-0 scale-50 opacity-20 -translate-x-24'
-                } ${index < currentIndex ? '-translate-x-12' : index > currentIndex ? 'translate-x-12' : ''}`}
+                    ? 'z-0 scale-50 opacity-20 translate-x-16 sm:translate-x-24 md:translate-x-32'
+                    : 'z-0 scale-50 opacity-20 -translate-x-16 sm:-translate-x-24 md:-translate-x-32'
+                } ${index < currentIndex ? '-translate-x-8 sm:-translate-x-12 md:-translate-x-16' : index > currentIndex ? 'translate-x-8 sm:translate-x-12 md:translate-x-16' : ''}`}
                 onClick={() => openModal(index)}
               >
-                <div className="relative w-80 h-96 rounded-2xl overflow-hidden shadow-2xl transform transition-all duration-300 group-hover:scale-105 group-hover:shadow-discovery-gold/20 bg-discovery-charcoal">
+                <div className="relative w-[320px] h-[384px] sm:w-[384px] sm:h-[460px] md:w-[448px] md:h-[537px] rounded-2xl overflow-hidden shadow-2xl transform transition-all duration-300 group-hover:scale-105 group-hover:shadow-discovery-gold/30 bg-discovery-charcoal">
                   <Image
                     src={image.src}
                     alt={image.alt}
@@ -147,15 +149,15 @@ export default function CustomBuildsCarousel({ images }: CustomBuildsCarouselPro
           {/* Indicators */}
           <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 flex space-x-2 z-20">
             {images.map((_, index) => (
-              <button
-                key={index}
-                onClick={() => setCurrentIndex(index)}
-                className={`w-3 h-3 rounded-full transition-all duration-300 ${
-                  index === currentIndex
-                    ? 'bg-discovery-gold scale-125'
-                    : 'bg-discovery-white/50 hover:bg-discovery-white/80'
-                }`}
-              />
+                              <button
+                  key={index}
+                  onClick={() => setCurrentIndex(index)}
+                  className={`w-4 h-4 rounded-full transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-discovery-gold focus:ring-offset-2 focus:ring-offset-discovery-charcoal ${
+                    index === currentIndex
+                      ? 'bg-discovery-gold scale-125'
+                      : 'bg-discovery-white/50 hover:bg-discovery-white/80'
+                  }`}
+                />
             ))}
           </div>
         </div>
@@ -219,7 +221,7 @@ export default function CustomBuildsCarousel({ images }: CustomBuildsCarouselPro
                   <button
                     key={index}
                     onClick={() => setModalImageIndex(index)}
-                    className={`w-4 h-4 rounded-full transition-all duration-300 ${
+                    className={`w-5 h-5 rounded-full transition-all duration-300 ${
                       index === modalImageIndex
                         ? 'bg-discovery-gold scale-125'
                         : 'bg-discovery-white/50 hover:bg-discovery-white/80'

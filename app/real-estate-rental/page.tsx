@@ -42,7 +42,7 @@ export default function RealEstateRentalLandingPage() {
         {/* Background Image */}
         <div className="absolute inset-0">
           <Image
-            src="/images/hero-carousel/hero-slide-5.webp"
+            src="/images/new-content/Landing Page - Real Estate Rental/CB-ResortCluster-Hero__Resort Cluster – Hero__Resort Cluster__v01.webp"
             alt="Real Estate Rental Investment"
             fill
             className="object-cover"

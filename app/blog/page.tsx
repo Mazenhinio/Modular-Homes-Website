@@ -46,7 +46,7 @@ export default function BlogPage() {
       date: "2024-01-15",
       readTime: "8 min read",
       category: "Rural Living",
-      image: "/images/blog/land-cash-flow-hero.jpg",
+      image: "/images/new-content/Blog/BL-COV-4__Solar-install__No-Model__v01.webp",
       featured: true,
       downloadUrl: "/downloads/roi-calculator.pdf",
       leadMagnetTitle: "Free ROI Calculator",

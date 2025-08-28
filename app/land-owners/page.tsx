@@ -39,7 +39,7 @@ export default function LandOwnersLandingPage() {
         {/* Background Image */}
         <div className="absolute inset-0">
           <Image
-            src="/images/hero-carousel/hero-slide-3.webp"
+            src="/images/new-content/Landing Page- Land Owners/CB-PrairieFarm-Hero__Prairie Farm – Hero__Custom-Build__v01.webp"
             alt="Land Development Investment"
             fill
             className="object-cover"
