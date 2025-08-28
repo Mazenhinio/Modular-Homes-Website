@@ -96,7 +96,7 @@ export function HeroSection() {
   }, [nextSlide, isPlaying])
 
   return (
-    <section className="relative h-screen pt-16 overflow-hidden">
+    <section className="relative min-h-screen h-screen pt-16 overflow-hidden">
       {/* Carousel Background */}
       <div className="absolute inset-0">
         {slides.map((slide, index) => (
@@ -118,36 +118,36 @@ export function HeroSection() {
       {/* Navigation Controls */}
       <button
         onClick={prevSlide}
-        className="absolute left-6 top-1/2 transform -translate-y-1/2 glass-nature text-discovery-lime p-3 rounded-full hover:glow-green transition-all duration-300 z-10 micro-interaction"
+        className="absolute left-2 sm:left-6 top-1/2 transform -translate-y-1/2 glass-nature text-discovery-lime p-2 sm:p-3 rounded-full hover:glow-green transition-all duration-300 z-10 micro-interaction"
       >
-        <ChevronLeft size={24} />
+        <ChevronLeft size={20} className="sm:w-6 sm:h-6" />
       </button>
 
       <button
         onClick={nextSlide}
-        className="absolute right-6 top-1/2 transform -translate-y-1/2 glass-nature text-discovery-lime p-3 rounded-full hover:glow-green transition-all duration-300 z-10 micro-interaction"
+        className="absolute right-2 sm:right-6 top-1/2 transform -translate-y-1/2 glass-nature text-discovery-lime p-2 sm:p-3 rounded-full hover:glow-green transition-all duration-300 z-10 micro-interaction"
       >
-        <ChevronRight size={24} />
+        <ChevronRight size={20} className="sm:w-6 sm:h-6" />
       </button>
 
       {/* Play/Pause Control */}
       <button
         onClick={togglePlayPause}
-        className="absolute top-6 right-6 glass-nature text-discovery-lime p-3 rounded-full hover:glow-green transition-all duration-300 z-10 micro-interaction"
+        className="absolute top-4 sm:top-6 right-4 sm:right-6 glass-nature text-discovery-lime p-2 sm:p-3 rounded-full hover:glow-green transition-all duration-300 z-10 micro-interaction"
       >
-        {isPlaying ? <Pause size={20} /> : <Play size={20} />}
+        {isPlaying ? <Pause size={18} className="sm:w-5 sm:h-5" /> : <Play size={18} className="sm:w-5 sm:h-5" />}
       </button>
 
       {/* Show Text Arrow Button - Smooth animation */}
       <button
         onClick={showTextOverlay}
-        className={`absolute bottom-20 left-1/2 transform -translate-x-1/2 glass-eco text-discovery-lime p-4 rounded-full hover:glow-lime transition-all duration-500 ease-out z-20 growth-pulse ${
+        className={`absolute bottom-16 sm:bottom-20 left-1/2 transform -translate-x-1/2 glass-eco text-discovery-lime p-3 sm:p-4 rounded-full hover:glow-lime transition-all duration-500 ease-out z-20 growth-pulse ${
           !showText 
             ? 'opacity-100 translate-y-0 scale-100 pointer-events-auto' 
             : 'opacity-0 translate-y-4 scale-75 pointer-events-none'
         }`}
       >
-        <ChevronUp size={24} />
+        <ChevronUp size={20} className="sm:w-6 sm:h-6" />
       </button>
 
       {/* Text Content - Smooth animation */}
@@ -156,39 +156,39 @@ export function HeroSection() {
           ? 'opacity-100 translate-y-0' 
           : 'opacity-0 translate-y-8 pointer-events-none'
       }`}>
-        <div className={`text-center text-yellow-400 max-w-4xl px-6 py-16 mb-16 transition-all duration-500 ease-out delay-100 relative ${
+        <div className={`text-center text-yellow-400 max-w-4xl px-4 sm:px-6 py-8 sm:py-12 md:py-16 mb-8 sm:mb-12 md:mb-16 transition-all duration-500 ease-out delay-100 relative ${
           showText ? 'scale-100' : 'scale-95'
         }`}>
           {/* Dark backdrop for better contrast */}
           <div className="absolute inset-0 bg-black/14 rounded-3xl -z-10 -m-6"></div>
           
-          <h1 className={`text-6xl font-black mb-6 leading-tight transition-all duration-600 ease-out drop-shadow-2xl text-discovery-lime nature-shimmer ${
+          <h1 className={`text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black mb-4 sm:mb-6 leading-tight transition-all duration-600 ease-out drop-shadow-2xl text-discovery-lime nature-shimmer ${
             showText ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4'
           }`}>
             {slides[currentSlide].title}
           </h1>
-          <p className={`text-2xl mb-4 font-bold transition-all duration-600 ease-out delay-100 text-discovery-sage ${
+          <p className={`text-lg sm:text-xl md:text-2xl mb-3 sm:mb-4 font-bold transition-all duration-600 ease-out delay-100 text-discovery-sage ${
             showText ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4'
           }`}>
             {slides[currentSlide].subtitle}
           </p>
-          <p className={`text-lg mb-8 max-w-3xl mx-auto leading-relaxed text-white transition-all duration-600 ease-out delay-150 ${
+          <p className={`text-sm sm:text-base md:text-lg mb-6 sm:mb-8 max-w-3xl mx-auto leading-relaxed text-white transition-all duration-600 ease-out delay-150 ${
             showText ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4'
           }`}>
             High-quality, culturally-respectful modular housing that respects the land, empowers communities, and helps Canadians unlock the potential of their property.
           </p>
-          <div className={`flex flex-col sm:flex-row gap-4 justify-center mb-8 transition-all duration-600 ease-out delay-200 ${
+          <div className={`flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center mb-6 sm:mb-8 transition-all duration-600 ease-out delay-200 ${
             showText ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4'
           }`}>
             <a 
               href="/quote-builder"
-              className="btn-nature px-8 py-3 rounded-lg text-lg font-semibold glow-green growth-pulse transition-all duration-300 hover:scale-105"
+              className="btn-nature px-6 sm:px-8 py-3 rounded-lg text-base sm:text-lg font-semibold glow-green growth-pulse transition-all duration-300 hover:scale-105"
             >
               Start Building My Home →
             </a>
             <a 
               href="/success-stories"
-              className="btn-forest px-8 py-3 rounded-lg text-lg font-semibold transition-all duration-300 hover:scale-105"
+              className="btn-forest px-6 sm:px-8 py-3 rounded-lg text-base sm:text-lg font-semibold transition-all duration-300 hover:scale-105"
             >
               Watch Success Stories
             </a>
@@ -207,12 +207,12 @@ export function HeroSection() {
       </div>
 
       {/* Slide Indicators */}
-      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex space-x-2 z-10">
+      <div className="absolute bottom-4 sm:bottom-8 left-1/2 transform -translate-x-1/2 flex space-x-1 sm:space-x-2 z-10">
         {slides.map((_, index) => (
           <button
             key={index}
             onClick={() => setCurrentSlide(index)}
-            className={`w-3 h-3 rounded-full transition-all duration-300 hover:scale-125 micro-interaction ${
+            className={`w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full transition-all duration-300 hover:scale-125 micro-interaction ${
               index === currentSlide 
                 ? `scale-110 leaf-sway ${
                     index % 3 === 0 ? 'bg-discovery-lime glow-lime' : 
