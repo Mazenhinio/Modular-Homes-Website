@@ -410,7 +410,7 @@ export default function LandOwnersLandingPage() {
             
             <div className="relative">
               <Image
-                src="/images/hero-carousel/hero-slide-7.webp"
+                src="/images/hero-carousel/hero-slide-6.webp"
                 alt="Sustainable Development"
                 width={600}
                 height={400}

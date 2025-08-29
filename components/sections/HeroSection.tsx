@@ -41,17 +41,17 @@ export function HeroSection() {
       subtitle: 'Net-Zero Ready Homes'
     },
     {
-      image: '/images/hero-carousel/hero-slide-7.webp',
+      image: '/images/hero-carousel/hero-slide-1.webp',
       title: 'Rural Living Made Easy',
       subtitle: 'Perfect for Acreage Owners'
     },
     {
-      image: '/images/hero-carousel/hero-slide-8.webp',
+      image: '/images/hero-carousel/hero-slide-2.webp',
       title: 'Modern Tiny Home Solutions',
       subtitle: 'Minimalist Luxury'
     },
     {
-      image: '/images/hero-carousel/hero-slide-9.webp',
+      image: '/images/hero-carousel/hero-slide-3.webp',
       title: 'Dream Homes, Delivered',
       subtitle: 'Your Vision, Our Expertise'
     }

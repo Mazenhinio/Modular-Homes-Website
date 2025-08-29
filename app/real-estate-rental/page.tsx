@@ -186,12 +186,12 @@ export default function RealEstateRentalLandingPage() {
               {
                 title: "Mike Rodriguez - Property Manager",
                 description: "Reduced vacancy rates to 2% with premium modular rentals",
-                image: "/images/hero-carousel/hero-slide-7.webp"
+                image: "/images/hero-carousel/hero-slide-4.webp"
               },
               {
                 title: "Jennifer Park - REIT Executive",
                 description: "Scaled portfolio by 200 units with 60-day deployment timeline",
-                image: "/images/hero-carousel/hero-slide-8.webp"
+                image: "/images/hero-carousel/hero-slide-5.webp"
               }
             ].map((story, index) => (
               <div key={index} className="bg-discovery-charcoal-light rounded-2xl overflow-hidden shadow-2xl">
