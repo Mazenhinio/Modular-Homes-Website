@@ -78,6 +78,14 @@ export default function RootLayout({
   return (
     <html lang="en" className="scroll-smooth">
       <head>
+        {/* Favicon and app icons */}
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+        <link rel="icon" type="image/png" sizes="192x192" href="/android-chrome-192x192.png" />
+        <link rel="icon" type="image/png" sizes="512x512" href="/android-chrome-512x512.png" />
+        <link rel="manifest" href="/site.webmanifest" />
+        
         {/* Additional meta tags for better link previews */}
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
@@ -87,6 +95,12 @@ export default function RootLayout({
         <meta name="twitter:site" content="@discoveryhomes" />
         <meta name="twitter:creator" content="@discoveryhomes" />
         <link rel="canonical" href="https://www.discoveryhomes.ca" />
+        
+        {/* Mobile and PWA meta tags */}
+        <meta name="mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+        <meta name="apple-mobile-web-app-title" content="Discovery Homes" />
       </head>
       <body className="min-h-screen flex flex-col">
         <AnimationProvider>
