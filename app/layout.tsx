@@ -35,10 +35,11 @@ export const metadata: Metadata = {
     siteName: 'Discovery Homes',
     images: [
       {
-        url: '/images/og-image.jpg',
+        url: '/images/og-image.png',
         width: 1200,
         height: 630,
         alt: 'Discovery Homes - Affordable Modular Housing',
+        type: 'image/png',
       },
     ],
   },
@@ -46,7 +47,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Discovery Homes | Affordable Modular Homes',
     description: 'High-quality, sustainable, culturally-respectful modular housing across Western Canada.',
-    images: ['/images/og-image.jpg'],
+    images: ['/images/og-image.png'],
   },
   robots: {
     index: true,
@@ -62,6 +63,11 @@ export const metadata: Metadata = {
   verification: {
     google: 'your-google-verification-code',
   },
+  // Additional meta tags for better link previews
+  other: {
+    'msapplication-TileColor': '#ffffff',
+    'theme-color': '#ffffff',
+  },
 }
 
 export default function RootLayout({
@@ -71,6 +77,17 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className="scroll-smooth">
+      <head>
+        {/* Additional meta tags for better link previews */}
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta property="og:image:type" content="image/png" />
+        <meta property="og:image:alt" content="Discovery Homes - Affordable Modular Housing" />
+        <meta name="twitter:image:alt" content="Discovery Homes - Affordable Modular Housing" />
+        <meta name="twitter:site" content="@discoveryhomes" />
+        <meta name="twitter:creator" content="@discoveryhomes" />
+        <link rel="canonical" href="https://www.discoveryhomes.ca" />
+      </head>
       <body className="min-h-screen flex flex-col">
         <AnimationProvider>
           <SmoothScrollProvider>
