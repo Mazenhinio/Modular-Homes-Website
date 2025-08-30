@@ -43,8 +43,8 @@ export default function ContactPage() {
               </div>
               <h3 className="text-xl font-bold text-[#2D2D2D] mb-4">Call Us</h3>
               <p className="text-gray-600 mb-4">Speak directly with our team</p>
-              <a href="tel:1-800-DISCOVERY" className="text-2xl font-bold text-[#D4AF37] hover:text-[#B8941F] transition-colors">
-                1-800-DISCOVERY
+              <a href="tel:+1-780-870-0524" className="text-2xl font-bold text-[#D4AF37] hover:text-[#B8941F] transition-colors">
+                +1 (780) 870 0524
               </a>
               <p className="text-sm text-gray-500 mt-2">Mon-Fri: 8:00 AM - 6:00 PM MST</p>
             </div>
@@ -68,11 +68,7 @@ export default function ContactPage() {
                 <MapPin className="text-white" size={32} />
               </div>
               <h3 className="text-xl font-bold text-[#2D2D2D] mb-4">Visit Us</h3>
-              <p className="text-gray-600 mb-4">Come see our showroom</p>
-              <p className="font-medium text-[#2D2D2D]">
-                123 Discovery Drive<br />
-                Calgary, AB T2P 1B8
-              </p>
+              <p className="text-gray-600 mb-4">Come see our showroom at Lloydminster</p>
               <p className="text-sm text-gray-500 mt-2">By appointment only</p>
             </div>
           </div>
@@ -158,7 +154,7 @@ export default function ContactPage() {
               Get Your Quote
             </a>
             <a
-              href="tel:1-800-DISCOVERY"
+              href="tel:+1-780-870-0524"
               className="border-2 border-white text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-white hover:text-[#2D2D2D] transition-colors"
             >
               Call Now

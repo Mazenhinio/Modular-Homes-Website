@@ -164,7 +164,8 @@ class CRMClient {
         'general': process.env.GENERAL_SALES_REP || 'sales@discoveryhomes.ca'
       }
 
-      const assignedTo = salesRepMap[segment] || salesRepMap.general
+      // Security: Validate segment before accessing object
+      const assignedTo = (segment && salesRepMap[segment]) ? salesRepMap[segment] : salesRepMap.general
 
       console.log('Assigning lead to sales rep:', leadId, assignedTo)
       

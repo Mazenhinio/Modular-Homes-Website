@@ -1547,8 +1547,9 @@ export default function QuoteBuilderPage() {
                           'ac': 'Air Conditioning',
                           'fireplace': 'Fireplace',
                         }
-                         const r = addOnRanges[addon]
-                         if (!r || !labels[addon]) return null
+                        // Security: Validate addon parameter before accessing object
+                        if (!labels[addon] || !addOnRanges[addon]) return null
+                        const r = addOnRanges[addon]
                         return (
                           <span key={addon} className="inline-flex items-center px-3 py-1 rounded-full text-sm bg-[#D4AF37]/20 text-[#D4AF37] font-medium">
                             {labels[addon]} +${formatCurrency(r.min)} - $${formatCurrency(r.max)}
@@ -1777,10 +1778,11 @@ export default function QuoteBuilderPage() {
                               'loft': 'Loft',
                               'deck': 'Deck',
                               'appliances': 'Upgraded Appliances',
-                              'smart-home': 'Smart Home Package',
-                            }
-                             const r = addOnRanges[addon]
-                             if (!r || !labels[addon]) return null
+                                                          'smart-home': 'Smart Home Package',
+                          }
+                          // Security: Validate addon parameter before accessing object
+                          if (!labels[addon] || !addOnRanges[addon]) return null
+                          const r = addOnRanges[addon]
                            return (
                              <div key={addon} className="flex justify-between items-center text-sm">
                                 <span className="text-gray-600">• {labels[addon]}</span>

@@ -76,13 +76,13 @@ export function Footer() {
             <h3 className="text-lg font-semibold mb-4">Contact</h3>
             <ul className="space-y-2 text-gray-300">
               <li>
-                <a href="tel:+1-800-DISCOVERY" className="hover:text-[#D4AF37] transition-colors">
-                  1-800-DISCOVERY
+                <a href="tel:+1-780-870-0524" className="hover:text-[#D4AF37] transition-colors">
+                  +1 (780) 870 0524
                 </a>
               </li>
               <li>
-                <a href="mailto:hello@discoveryhomes.ca" className="hover:text-[#D4AF37] transition-colors">
-                  hello@discoveryhomes.ca
+                <a href="mailto:info@discoveryhomes.ca" className="hover:text-[#D4AF37] transition-colors">
+                  info@discoveryhomes.ca
                 </a>
               </li>
               <li>

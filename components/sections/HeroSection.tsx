@@ -215,8 +215,8 @@ export function HeroSection() {
             className={`w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full transition-all duration-300 hover:scale-125 micro-interaction ${
               index === currentSlide 
                 ? `scale-110 leaf-sway ${
-                    index % 3 === 0 ? 'bg-discovery-lime glow-lime' : 
-                    index % 3 === 1 ? 'bg-discovery-sage glow-green' : 
+                    (index % 3) === 0 ? 'bg-discovery-lime glow-lime' : 
+                    (index % 3) === 1 ? 'bg-discovery-sage glow-green' : 
                     'bg-discovery-forest glow-forest'
                   }` 
                 : 'bg-white/50 hover:bg-discovery-lime/70'

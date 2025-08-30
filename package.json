@@ -7,7 +7,10 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "type-check": "tsc --noEmit"
+    "lint:security": "eslint . --ext .ts,.tsx --config .eslintrc.json",
+    "type-check": "tsc --noEmit",
+    "security-check": "node scripts/security-check.js",
+    "audit": "npm audit"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.3.0",
@@ -44,6 +47,8 @@
     "@tailwindcss/forms": "^0.5.7",
     "@tailwindcss/typography": "^0.5.10",
     "eslint": "^8.0.0",
-    "eslint-config-next": "^14.0.0"
+    "eslint-config-next": "^14.0.0",
+    "eslint-plugin-jsx-a11y": "^6.10.2",
+    "eslint-plugin-security": "^3.0.1"
   }
 }

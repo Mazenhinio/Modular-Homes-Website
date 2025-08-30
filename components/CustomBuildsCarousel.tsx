@@ -50,8 +50,11 @@ export default function CustomBuildsCarousel({ images }: CustomBuildsCarouselPro
   }
 
   const openModal = (index: number) => {
-    setModalImageIndex(index)
-    setIsModalOpen(true)
+    // Security: Validate index before setting
+    if (index >= 0 && index < images.length) {
+      setModalImageIndex(index)
+      setIsModalOpen(true)
+    }
   }
 
   const closeModal = () => {
@@ -194,8 +197,8 @@ export default function CustomBuildsCarousel({ images }: CustomBuildsCarouselPro
             <div className="relative w-full bg-discovery-charcoal rounded-2xl overflow-hidden shadow-2xl">
               <div className="relative w-full">
                 <Image
-                  src={images[modalImageIndex].src}
-                  alt={images[modalImageIndex].alt}
+                  src={images[modalImageIndex]?.src || ''}
+                  alt={images[modalImageIndex]?.alt || ''}
                   width={1920}
                   height={1080}
                   className="w-full h-auto object-contain"
@@ -206,10 +209,10 @@ export default function CustomBuildsCarousel({ images }: CustomBuildsCarouselPro
               {/* Modal Overlay Info */}
               <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-discovery-charcoal/90 to-transparent p-8">
                 <h3 className="text-2xl font-serif font-bold text-discovery-white mb-2">
-                  {images[modalImageIndex].title || `Custom Build ${modalImageIndex + 1}`}
+                  {images[modalImageIndex]?.title || `Custom Build ${modalImageIndex + 1}`}
                 </h3>
                 <p className="text-discovery-sage">
-                  {images[modalImageIndex].description || 'Luxurious custom modular home design'}
+                  {images[modalImageIndex]?.description || 'Luxurious custom modular home design'}
                 </p>
               </div>
             </div>
