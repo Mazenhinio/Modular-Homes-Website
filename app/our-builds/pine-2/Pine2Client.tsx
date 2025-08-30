@@ -30,8 +30,6 @@ export function Pine2Client() {
   ]
 
   const gallery = [
-    { src: '/images/new-content/Pine 2- Spruce/XF pine 2 cedar front right .webp', alt: 'Spruce Cedar Front Right View' },
-    { src: '/images/new-content/Pine 2- Spruce/XF pine 2 cedar front left.webp', alt: 'Spruce Cedar Front Left View' },
     { src: '/images/new-content/Pine 2- Spruce/IF pine1-kitchen-E&S.webp', alt: 'Spruce Earth & Sky Kitchen' },
     { src: '/images/new-content/Pine 2- Spruce/IF pine1-bedroom-E&S.webp', alt: 'Spruce Earth & Sky Bedroom' },
     { src: '/images/new-content/Pine 2- Spruce/IF pine1-bedroom-IC.webp', alt: 'Spruce Indigenous Collection Bedroom' },
