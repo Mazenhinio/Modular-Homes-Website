@@ -291,7 +291,6 @@ export default function LandOwnersLandingPage() {
                       title="Land Owners"
                       scrolling="no"
                     />
-                    <script src="https://link.msgsndr.com/js/form_embed.js"></script>
                   </>
                 )}
               </div>

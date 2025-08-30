@@ -180,7 +180,6 @@ export default function WebinarsPage() {
                   data-form-id="AdzCTh4LzELOJIxNVPWb"
                   title="Form 3"
                 />
-                <script src="https://link.msgsndr.com/js/form_embed.js"></script>
               </div>
             </LeadCaptureForm>
           </div>

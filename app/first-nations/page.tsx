@@ -133,7 +133,7 @@ export default function FirstNationsLandingPage() {
               </h3>
               <p className="text-discovery-charcoal-light">
                 We honor traditional values and incorporate cultural elements into our designs, 
-                ensuring each home reflects the community's heritage and identity.
+                ensuring each home reflects the community&apos;s heritage and identity.
               </p>
             </div>
 
@@ -174,7 +174,7 @@ export default function FirstNationsLandingPage() {
               Success Stories
             </h2>
             <p className="text-xl text-discovery-sage max-w-3xl mx-auto">
-              See how we've helped First Nations communities across Canada create sustainable, 
+              See how we&apos;ve helped First Nations communities across Canada create sustainable, 
               beautiful homes that strengthen their communities.
             </p>
           </div>
@@ -231,7 +231,7 @@ export default function FirstNationsLandingPage() {
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div>
               <h2 className="text-4xl md:text-5xl font-serif font-bold text-discovery-charcoal mb-6">
-                Start Your Community's Housing Journey
+                Start Your Community&apos;s Housing Journey
               </h2>
               <p className="text-xl text-discovery-charcoal-light mb-8">
                 Ready to explore how Discovery Homes can help your First Nations community? 
@@ -297,7 +297,6 @@ export default function FirstNationsLandingPage() {
                        title="First Nations"
                        scrolling="no"
                      />
-                     <script src="https://link.msgsndr.com/js/form_embed.js"></script>
                    </>
                  )}
                </div>
@@ -341,7 +340,7 @@ export default function FirstNationsLandingPage() {
 
       {/* CTA Banner */}
       <CTABanner
-        title="Ready to Build Your Community's Future?"
+        title="Ready to Build Your Community&apos;s Future?"
         description="Join the many First Nations communities who have partnered with Discovery Homes to create sustainable, beautiful housing solutions."
         primaryAction={{
           text: "Schedule Consultation",

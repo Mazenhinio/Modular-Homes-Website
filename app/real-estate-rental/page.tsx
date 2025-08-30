@@ -294,7 +294,6 @@ export default function RealEstateRentalLandingPage() {
                       title="Real Estate Rental"
                       scrolling="no"
                     />
-                    <script src="https://link.msgsndr.com/js/form__embed.js"></script>
                   </>
                 )}
               </div>

@@ -671,7 +671,6 @@ export default function QuoteBuilderPage() {
                     id="PTZ3zcQLwvLZ7CizfIdf_quote_builder"
                     className="w-full rounded-lg"
                   />
-                  <script src="https://link.msgsndr.com/js/form_embed.js" type="text/javascript"></script>
                 </div>
               </div>
             </div>

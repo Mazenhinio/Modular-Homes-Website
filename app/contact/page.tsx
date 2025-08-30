@@ -91,7 +91,6 @@ export default function ContactPage() {
                 id="PTZ3zcQLwvLZ7CizfIdf_1753871801578"
                 className="w-full"
               />
-              <script src="https://link.msgsndr.com/js/form_embed.js" type="text/javascript"></script>
             </div>
           </div>
         </div>

@@ -76,7 +76,7 @@ export default function IndigenousCommunitiesPage() {
         <div className="container-custom">
           <div className="max-w-4xl mx-auto text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-serif font-bold text-discovery-charcoal mb-6">
-              Honoring Your Community's Values
+              Honoring Your Community&apos;s Values
             </h2>
             <p className="text-xl text-neutral-600 leading-relaxed">
               Discovery Homes is proud to partner with Indigenous communities across Western Canada 
@@ -173,11 +173,11 @@ export default function IndigenousCommunitiesPage() {
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <div>
               <h2 className="text-3xl md:text-4xl font-serif font-bold text-discovery-charcoal mb-6">
-                Ready to Start Your Community's Housing Project?
+                Ready to Start Your Community&apos;s Housing Project?
               </h2>
               <p className="text-lg text-neutral-600 mb-8">
-                Let's work together to create housing solutions that honor your community's values 
-                and serve your people's needs. Our team is ready to provide culturally-respectful 
+                Let&apos;s work together to create housing solutions that honor your community&apos;s values 
+                and serve your people&apos;s needs. Our team is ready to provide culturally-respectful 
                 consultation and support throughout your entire project.
               </p>
               
@@ -255,10 +255,10 @@ export default function IndigenousCommunitiesPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-serif font-bold text-discovery-charcoal mb-6">
-              Ready to Start Your Community's Housing Project?
+              Ready to Start Your Community&apos;s Housing Project?
             </h2>
             <p className="text-xl text-neutral-600 max-w-3xl mx-auto">
-              Get in touch with our team to discuss your community's housing needs and schedule a consultation.
+              Get in touch with our team to discuss your community&apos;s housing needs and schedule a consultation.
             </p>
           </div>
           
@@ -285,7 +285,6 @@ export default function IndigenousCommunitiesPage() {
                 title="Contact Form"
                 className="w-full min-h-[758px]"
               />
-              <script src="https://link.msgsndr.com/js/form_embed.js"></script>
             </div>
 
             {/* GHL Booking Calendar */}
@@ -298,7 +297,6 @@ export default function IndigenousCommunitiesPage() {
                 id="PTZ3zcQLwvLZ7CizfIdf_1753871801578"
                 className="w-full"
               />
-              <script src="https://link.msgsndr.com/js/form_embed.js" type="text/javascript"></script>
             </div>
           </div>
         </div>

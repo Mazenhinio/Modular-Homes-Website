@@ -95,7 +95,7 @@ export default function DevelopersPage() {
               Perfect for Your Next Project
             </h2>
             <p className="text-xl text-neutral-600 max-w-3xl mx-auto">
-              Whether you're planning a rural subdivision, infill project, or vacation rental community, 
+              Whether you&apos;re planning a rural subdivision, infill project, or vacation rental community, 
               our team is here to partner with you — from planning to delivery.
             </p>
           </div>
@@ -132,7 +132,7 @@ export default function DevelopersPage() {
                 Ready to Discuss Your Next Project?
               </h2>
               <p className="text-lg text-neutral-600 mb-8">
-                Let's explore how Discovery Homes can help you deliver quality housing faster and more 
+                Let&apos;s explore how Discovery Homes can help you deliver quality housing faster and more 
                 efficiently. Our team will work with you to understand your project requirements and 
                 provide a detailed proposal tailored to your needs.
               </p>
@@ -191,7 +191,7 @@ export default function DevelopersPage() {
       </section>
 
       <DownloadCTA 
-        title="Developer's Planning Checklist: Building Smarter with Modular"
+        title="Developer&apos;s Planning Checklist: Building Smarter with Modular"
         description="Get our comprehensive planning guide with key steps, timelines, and cost considerations for modular housing projects."
         benefits={[
           'How modular compares to stick‑built construction',
@@ -239,7 +239,6 @@ export default function DevelopersPage() {
                 title="Contact Form"
                 className="w-full min-h-[758px]"
               />
-              <script src="https://link.msgsndr.com/js/form_embed.js"></script>
             </div>
 
             {/* GHL Booking Calendar */}
@@ -252,7 +251,6 @@ export default function DevelopersPage() {
                 id="PTZ3zcQLwvLZ7CizfIdf_1753871801578"
                 className="w-full"
               />
-              <script src="https://link.msgsndr.com/js/form_embed.js" type="text/javascript"></script>
             </div>
           </div>
         </div>

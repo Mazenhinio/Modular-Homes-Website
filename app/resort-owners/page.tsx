@@ -279,7 +279,6 @@ export default function ResortOwnersPage() {
                 title="Contact Form"
                 className="w-full min-h-[758px]"
               />
-              <script src="https://link.msgsndr.com/js/form_embed.js"></script>
             </div>
 
             {/* GHL Booking Calendar */}
@@ -292,7 +291,6 @@ export default function ResortOwnersPage() {
                 id="PTZ3zcQLwvLZ7CizfIdf_1753871801578"
                 className="w-full"
               />
-              <script src="https://link.msgsndr.com/js/form_embed.js" type="text/javascript"></script>
             </div>
           </div>
         </div>

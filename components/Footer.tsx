@@ -13,7 +13,7 @@ export function Footer() {
               className="h-20 w-auto mb-4"
             />
             <p className="text-gray-300 mb-4">
-              Discovery Homes believes a home is more than walls and a roof — it's a foundation 
+              Discovery Homes believes a home is more than walls and a roof — it&apos;s a foundation 
               for stronger families, thriving communities, and a better future.
             </p>
             <p className="text-[#D4AF37] font-semibold">
