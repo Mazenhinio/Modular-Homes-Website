@@ -71,13 +71,4 @@ export function AnalyticsProvider({ children }: AnalyticsProviderProps) {
   return <>{children}</>
 }
 
-// Type declarations for global objects
-declare global {
-  interface Window {
-    dataLayer: any[]
-    gtag: (...args: any[]) => void
-    fbq: (...args: any[]) => void
-    _linkedin_partner_id: string
-    _linkedin_data_partner_id: string
-  }
-}
+// Note: Global type declarations are handled in lib/analytics.ts

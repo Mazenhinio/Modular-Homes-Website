@@ -197,12 +197,9 @@ export function FirstNationsAnalytics() {
   return null // This component doesn't render anything
 }
 
-// TypeScript declarations
+// TypeScript declarations for component-specific functionality
 declare global {
   interface Window {
-    gtag?: (...args: any[]) => void
-    fbq?: (...args: any[]) => void
-    lintrk?: (...args: any[]) => void
     firstNationsAnalytics?: {
       trackFormSubmission: (formData: any) => void
       trackButtonClick: (buttonName: string, section: string) => void
