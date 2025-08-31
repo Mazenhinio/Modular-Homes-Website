@@ -150,7 +150,7 @@ function calculatePricing(model: string, addOns: string[] = [], sqft?: string) {
   }
   
   const addOnPrices = {
-    'solar': 15000,
+    'solar': 17500,
     'net-zero': 25000,
     'off-grid': 35000,
     'upgraded-finishes': 8000,

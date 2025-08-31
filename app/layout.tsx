@@ -86,6 +86,9 @@ export default function RootLayout({
         <link rel="icon" type="image/png" sizes="512x512" href="/android-chrome-512x512.png" />
         <link rel="manifest" href="/site.webmanifest" />
         
+        {/* Preload Open Graph image for faster link previews */}
+        <link rel="preload" as="image" href="/images/og-image.webp" />
+        
         {/* Additional meta tags for better link previews */}
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />

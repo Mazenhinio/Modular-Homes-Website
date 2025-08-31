@@ -45,14 +45,13 @@ export async function POST(request: NextRequest) {
 
     let addOnsCost = 0
     const addOnPrices = {
-      'solar': 25000,
+      'solar': 17500,
       'net-zero': 35000,
       'off-grid': 40000,
-      'loft': 15000,
       'deck': 8000,
       'appliances': 12000,
       'smart-home': 5000,
-      
+      'fireplace': 6500,
     }
 
     addons.forEach((addon: string) => {
