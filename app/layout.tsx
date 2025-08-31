@@ -7,6 +7,8 @@ import { VapiWidget } from '@/components/VapiWidget'
 import { SmoothScrollProvider } from '@/components/providers/SmoothScrollProvider'
 import { AnimationProvider } from '@/components/providers/AnimationProvider'
 import { ToastProvider } from '@/components/providers/ToastProvider'
+import { AnalyticsProvider } from '@/components/providers/AnalyticsProvider'
+import { Analytics } from '@vercel/analytics/react'
 
 export const metadata: Metadata = {
   title: 'Discovery Homes | Affordable Modular Homes | Ready When You Are',
@@ -110,16 +112,19 @@ export default function RootLayout({
         <AnimationProvider>
           <SmoothScrollProvider>
             <ToastProvider>
-              <Navigation />
-              <main className="flex-1">
-                {children}
-              </main>
-              <Footer />
-              <MayaChatbot />
-              <VapiWidget />
+              <AnalyticsProvider>
+                <Navigation />
+                <main className="flex-1">
+                  {children}
+                </main>
+                <Footer />
+                <MayaChatbot />
+                <VapiWidget />
+              </AnalyticsProvider>
             </ToastProvider>
           </SmoothScrollProvider>
         </AnimationProvider>
+        <Analytics />
       </body>
     </html>
   )

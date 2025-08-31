@@ -11,7 +11,7 @@ const owners = [
   {
     name: 'Aaron Davis',
     title: 'Project Manager & Vice President',
-    image: '/images/team/aaron-davis.jpg',
+    image: '/images/new-content/Owners/Aaron Davis.jpeg',
     bio: `Aaron's story starts on a farm just outside Lloydminster, where as a boy he and his brothers built everything they could imagine with their own two hands. Those early days instilled in him a love of building and creating — and a deep respect for what it means to build something that lasts.
 
 After earning a BA with honours from the University of Alberta, Aaron explored the corporate world but quickly realized that sitting behind a desk wasn't for him. He returned to his roots and spent six years mastering his craft in Edmonton's construction industry: framing homes, crafting cabinetry, and learning what true craftsmanship looks like.

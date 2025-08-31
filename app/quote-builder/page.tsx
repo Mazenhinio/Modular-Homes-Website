@@ -1,8 +1,9 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { ChevronLeft, ChevronRight, Check, Home, MapPin, Users, Building, Palette, Zap, DollarSign, Calendar, Heart, CreditCard } from 'lucide-react'
+import { trackBusinessEvent } from '@/lib/analytics'
 
 interface FormData {
   // Step 1: Contact Info
@@ -71,6 +72,11 @@ interface FormData {
 export default function QuoteBuilderPage() {
   const [currentStep, setCurrentStep] = useState(1)
   const [stepError, setStepError] = useState<string | null>(null)
+  
+  // Track when quote builder is started
+  useEffect(() => {
+    trackBusinessEvent.quoteStarted()
+  }, [])
   const [formData, setFormData] = useState<FormData>({
     name: '', email: '', phone: '',
     location: '', landStatus: '',
@@ -106,6 +112,7 @@ export default function QuoteBuilderPage() {
   })
   const [estimatedPrice, setEstimatedPrice] = useState(0)
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [isGeneratingPDF, setIsGeneratingPDF] = useState(false)
   const [isSubmitted, setIsSubmitted] = useState(false)
   const [submitError, setSubmitError] = useState<string | null>(null)
 
@@ -499,6 +506,35 @@ export default function QuoteBuilderPage() {
   const handlePrev = () => {
     if (currentStep > 1) {
       setCurrentStep(currentStep - 1)
+    }
+  }
+
+  const generatePine1PDF = async () => {
+    try {
+      setIsGeneratingPDF(true)
+      const response = await fetch('/api/quote-builder/generate-pine1-pdf', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData)
+      })
+      
+      if (response.ok) {
+        const blob = await response.blob()
+        const url = window.URL.createObjectURL(blob)
+        const a = document.createElement('a')
+        a.href = url
+        a.download = 'Pine1-Quotation.pdf'
+        a.click()
+        window.URL.revokeObjectURL(url)
+      } else {
+        console.error('Failed to generate PDF')
+      }
+    } catch (error) {
+      console.error('Error generating PDF:', error)
+    } finally {
+      setIsGeneratingPDF(false)
     }
   }
 
@@ -1870,24 +1906,47 @@ export default function QuoteBuilderPage() {
                 <ChevronRight size={20} className="ml-2" />
               </button>
             ) : (
-              <button
-                onClick={handleSubmit}
-                disabled={isSubmitting}
-                className={`px-8 py-3 rounded-lg transition-colors font-semibold flex items-center ${
-                  isSubmitting 
-                    ? 'bg-gray-400 text-white cursor-not-allowed' 
-                    : 'bg-[#68a71d] text-white hover:bg-[#5a8f1a]'
-                }`}
-              >
-                {isSubmitting ? (
-                  <>
-                    <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin mr-2"></div>
-                    Generating PDF...
-                  </>
-                ) : (
-                  'Get My Quote'
+              <div className="flex gap-4">
+                <button
+                  onClick={handleSubmit}
+                  disabled={isSubmitting}
+                  className={`px-8 py-3 rounded-lg transition-colors font-semibold flex items-center ${
+                    isSubmitting 
+                      ? 'bg-gray-400 text-white cursor-not-allowed' 
+                      : 'bg-[#68a71d] text-white hover:bg-[#5a8f1a]'
+                  }`}
+                >
+                  {isSubmitting ? (
+                    <>
+                      <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin mr-2"></div>
+                      Generating PDF...
+                    </>
+                  ) : (
+                    'Get My Quote'
+                  )}
+                </button>
+                
+                {formData.model === 'pine1' && (
+                  <button
+                    onClick={generatePine1PDF}
+                    disabled={isGeneratingPDF}
+                    className={`px-6 py-3 rounded-lg transition-colors font-semibold flex items-center border-2 border-[#D4AF37] ${
+                      isGeneratingPDF 
+                        ? 'bg-gray-400 text-white cursor-not-allowed border-gray-400' 
+                        : 'bg-white text-[#D4AF37] hover:bg-[#D4AF37] hover:text-white'
+                    }`}
+                  >
+                    {isGeneratingPDF ? (
+                      <>
+                        <div className="w-5 h-5 border-2 border-[#D4AF37] border-t-transparent rounded-full animate-spin mr-2"></div>
+                        Generating PDF...
+                      </>
+                  ) : (
+                    'Download Pine 1 PDF'
+                  )}
+                  </button>
                 )}
-              </button>
+              </div>
             )}
           </div>
         </div>
