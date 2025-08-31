@@ -31,7 +31,7 @@ Happily married since 2009, and a proud father of two, Aaron's commitment to fam
   {
     name: 'Corey Davis',
     title: 'Operations & Strategy',
-    image: '/images/team/corey-davis.jpg',
+    image: '/images/new-content/Owners/Corey Davis.webp',
     bio: `Corey's path to homebuilding wasn't linear — but it taught him the value of thoughtful, deliberate work. He spent over a decade working as an archaeologist, uncovering the stories of communities past. That experience gave him a unique perspective on how homes, land, and people are connected.
 
 With a background in power engineering and a decade of hands‑on construction experience, Corey brings a quiet determination and deep strategic thinking to Discovery Homes. His passion lies in helping families and communities find better, smarter ways to live — ways that honour the land and the people on it.
@@ -49,7 +49,7 @@ When he's not overseeing operations or designing smarter building strategies, Co
   {
     name: 'Jeff Lorenz',
     title: 'Community & Client Relations',
-    image: '/images/team/jeff-lorenz.jpg',
+    image: '/images/new-content/Owners/Jeff Lorenz.webp',
     bio: `Jeff knows the value of discipline, teamwork, and hard work — lessons he learned on the ice playing competitive hockey at a high level, which eventually took him to Camrose where he earned his business degree.
 
 His entrepreneurial spirit brought him back to Lloydminster, where he founded Blue Spruce Builders, pouring his passion for craftsmanship and community into every project.

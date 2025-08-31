@@ -1,3 +1,5 @@
+import Image from 'next/image'
+
 interface Owner {
   name: string;
   title: string;
@@ -20,7 +22,15 @@ export function OwnerProfile({ owner, reverse = false }: OwnerProfileProps) {
           <div className={reverse ? 'lg:order-2' : ''}>
             <div className="relative">
               <div className="w-full max-w-md mx-auto">
-                <div className="aspect-square bg-gray-200 rounded-lg"></div>
+                <div className="aspect-square relative rounded-lg overflow-hidden shadow-xl">
+                  <Image
+                    src={owner.image}
+                    alt={`${owner.name} - ${owner.title}`}
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  />
+                </div>
               </div>
             </div>
           </div>
