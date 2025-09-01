@@ -488,13 +488,40 @@ export default function QuoteBuilderPage() {
     }
   }
 
-  const handleNext = () => {
+  const handleNext = async () => {
     const error = validateStep(currentStep)
     if (error) {
       setStepError(error)
       return
     }
     setStepError(null)
+    
+    // Send contact information to webhook when moving from step 1 to step 2
+    if (currentStep === 1) {
+      try {
+        const response = await fetch('/api/forms/quote-builder-webhook', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            name: formData.name,
+            email: formData.email,
+            phone: formData.phone
+          })
+        })
+
+        if (response.ok) {
+          console.log('✅ Contact information sent to webhook successfully')
+        } else {
+          console.error('❌ Failed to send contact information to webhook')
+        }
+      } catch (error) {
+        console.error('❌ Error sending contact information to webhook:', error)
+        // Continue with the form even if webhook fails
+      }
+    }
+    
     if (currentStep < totalSteps) {
       setCurrentStep(currentStep + 1)
     } else {

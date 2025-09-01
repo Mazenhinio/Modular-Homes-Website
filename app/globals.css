@@ -4,6 +4,23 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Custom favicon styling for better visibility */
+@layer base {
+  /* Make favicon more prominent */
+  link[rel="icon"] {
+    display: block !important;
+  }
+  
+  /* Ensure larger favicon is used */
+  link[rel="icon"][sizes="512x512"] {
+    display: block !important;
+  }
+  
+  link[rel="icon"][sizes="192x192"] {
+    display: block !important;
+  }
+}
+
 @layer base {
   html {
     scroll-behavior: smooth;

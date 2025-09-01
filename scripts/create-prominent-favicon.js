@@ -1,0 +1,144 @@
+#!/usr/bin/env node
+
+/**
+ * Script to create a more prominent favicon
+ * This script helps create a favicon that will be more visible in browser tabs
+ */
+
+const fs = require('fs');
+const path = require('path');
+
+console.log('🎨 Creating more prominent favicon...\n');
+
+// Create a simple HTML file to test favicon visibility
+const testHTML = `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Favicon Test - Discovery Homes</title>
+    
+    <!-- Multiple favicon sizes for maximum visibility -->
+    <link rel="icon" type="image/png" sizes="512x512" href="/android-chrome-512x512.png" />
+    <link rel="icon" type="image/png" sizes="192x192" href="/android-chrome-192x192.png" />
+    <link rel="icon" type="image/png" sizes="64x64" href="/favicon-64x64.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    
+    <!-- Force larger favicon display -->
+    <meta name="msapplication-TileImage" content="/android-chrome-512x512.png" />
+    <meta name="msapplication-TileColor" content="#68A71D" />
+    
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .favicon-info {
+            background: #f5f5f5;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        .favicon-preview {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            margin: 20px 0;
+        }
+        .favicon-item {
+            text-align: center;
+        }
+        .favicon-item img {
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Discovery Homes - Favicon Test</h1>
+    
+    <div class="favicon-info">
+        <h2>Favicon Visibility Information</h2>
+        <p><strong>Note:</strong> Browser tabs have strict limitations on favicon display size. Most browsers will only show favicons at 16x16 or 32x32 pixels in the tab bar, regardless of the source image size.</p>
+        
+        <h3>Available Favicon Sizes:</h3>
+        <ul>
+            <li>512x512 - For high-DPI displays and PWA</li>
+            <li>192x192 - For Android devices</li>
+            <li>64x64 - For better visibility (custom)</li>
+            <li>32x32 - Standard favicon size</li>
+            <li>16x16 - Minimum favicon size</li>
+        </ul>
+        
+        <h3>To maximize favicon visibility:</h3>
+        <ol>
+            <li>Use a simple, recognizable design</li>
+            <li>Ensure good contrast</li>
+            <li>Test in different browsers</li>
+            <li>Consider using an emoji or simple icon</li>
+        </ol>
+    </div>
+    
+    <div class="favicon-preview">
+        <div class="favicon-item">
+            <img src="/android-chrome-512x512.png" alt="512x512" width="64" height="64">
+            <p>512x512</p>
+        </div>
+        <div class="favicon-item">
+            <img src="/android-chrome-192x192.png" alt="192x192" width="48" height="48">
+            <p>192x192</p>
+        </div>
+        <div class="favicon-item">
+            <img src="/favicon-64x64.png" alt="64x64" width="32" height="32">
+            <p>64x64</p>
+        </div>
+        <div class="favicon-item">
+            <img src="/favicon-32x32.png" alt="32x32" width="32" height="32">
+            <p>32x32</p>
+        </div>
+        <div class="favicon-item">
+            <img src="/favicon-16x16.png" alt="16x16" width="16" height="16">
+            <p>16x16</p>
+        </div>
+    </div>
+    
+    <h2>Recommendations for Better Favicon Visibility:</h2>
+    <ul>
+        <li><strong>Use a simple design:</strong> Complex logos don't work well at small sizes</li>
+        <li><strong>High contrast:</strong> Ensure the icon stands out against browser backgrounds</li>
+        <li><strong>Test in multiple browsers:</strong> Different browsers handle favicons differently</li>
+        <li><strong>Consider using an emoji:</strong> Emojis are often more recognizable at small sizes</li>
+        <li><strong>Use solid colors:</strong> Avoid gradients or complex patterns</li>
+    </ul>
+    
+    <h2>Alternative Solutions:</h2>
+    <ol>
+        <li><strong>Create a custom 32x32 favicon</strong> with a simple, bold design</li>
+        <li><strong>Use an emoji favicon</strong> (e.g., 🏠 for homes)</li>
+        <li><strong>Create a monochrome version</strong> of your logo</li>
+        <li><strong>Use a letter-based favicon</strong> (e.g., "DH" for Discovery Homes)</li>
+    </ol>
+</body>
+</html>
+`;
+
+// Write the test HTML file
+fs.writeFileSync(path.join(__dirname, '../public/favicon-test.html'), testHTML);
+
+console.log('✅ Created favicon test page at: public/favicon-test.html');
+console.log('📝 You can view this page to see all your favicon sizes');
+console.log('\n🔍 To test your favicon:');
+console.log('1. Open public/favicon-test.html in your browser');
+console.log('2. Check the browser tab to see the favicon');
+console.log('3. Try different browsers to see how they handle the favicon');
+console.log('\n💡 Tips for better favicon visibility:');
+console.log('- Use simple, bold designs');
+console.log('- Ensure high contrast');
+console.log('- Test in multiple browsers');
+console.log('- Consider using an emoji or letter-based design');

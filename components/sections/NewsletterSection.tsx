@@ -9,6 +9,8 @@ export function NewsletterSection() {
     segment: ''
   })
   const [status, setStatus] = useState('')
+  const [isLoading, setIsLoading] = useState(false)
+  const [isSubmitted, setIsSubmitted] = useState(false)
 
   const segments = [
     { value: '', label: 'Select your interest (optional)' },
@@ -20,12 +22,35 @@ export function NewsletterSection() {
     { value: 'general', label: 'General Interest' }
   ]
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    // In production, this would integrate with CRM
-    console.log('Newsletter signup:', formData)
-    setStatus('Thanks for subscribing! You\'ll receive monthly insights and opportunities. (Development mode)')
-    setFormData({ name: '', email: '', segment: '' })
+    setIsLoading(true)
+    setStatus('')
+
+    try {
+      const response = await fetch('/api/forms/newsletter', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData)
+      })
+
+      const result = await response.json()
+
+      if (response.ok) {
+        setStatus(result.message)
+        setIsSubmitted(true)
+        setFormData({ name: '', email: '', segment: '' })
+      } else {
+        setStatus(result.error || 'Something went wrong. Please try again.')
+      }
+    } catch (error) {
+      console.error('Newsletter signup error:', error)
+      setStatus('Network error. Please check your connection and try again.')
+    } finally {
+      setIsLoading(false)
+    }
   }
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
@@ -33,6 +58,34 @@ export function NewsletterSection() {
       ...formData,
       [e.target.name]: e.target.value
     })
+  }
+
+  if (isSubmitted) {
+    return (
+      <section className="py-16 bg-[#2D2D2D] text-white">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <div className="max-w-2xl mx-auto">
+            <div className="w-16 h-16 bg-[#D4AF37] rounded-full flex items-center justify-center mx-auto mb-6">
+              <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+              </svg>
+            </div>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">
+              Welcome to Discovery Homes!
+            </h2>
+            <p className="text-xl mb-8 opacity-90">
+              Thank you for subscribing to our monthly insights and opportunities. Check your email for our welcome message.
+            </p>
+            <button
+              onClick={() => setIsSubmitted(false)}
+              className="bg-[#D4AF37] text-white px-8 py-3 rounded-md font-semibold hover:bg-[#B8941F] transition-colors"
+            >
+              Subscribe Another Email
+            </button>
+          </div>
+        </div>
+      </section>
+    )
   }
 
   return (
@@ -54,7 +107,8 @@ export function NewsletterSection() {
               onChange={handleInputChange}
               placeholder="Your name"
               required
-              className="px-4 py-3 rounded-md text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#D4AF37]"
+              disabled={isLoading}
+              className="px-4 py-3 rounded-md text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#D4AF37] disabled:opacity-50"
             />
             <input
               type="email"
@@ -63,7 +117,8 @@ export function NewsletterSection() {
               onChange={handleInputChange}
               placeholder="Your email address"
               required
-              className="px-4 py-3 rounded-md text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#D4AF37]"
+              disabled={isLoading}
+              className="px-4 py-3 rounded-md text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#D4AF37] disabled:opacity-50"
             />
           </div>
           
@@ -72,7 +127,8 @@ export function NewsletterSection() {
               name="segment"
               value={formData.segment}
               onChange={handleInputChange}
-              className="w-full px-4 py-3 rounded-md text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#D4AF37]"
+              disabled={isLoading}
+              className="w-full px-4 py-3 rounded-md text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#D4AF37] disabled:opacity-50"
             >
               {segments.map((segment) => (
                 <option key={segment.value} value={segment.value}>
@@ -84,13 +140,26 @@ export function NewsletterSection() {
           
           <button
             type="submit"
-            className="bg-[#D4AF37] text-white px-8 py-3 rounded-md font-semibold hover:bg-[#B8941F] transition-colors"
+            disabled={isLoading}
+            className="bg-[#D4AF37] text-white px-8 py-3 rounded-md font-semibold hover:bg-[#B8941F] transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center mx-auto"
           >
-            Subscribe to Newsletter
+            {isLoading ? (
+              <>
+                <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                Subscribing...
+              </>
+            ) : (
+              'Subscribe to Newsletter'
+            )}
           </button>
           
           {status && (
-            <p className="mt-4 text-[#D4AF37]">{status}</p>
+            <p className={`mt-4 ${status.includes('error') ? 'text-red-400' : 'text-[#D4AF37]'}`}>
+              {status}
+            </p>
           )}
         </form>
         
