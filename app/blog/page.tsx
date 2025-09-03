@@ -24,6 +24,14 @@ interface BlogPost {
 export default function BlogPage() {
   const [selectedCategory, setSelectedCategory] = useState('All')
   const [searchTerm, setSearchTerm] = useState('')
+  const [newsletterFormData, setNewsletterFormData] = useState({
+    name: '',
+    email: '',
+    segment: ''
+  })
+  const [newsletterStatus, setNewsletterStatus] = useState('')
+  const [isNewsletterLoading, setIsNewsletterLoading] = useState(false)
+  const [isNewsletterSubmitted, setIsNewsletterSubmitted] = useState(false)
 
   // Updated categories to match specification exactly
   const categories = [
@@ -138,6 +146,54 @@ export default function BlogPage() {
 
   const featuredPosts = blogPosts.filter(post => post.featured)
   const regularPosts = filteredPosts.filter(post => !post.featured)
+
+  const newsletterSegments = [
+    { value: '', label: 'Select your interest (optional)' },
+    { value: 'indigenous', label: 'Indigenous Community' },
+    { value: 'developer', label: 'Developer' },
+    { value: 'resort-owner', label: 'Resort Owner' },
+    { value: 'rural-living', label: 'Rural Living' },
+    { value: 'net-zero', label: 'Net-Zero/Off-Grid' },
+    { value: 'general', label: 'General Interest' }
+  ]
+
+  const handleNewsletterSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setIsNewsletterLoading(true)
+    setNewsletterStatus('')
+
+    try {
+      const response = await fetch('/api/forms/newsletter', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(newsletterFormData)
+      })
+
+      const result = await response.json()
+
+      if (response.ok) {
+        setNewsletterStatus(result.message)
+        setIsNewsletterSubmitted(true)
+        setNewsletterFormData({ name: '', email: '', segment: '' })
+      } else {
+        setNewsletterStatus(result.error || 'Something went wrong. Please try again.')
+      }
+    } catch (error) {
+      console.error('Newsletter signup error:', error)
+      setNewsletterStatus('Network error. Please check your connection and try again.')
+    } finally {
+      setIsNewsletterLoading(false)
+    }
+  }
+
+  const handleNewsletterInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    setNewsletterFormData({
+      ...newsletterFormData,
+      [e.target.name]: e.target.value
+    })
+  }
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -362,50 +418,105 @@ export default function BlogPage() {
       {/* Newsletter CTA */}
       <section className="py-16 bg-[#2D2D2D]">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid lg:grid-cols-3 gap-8">
-            
-            {/* Main Newsletter CTA */}
-            <div className="lg:col-span-2 text-center lg:text-left">
-              <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
-                Sign Up for Monthly Insights & Opportunities
+          {isNewsletterSubmitted ? (
+            <div className="text-center">
+              <div className="w-16 h-16 bg-[#D4AF37] rounded-full flex items-center justify-center mx-auto mb-6">
+                <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                </svg>
+              </div>
+              <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+                Welcome to Discovery Homes!
               </h2>
               <p className="text-xl text-white opacity-90 mb-8">
-                Get the latest insights on modular housing, funding opportunities, and industry updates 
-                delivered directly to your inbox every month.
+                Thank you for subscribing to our monthly insights and opportunities. Check your email for our welcome message.
               </p>
+              <button
+                onClick={() => setIsNewsletterSubmitted(false)}
+                className="bg-[#D4AF37] text-white px-8 py-3 rounded-md font-semibold hover:bg-[#B8941F] transition-colors"
+              >
+                Subscribe Another Email
+              </button>
             </div>
-            
-            {/* Newsletter Signup Form */}
-            <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6">
-              <form className="space-y-4">
-                <input
-                  type="text"
-                  placeholder="Your name"
-                  className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-[#D4AF37] focus:border-transparent"
-                />
-                <input
-                  type="email"
-                  placeholder="Your email address"
-                  className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-[#D4AF37] focus:border-transparent"
-                />
-                <select className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-[#D4AF37] focus:border-transparent text-gray-600">
-                  <option value="">Select your interest (optional)</option>
-                  <option value="indigenous">Indigenous Community</option>
-                  <option value="developer">Developer</option>
-                  <option value="resort-owner">Resort Owner</option>
-                  <option value="rural-living">Rural Living</option>
-                  <option value="net-zero">Net-Zero/Off-Grid</option>
-                  <option value="general">General Interest</option>
-                </select>
-                <button className="w-full bg-[#D4AF37] text-white py-3 rounded-lg font-semibold hover:bg-[#B8941F] transition-colors">
-                  Subscribe to Newsletter
-                </button>
-              </form>
-              <p className="text-sm text-white opacity-70 mt-4 text-center">
-                Join 2,500+ subscribers. Unsubscribe anytime.
-              </p>
+          ) : (
+            <div className="grid lg:grid-cols-3 gap-8">
+              
+              {/* Main Newsletter CTA */}
+              <div className="lg:col-span-2 text-center lg:text-left">
+                <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
+                  Sign Up for Monthly Insights & Opportunities
+                </h2>
+                <p className="text-xl text-white opacity-90 mb-8">
+                  Get the latest insights on modular housing, funding opportunities, and industry updates 
+                  delivered directly to your inbox every month.
+                </p>
+              </div>
+              
+              {/* Newsletter Signup Form */}
+              <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6">
+                <form onSubmit={handleNewsletterSubmit} className="space-y-4">
+                  <input
+                    type="text"
+                    name="name"
+                    value={newsletterFormData.name}
+                    onChange={handleNewsletterInputChange}
+                    placeholder="Your name"
+                    required
+                    disabled={isNewsletterLoading}
+                    className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-[#D4AF37] focus:border-transparent disabled:opacity-50"
+                  />
+                  <input
+                    type="email"
+                    name="email"
+                    value={newsletterFormData.email}
+                    onChange={handleNewsletterInputChange}
+                    placeholder="Your email address"
+                    required
+                    disabled={isNewsletterLoading}
+                    className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-[#D4AF37] focus:border-transparent disabled:opacity-50"
+                  />
+                  <select 
+                    name="segment"
+                    value={newsletterFormData.segment}
+                    onChange={handleNewsletterInputChange}
+                    disabled={isNewsletterLoading}
+                    className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-[#D4AF37] focus:border-transparent text-gray-600 disabled:opacity-50"
+                  >
+                    {newsletterSegments.map((segment) => (
+                      <option key={segment.value} value={segment.value}>
+                        {segment.label}
+                      </option>
+                    ))}
+                  </select>
+                  <button 
+                    type="submit"
+                    disabled={isNewsletterLoading}
+                    className="w-full bg-[#D4AF37] text-white py-3 rounded-lg font-semibold hover:bg-[#B8941F] transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center"
+                  >
+                    {isNewsletterLoading ? (
+                      <>
+                        <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                        </svg>
+                        Subscribing...
+                      </>
+                    ) : (
+                      'Subscribe to Newsletter'
+                    )}
+                  </button>
+                  {newsletterStatus && (
+                    <p className={`text-sm ${newsletterStatus.includes('error') ? 'text-red-400' : 'text-[#D4AF37]'}`}>
+                      {newsletterStatus}
+                    </p>
+                  )}
+                </form>
+                <p className="text-sm text-white opacity-70 mt-4 text-center">
+                  Join 2,500+ subscribers. Unsubscribe anytime.
+                </p>
+              </div>
             </div>
-          </div>
+          )}
         </div>
       </section>
 
