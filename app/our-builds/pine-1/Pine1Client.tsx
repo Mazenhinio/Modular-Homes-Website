@@ -40,18 +40,11 @@ export function Pine1Client() {
 
   const pdfDownloads = [
     {
-      title: 'Main Floor Plan',
+      title: 'Floor Plan',
       description: 'Detailed architectural floor plan with dimensions and room layouts',
       filename: '/images/pine1/Floor Plan.pdf',
       category: 'floorplan' as const,
       size: '2.1 MB'
-    },
-    {
-      title: 'Utilities Perspective',
-      description: 'Technical drawings showing utility connections and specifications',
-      filename: '/images/pine1/Utilities Perspective.pdf',
-      category: 'technical' as const,
-      size: '1.8 MB'
     }
   ]
 

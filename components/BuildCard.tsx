@@ -99,14 +99,6 @@ export function BuildCard({ build, reversed = false }: BuildCardProps) {
           >
             Get Quote for {build.name}
           </Link>
-          <a
-            href={build.floorPlan}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="btn-outline text-center px-6 py-3"
-          >
-            Download Floor Plan
-          </a>
         </div>
       </div>
     </div>

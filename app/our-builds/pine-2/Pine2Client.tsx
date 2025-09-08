@@ -39,25 +39,11 @@ export function Pine2Client() {
 
   const pdfDownloads = [
     {
-      title: 'Main Floor & Loft Plan',
+      title: 'Floor Plan',
       description: 'Complete floor plan showing both main floor and loft layouts with dimensions',
-      filename: '/images/pine2/Main Floor and Loft Plan.pdf',
+      filename: '/images/pine2/Floor Plan.pdf',
       category: 'floorplan' as const,
       size: '2.8 MB'
-    },
-    {
-      title: '2 Bedroom Modular Floor Plan',
-      description: 'Detailed modular construction specifications and room layouts',
-      filename: '/images/pine2/2 Bedroom Modular Floor Plan.pdf',
-      category: 'floorplan' as const,
-      size: '2.5 MB'
-    },
-    {
-      title: 'Architectural Perspectives',
-      description: '3D perspective views and elevation drawings for visualization',
-      filename: '/images/pine2/Perspectives.pdf',
-      category: 'perspective' as const,
-      size: '3.2 MB'
     }
   ]
 

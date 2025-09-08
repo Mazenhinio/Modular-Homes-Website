@@ -39,18 +39,11 @@ export function Pine3Client() {
 
   const pdfDownloads = [
     {
-      title: 'Loft Bedroom Modular Floor Plan',
+      title: 'Floor Plan',
       description: 'Detailed modular floor plan with loft bedroom layout and dimensions',
-      filename: '/images/pine3/Loft Bedroom Modular Floorplan.pdf',
+      filename: '/images/pine3/Floor Plan.pdf',
       category: 'floorplan' as const,
       size: '1.9 MB'
-    },
-    {
-      title: 'Loft Perspectives',
-      description: '3D perspective views and visual layouts showing the loft design',
-      filename: '/images/pine3/Loft Perspectives.pdf',
-      category: 'perspective' as const,
-      size: '2.3 MB'
     }
   ]
 
