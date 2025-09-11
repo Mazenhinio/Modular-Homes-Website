@@ -56,7 +56,7 @@ export default function BlogPage() {
       category: "Rural Living",
       image: "/images/new-content/Blog/BL-COV-4__Solar-install__No-Model__v01.webp",
       featured: true,
-      downloadUrl: "/downloads/roi-calculator.pdf",
+      downloadUrl: "/downloads/roi-calculator",
       leadMagnetTitle: "Free ROI Calculator",
       leadMagnetDescription: "Calculate your land's income potential with our comprehensive ROI calculator. Includes rental rate comparisons and financing options."
     },
@@ -537,7 +537,7 @@ export default function BlogPage() {
               {
                 title: "Free ROI Calculator",
                 description: "Calculate your land's income potential with modular homes",
-                downloadUrl: "/downloads/roi-calculator.pdf",
+                downloadUrl: "/downloads/roi-calculator",
                 icon: "💰"
               },
               {

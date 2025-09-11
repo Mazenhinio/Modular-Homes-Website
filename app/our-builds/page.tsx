@@ -16,7 +16,7 @@ const builds = [
     subtitle: 'The Efficient One',
     sqft: '504 sq/ft',
     bedrooms: '1 Bedroom',
-    startingPrice: '$182,700 CAD',
+    startingPrice: '$183,000 CAD',
     description: 'Ideal for singles, couples, or resort units — blending simplicity with style in a compact footprint.',
     features: [
       'Efficient 504 sq/ft layout',
@@ -48,7 +48,7 @@ const builds = [
     subtitle: 'The Versatile One',
     sqft: '504 sq/ft',
     bedrooms: '2 Bedroom with Loft',
-    startingPrice: '$187,950 CAD',
+    startingPrice: '$188,000 CAD',
     description: 'Perfect for families or rental markets, with extra space and a flexible layout.',
     features: [
       'Versatile 504 sq/ft main floor',
@@ -80,7 +80,7 @@ const builds = [
     subtitle: 'The Minimalist',
     sqft: '240 sq/ft with Loft',
     bedrooms: 'Loft Bedroom',
-    startingPrice: '$103,950 CAD',
+    startingPrice: '$104,000 CAD',
     description: 'A modern, tiny‑home solution — perfect as an office, rental, or weekend retreat.',
     features: [
       'Compact 240 sq/ft design',

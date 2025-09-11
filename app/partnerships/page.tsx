@@ -14,6 +14,8 @@ export default function PartnershipsPage() {
         <IndigenousPartnerships />
       </div>
       
+      {/* Hidden sections under "Serving Indigenous Communities Across Western Canada" */}
+      {/* 
       <div className="animate-section">
         <CommunityImpact />
       </div>
@@ -32,6 +34,7 @@ export default function PartnershipsPage() {
           }}
         />
       </div>
+      */}
     </div>
   )
 }

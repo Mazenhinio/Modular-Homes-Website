@@ -96,7 +96,7 @@ export function Navigation() {
                       <div className="flex items-center space-x-3">
                         <div>
                                                 <div className="font-semibold">Pine</div>
-                      <div className="text-xs text-gray-500">504 sq/ft • 1 Bedroom • $182,700</div>
+                      <div className="text-xs text-gray-500">504 sq/ft • 1 Bedroom • $183,000</div>
                         </div>
                       </div>
                     </Link>
@@ -108,7 +108,7 @@ export function Navigation() {
                       <div className="flex items-center space-x-3">
                         <div>
                                                 <div className="font-semibold">Spruce</div>
-                      <div className="text-xs text-gray-500">504 sq/ft • 2 Bedroom + Loft • $187,950</div>
+                      <div className="text-xs text-gray-500">504 sq/ft • 2 Bedroom + Loft • $188,000</div>
                         </div>
                       </div>
                     </Link>
@@ -120,7 +120,7 @@ export function Navigation() {
                       <div className="flex items-center space-x-3">
                         <div>
                                                 <div className="font-semibold">Willow</div>
-                      <div className="text-xs text-gray-500">240 sq/ft + Loft • $103,950</div>
+                      <div className="text-xs text-gray-500">240 sq/ft + Loft • $104,000</div>
                         </div>
                       </div>
                     </Link>

@@ -9,6 +9,24 @@ export const metadata: Metadata = {
 
 const owners = [
   {
+    name: 'Jeff Lorenz',
+    title: 'Community & Client Relations',
+    image: '/images/new-content/Owners/Jeff Lorenz.webp',
+    bio: `Jeff knows the value of discipline, teamwork, and hard work — lessons he learned on the ice playing competitive hockey at a high level, which eventually took him to University of Alberta where he earned his business degree.
+
+His entrepreneurial spirit brought him back to Lloydminster, where he founded The Blue Spruce Builder, pouring his passion for craftsmanship and community into every project.
+
+At Discovery Homes, Jeff focuses on building relationships — with clients, partners, and the community. He believes deeply in giving back to the place he calls home, and he thrives on helping others see the untapped potential of their land, transforming it into something truly meaningful.`,
+    quote: "My goal is simple: help people see what's possible - and then work with them to make it a reality.",
+    highlights: [
+      'Competitive hockey player',
+      'Business degree from University of Alberta',
+      'Founded The Blue Spruce Builder',
+      'Specializes in client relations',
+      'Community-focused entrepreneur'
+    ]
+  },
+  {
     name: 'Aaron Davis',
     title: 'Project Manager & Vice President',
     image: '/images/new-content/Owners/Aaron Davis.jpeg',
@@ -44,24 +62,6 @@ When he's not overseeing operations or designing smarter building strategies, Co
       'Decade of construction experience',
       'Specializes in operations and strategy',
       'Creates custom furniture in workshop'
-    ]
-  },
-  {
-    name: 'Jeff Lorenz',
-    title: 'Community & Client Relations',
-    image: '/images/new-content/Owners/Jeff Lorenz.webp',
-    bio: `Jeff knows the value of discipline, teamwork, and hard work — lessons he learned on the ice playing competitive hockey at a high level, which eventually took him to Camrose where he earned his business degree.
-
-His entrepreneurial spirit brought him back to Lloydminster, where he founded Blue Spruce Builders, pouring his passion for craftsmanship and community into every project.
-
-At Discovery Homes, Jeff focuses on building relationships — with clients, partners, and the community. He believes deeply in giving back to the place he calls home, and he thrives on helping others see the untapped potential of their land, transforming it into something truly meaningful.`,
-    quote: "My goal is simple: help people see what's possible - and then work with them to make it a reality.",
-    highlights: [
-      'Competitive hockey player',
-      'Business degree from Camrose',
-      'Founded Blue Spruce Builders',
-      'Specializes in client relations',
-      'Community-focused entrepreneur'
     ]
   }
 ]

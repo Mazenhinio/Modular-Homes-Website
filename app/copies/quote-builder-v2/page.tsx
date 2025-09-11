@@ -312,13 +312,13 @@ export default function QuoteBuilderPage() {
     // Base model pricing
     switch (formData.model) {
       case 'pine1':
-        basePrice = 182700
+        basePrice = 183000
         break
       case 'pine2':
-        basePrice = 187950
+        basePrice = 188000
         break
       case 'pine3':
-        basePrice = 103950
+        basePrice = 104000
         break
       case 'custom':
         // Custom build pricing based on square footage
@@ -1096,9 +1096,9 @@ export default function QuoteBuilderPage() {
                         <div className="flex items-center justify-between">
                           <p className="text-xl font-bold text-[#D4AF37]">
                             {model.value === 'custom' ? 'Quote on request' : (
-                              model.value === 'pine1' ? '$182,700 CAD' :
-                              model.value === 'pine2' ? '$187,950 CAD' :
-                              '$103,950 CAD'
+                              model.value === 'pine1' ? '$183,000 CAD' :
+                              model.value === 'pine2' ? '$188,000 CAD' :
+                              '$104,000 CAD'
                             )}
                           </p>
                          {formData.model === model.value && (
@@ -1639,7 +1639,7 @@ export default function QuoteBuilderPage() {
               <h2 className="text-2xl font-bold text-[#2D2D2D] mb-6">Budget Range</h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {[
-                  '$103,950 - $131,250',
+                  '$104,000 - $131,000',
                   '$125,000 - $200,000',
                   '$200,000 - $300,000',
                   '$300,000+'

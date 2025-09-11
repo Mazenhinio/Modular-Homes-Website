@@ -11,7 +11,7 @@ export function Pine1Client() {
     { label: 'Total Area', value: '504 sq/ft' },
     { label: 'Bedrooms', value: '1' },
     { label: 'Bathrooms', value: '1' },
-    { label: 'Starting Price', value: '$182,700 CAD' },
+    { label: 'Starting Price', value: '$183,000 CAD' },
     { label: 'Ideal For', value: 'Singles, Couples, Resort Units' },
     { label: 'Delivery Time', value: '6-8 weeks' }
   ]
@@ -100,7 +100,7 @@ export function Pine1Client() {
                 Ideal for singles, couples, or resort units — blending simplicity with style in a compact footprint.
               </p>
               <div className="text-3xl font-bold text-discovery-forest mb-8">
-                Starting at $182,700 CAD
+                Starting at $183,000 CAD
               </div>
               
               {/* CTA Buttons */}

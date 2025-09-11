@@ -11,7 +11,7 @@ export function Pine3Client() {
     { label: 'Total Area', value: '240 sq/ft with Loft' },
     { label: 'Bedrooms', value: 'Loft Bedroom' },
     { label: 'Bathrooms', value: '1' },
-    { label: 'Starting Price', value: '$103,950 CAD' },
+    { label: 'Starting Price', value: '$104,000 CAD' },
     { label: 'Ideal For', value: 'Office, Rental, Retreat' },
     { label: 'Delivery Time', value: '4-6 weeks' }
   ]
@@ -99,7 +99,7 @@ export function Pine3Client() {
                 A modern, tiny‑home solution — perfect as an office, rental, or weekend retreat.
               </p>
               <div className="text-3xl font-bold text-discovery-forest mb-8">
-                Starting at $103,950 CAD
+                Starting at $104,000 CAD
               </div>
               
               {/* CTA Buttons */}

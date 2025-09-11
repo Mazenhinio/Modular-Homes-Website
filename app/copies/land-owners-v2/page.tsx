@@ -468,7 +468,7 @@ export default function LandOwnersLandingPage() {
                       <div className="text-sm text-discovery-charcoal-light">Layout</div>
                     </div>
                     <div className="bg-discovery-gold/10 p-4 rounded-xl">
-                      <div className="text-2xl font-bold text-discovery-charcoal">$182,700</div>
+                      <div className="text-2xl font-bold text-discovery-charcoal">$183,000</div>
                       <div className="text-sm text-discovery-charcoal-light">Starting Price</div>
                     </div>
                     <div className="bg-discovery-gold/10 p-4 rounded-xl">
@@ -514,7 +514,7 @@ export default function LandOwnersLandingPage() {
                       <div className="text-sm text-discovery-charcoal-light">Layout</div>
                     </div>
                     <div className="bg-discovery-gold/10 p-4 rounded-xl">
-                      <div className="text-2xl font-bold text-discovery-charcoal">$187,950</div>
+                      <div className="text-2xl font-bold text-discovery-charcoal">$188,000</div>
                       <div className="text-sm text-discovery-charcoal-light">Starting Price</div>
                     </div>
                     <div className="bg-discovery-gold/10 p-4 rounded-xl">
@@ -560,7 +560,7 @@ export default function LandOwnersLandingPage() {
                       <div className="text-sm text-discovery-charcoal-light">Layout</div>
                     </div>
                     <div className="bg-discovery-gold/10 p-4 rounded-xl">
-                      <div className="text-2xl font-bold text-discovery-charcoal">$103,950</div>
+                      <div className="text-2xl font-bold text-discovery-charcoal">$104,000</div>
                       <div className="text-sm text-discovery-charcoal-light">Starting Price</div>
                     </div>
                     <div className="bg-discovery-gold/10 p-4 rounded-xl">

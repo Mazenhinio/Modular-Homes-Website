@@ -52,7 +52,7 @@ export function CommunityImpact() {
     },
     {
       icon: <Star size={32} />,
-      number: "98%",
+      number: "99%",
       label: "Satisfaction Rate",
       description: "Based on community feedback surveys"
     }
