@@ -152,6 +152,9 @@ export function Navigation() {
             <Link href="/partnerships" className="nav-link nav-item">
               <span className="font-medium">Partnerships</span>
             </Link>
+            <Link href="/eco-friendly" className="nav-link nav-item">
+              <span className="font-medium text-discovery-sage hover:text-discovery-lime transition-colors">Eco-Friendly</span>
+            </Link>
             <Link href="/webinars" className="nav-link nav-item">
               <span className="font-medium">Webinars</span>
             </Link>
@@ -283,6 +286,13 @@ export function Navigation() {
                 onClick={() => setIsOpen(false)}
               >
                 Partnerships
+              </Link>
+              <Link 
+                href="/eco-friendly" 
+                className="block px-4 py-3 text-discovery-white hover:text-discovery-gold transition-colors duration-300 rounded-lg hover:bg-white/10"
+                onClick={() => setIsOpen(false)}
+              >
+                Eco-Friendly
               </Link>
               <Link 
                 href="/blog" 
