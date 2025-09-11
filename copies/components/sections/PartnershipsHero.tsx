@@ -23,19 +23,19 @@ export function PartnershipsHero() {
           <div className="grid md:grid-cols-3 gap-6 mt-12 mb-8">
             <div className="glass-dark rounded-2xl p-6 text-center micro-interaction">
               <Users className="text-discovery-gold mx-auto mb-3" size={40} />
-              <h3 className="text-lg font-semibold mb-2">Cultural Respect</h3>
+              <h3 className="text-lg font-semibold mb-2 text-discovery-lime">Cultural Respect</h3>
               <p className="text-discovery-white-soft">Built with Indigenous values and traditional knowledge</p>
             </div>
             
             <div className="glass-dark rounded-2xl p-6 text-center micro-interaction">
               <Home className="text-discovery-gold mx-auto mb-3" size={40} />
-              <h3 className="text-lg font-semibold mb-2">Grant Ready</h3>
+              <h3 className="text-lg font-semibold mb-2 text-discovery-lime">Grant Ready</h3>
               <p className="text-discovery-white-soft">CMHC, ISC, and provincial funding compatible</p>
             </div>
             
             <div className="glass-dark rounded-2xl p-6 text-center micro-interaction">
               <Heart className="text-discovery-gold mx-auto mb-3" size={40} />
-              <h3 className="text-lg font-semibold mb-2">Community Focus</h3>
+              <h3 className="text-lg font-semibold mb-2 text-discovery-lime">Community Focus</h3>
               <p className="text-discovery-white-soft">Partnerships that strengthen and empower</p>
             </div>
           </div>
