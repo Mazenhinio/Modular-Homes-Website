@@ -312,27 +312,27 @@ export default function QuoteBuilderPage() {
     // Base model pricing
     switch (formData.model) {
       case 'pine1':
-        basePrice = 174000
+        basePrice = 182700
         break
       case 'pine2':
-        basePrice = 179000
+        basePrice = 187950
         break
       case 'pine3':
-        basePrice = 99000
+        basePrice = 103950
         break
       case 'custom':
         // Custom build pricing based on square footage
         const sqftNumber = parseInt(formData.sqft.replace(/\D/g, '')) || 800
         if (sqftNumber <= 800) {
-          basePrice = 200000
+          basePrice = 210000
         } else if (sqftNumber <= 1200) {
-          basePrice = 280000
+          basePrice = 294000
         } else if (sqftNumber <= 1800) {
-          basePrice = 380000
+          basePrice = 399000
         } else if (sqftNumber <= 2400) {
-          basePrice = 480000
+          basePrice = 504000
         } else {
-          basePrice = 580000 // 3000+ sq ft
+          basePrice = 609000 // 3000+ sq ft
         }
         break
     }
@@ -1096,9 +1096,9 @@ export default function QuoteBuilderPage() {
                         <div className="flex items-center justify-between">
                           <p className="text-xl font-bold text-[#D4AF37]">
                             {model.value === 'custom' ? 'Quote on request' : (
-                              model.value === 'pine1' ? '$174,000 CAD' :
-                              model.value === 'pine2' ? '$179,000 CAD' :
-                              '$99,000 CAD'
+                              model.value === 'pine1' ? '$182,700 CAD' :
+                              model.value === 'pine2' ? '$187,950 CAD' :
+                              '$103,950 CAD'
                             )}
                           </p>
                          {formData.model === model.value && (
@@ -1639,7 +1639,7 @@ export default function QuoteBuilderPage() {
               <h2 className="text-2xl font-bold text-[#2D2D2D] mb-6">Budget Range</h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {[
-                  '$99,000 - $125,000',
+                  '$103,950 - $131,250',
                   '$125,000 - $200,000',
                   '$200,000 - $300,000',
                   '$300,000+'

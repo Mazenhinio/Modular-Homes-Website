@@ -468,7 +468,7 @@ export default function ResortOwnersLandingPage() {
                       <div className="text-sm text-discovery-charcoal-light">Layout</div>
                     </div>
                     <div className="bg-discovery-gold/10 p-4 rounded-xl">
-                      <div className="text-2xl font-bold text-discovery-charcoal">$174,000</div>
+                      <div className="text-2xl font-bold text-discovery-charcoal">$182,700</div>
                       <div className="text-sm text-discovery-charcoal-light">Starting Price</div>
                     </div>
                     <div className="bg-discovery-gold/10 p-4 rounded-xl">
@@ -514,7 +514,7 @@ export default function ResortOwnersLandingPage() {
                       <div className="text-sm text-discovery-charcoal-light">Layout</div>
                     </div>
                     <div className="bg-discovery-gold/10 p-4 rounded-xl">
-                      <div className="text-2xl font-bold text-discovery-charcoal">$179,000</div>
+                      <div className="text-2xl font-bold text-discovery-charcoal">$187,950</div>
                       <div className="text-sm text-discovery-charcoal-light">Starting Price</div>
                     </div>
                     <div className="bg-discovery-gold/10 p-4 rounded-xl">
@@ -560,7 +560,7 @@ export default function ResortOwnersLandingPage() {
                       <div className="text-sm text-discovery-charcoal-light">Layout</div>
                     </div>
                     <div className="bg-discovery-gold/10 p-4 rounded-xl">
-                      <div className="text-2xl font-bold text-discovery-charcoal">$99,000</div>
+                      <div className="text-2xl font-bold text-discovery-charcoal">$103,950</div>
                       <div className="text-sm text-discovery-charcoal-light">Starting Price</div>
                     </div>
                     <div className="bg-discovery-gold/10 p-4 rounded-xl">
@@ -689,7 +689,7 @@ export default function ResortOwnersLandingPage() {
                 },
                 {
                   title: "Guest Experience Upgrade",
-                  description: "Enhanced guest amenities with modern modular units achieving 95% guest satisfaction",
+                  description: "Enhanced guest amenities with modern modular units achieving 99% guest satisfaction",
                   image: "/assets/images/new-content/Landing Page- Land Owners/LP-CAB-5__Interior_Comfort__Cabin_Living__v01.webp"
                 }
             ].map((story, index) => (

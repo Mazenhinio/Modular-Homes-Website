@@ -388,19 +388,19 @@ export default function CustomBuildsPage() {
               <div className="space-y-4">
                 <div className="flex justify-between items-center py-3 border-b border-neutral-200">
                   <span className="text-neutral-700">Base Custom Home</span>
-                  <span className="font-semibold text-discovery-charcoal">$200,000+</span>
+                  <span className="font-semibold text-discovery-charcoal">$210,000+</span>
                 </div>
                 <div className="flex justify-between items-center py-3 border-b border-neutral-200">
                   <span className="text-neutral-700">With Net-Zero Package</span>
-                  <span className="font-semibold text-discovery-charcoal">$250,000+</span>
+                  <span className="font-semibold text-discovery-charcoal">$262,500+</span>
                 </div>
                 <div className="flex justify-between items-center py-3 border-b border-neutral-200">
                   <span className="text-neutral-700">With Off-Grid Systems</span>
-                  <span className="font-semibold text-discovery-charcoal">$280,000+</span>
+                  <span className="font-semibold text-discovery-charcoal">$294,000+</span>
                 </div>
                 <div className="flex justify-between items-center py-3">
                   <span className="text-neutral-700">Luxury Custom</span>
-                  <span className="font-semibold text-discovery-charcoal">$350,000+</span>
+                  <span className="font-semibold text-discovery-charcoal">$367,500+</span>
                 </div>
               </div>
               <p className="text-sm text-neutral-600 mt-4">

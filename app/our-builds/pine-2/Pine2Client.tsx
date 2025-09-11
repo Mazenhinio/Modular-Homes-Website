@@ -11,7 +11,7 @@ export function Pine2Client() {
     { label: 'Main Floor', value: '504 sq/ft' },
     { label: 'Bedrooms', value: '2 + Loft' },
     { label: 'Bathrooms', value: '1' },
-    { label: 'Starting Price', value: '$179,000 CAD' },
+    { label: 'Starting Price', value: '$187,950 CAD' },
     { label: 'Ideal For', value: 'Families, Rental Markets' },
     { label: 'Delivery Time', value: '6-8 weeks' }
   ]
@@ -99,7 +99,7 @@ export function Pine2Client() {
                 Perfect for families or rental markets, with extra space and a flexible layout.
               </p>
               <div className="text-3xl font-bold text-discovery-forest mb-8">
-                Starting at $179,000 CAD
+                Starting at $187,950 CAD
               </div>
               
               {/* CTA Buttons */}

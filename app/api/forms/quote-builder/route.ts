@@ -143,19 +143,19 @@ export async function POST(request: NextRequest) {
 function calculatePricing(model: string, addOns: string[] = [], sqft?: string) {
   // Base pricing from documentation
   const basePrices = {
-    'pine-1': 174000,
-    'pine-2': 179000,
-    'pine-3': 99000,
-    'custom': 200000 // Starting price for custom
+    'pine-1': 182700,
+    'pine-2': 187950,
+    'pine-3': 103950,
+    'custom': 210000 // Starting price for custom
   }
   
   const addOnPrices = {
-    'solar': 17500,
-    'net-zero': 25000,
-    'off-grid': 35000,
-    'upgraded-finishes': 8000,
-    'deck': 5000,
-    'garage': 12000
+    'solar': 18375,
+    'net-zero': 26250,
+    'off-grid': 36750,
+    'upgraded-finishes': 8400,
+    'deck': 5250,
+    'garage': 12600
   }
   
   const basePrice = basePrices[model as keyof typeof basePrices] || basePrices.custom

@@ -141,13 +141,13 @@ export default function SuccessStoriesPage() {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <div className="bg-[#D4AF37] px-6 py-3 rounded-lg">
-              <span className="text-white font-semibold">500+ Homes Delivered</span>
+              <span className="text-white font-semibold">25+ Homes Delivered</span>
             </div>
             <div className="bg-white/20 backdrop-blur-sm px-6 py-3 rounded-lg">
               <span className="text-white font-semibold">Built in 60 Days Average</span>
             </div>
             <div className="bg-white/20 backdrop-blur-sm px-6 py-3 rounded-lg">
-              <span className="text-white font-semibold">98% Satisfaction Rate</span>
+              <span className="text-white font-semibold">99% Satisfaction Rate</span>
             </div>
           </div>
         </div>

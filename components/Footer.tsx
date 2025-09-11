@@ -8,7 +8,7 @@ export function Footer() {
           {/* Company Info */}
           <div className="col-span-1 md:col-span-2">
             <img
-              src="/images/logo/logo-footer.webp"
+              src="/favicon.png"
               alt="Discovery Homes"
               className="h-20 w-auto mb-4"
             />
@@ -33,11 +33,6 @@ export function Footer() {
               <li>
                 <Link href="/quote-builder" className="text-gray-300 hover:text-[#D4AF37] transition-colors">
                   Get Quote
-                </Link>
-              </li>
-              <li>
-                <Link href="/success-stories" className="text-gray-300 hover:text-[#D4AF37] transition-colors">
-                  Success Stories
                 </Link>
               </li>
               <li>

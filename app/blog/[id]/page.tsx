@@ -38,7 +38,7 @@ const getBlogPost = (id: string): BlogPost | null => {
           <p>Unlike traditional construction, modular homes offer several key advantages for income generation:</p>
           <ul>
             <li><strong>Speed to Market:</strong> Generate income within 60-90 days instead of 12+ months</li>
-            <li><strong>Lower Investment:</strong> Starting costs from $99,000 vs $300,000+ for traditional builds</li>
+            <li><strong>Lower Investment:</strong> Starting costs from $103,950 vs $300,000+ for traditional builds</li>
             <li><strong>Scalable:</strong> Add additional units as demand grows</li>
             <li><strong>Flexible:</strong> Easily relocate or repurpose units</li>
           </ul>
@@ -208,7 +208,7 @@ const getBlogPost = (id: string): BlogPost | null => {
             <li><strong>Timeline:</strong> 3 months vs 18 months</li>
             <li><strong>Revenue Increase:</strong> $680,000 annually</li>
             <li><strong>Payback Period:</strong> 1.8 years</li>
-            <li><strong>Guest Satisfaction:</strong> 98% (up from 87%)</li>
+            <li><strong>Guest Satisfaction:</strong> 99% (up from 87%)</li>
           </ul>
 
           <blockquote>
@@ -453,7 +453,7 @@ const getBlogPost = (id: string): BlogPost | null => {
           <h3>Discovery Homes Off-Grid Packages</h3>
           <h4>Pine 1 Off-Grid Package</h4>
           <ul>
-            <li><strong>Base Home:</strong> $174,000</li>
+            <li><strong>Base Home:</strong> $182,700</li>
             <li><strong>Solar System:</strong> $30,000 (6kW with battery backup)</li>
             <li><strong>Well & Septic:</strong> $20,000 (estimated)</li>
             <li><strong>Total Package:</strong> Starting at $224,000</li>
@@ -461,7 +461,7 @@ const getBlogPost = (id: string): BlogPost | null => {
           
           <h4>Pine 2 Off-Grid Package</h4>
           <ul>
-            <li><strong>Base Home:</strong> $179,000</li>
+            <li><strong>Base Home:</strong> $187,950</li>
             <li><strong>Solar System:</strong> $35,000 (8kW with extended battery)</li>
             <li><strong>Well & Septic:</strong> $22,000 (estimated)</li>
             <li><strong>Total Package:</strong> Starting at $236,000</li>
@@ -572,7 +572,7 @@ const getBlogPost = (id: string): BlogPost | null => {
           <h4>Why Pine 2 Made Perfect Sense:</h4>
           <ul>
             <li><strong>Size:</strong> 504 sq ft with loft - perfect for couples and small families</li>
-            <li><strong>Cost:</strong> $179,000 per unit - budget for 2 units plus site development</li>
+            <li><strong>Cost:</strong> $187,950 per unit - budget for 2 units plus site development</li>
             <li><strong>Speed:</strong> Factory construction while site prep happens simultaneously</li>
             <li><strong>Quality:</strong> Consistent build quality and energy efficiency</li>
           </ul>

@@ -96,7 +96,7 @@ export function Navigation() {
                       <div className="flex items-center space-x-3">
                         <div>
                                                 <div className="font-semibold">Pine</div>
-                      <div className="text-xs text-gray-500">504 sq/ft • 1 Bedroom • $174,000</div>
+                      <div className="text-xs text-gray-500">504 sq/ft • 1 Bedroom • $182,700</div>
                         </div>
                       </div>
                     </Link>
@@ -108,7 +108,7 @@ export function Navigation() {
                       <div className="flex items-center space-x-3">
                         <div>
                                                 <div className="font-semibold">Spruce</div>
-                      <div className="text-xs text-gray-500">504 sq/ft • 2 Bedroom + Loft • $179,000</div>
+                      <div className="text-xs text-gray-500">504 sq/ft • 2 Bedroom + Loft • $187,950</div>
                         </div>
                       </div>
                     </Link>
@@ -120,7 +120,7 @@ export function Navigation() {
                       <div className="flex items-center space-x-3">
                         <div>
                                                 <div className="font-semibold">Willow</div>
-                      <div className="text-xs text-gray-500">240 sq/ft + Loft • $99,000</div>
+                      <div className="text-xs text-gray-500">240 sq/ft + Loft • $103,950</div>
                         </div>
                       </div>
                     </Link>
@@ -145,9 +145,6 @@ export function Navigation() {
 
             <Link href="/quote-builder" className="nav-link nav-link-eco nav-item">
               <span className="font-semibold text-discovery-sage hover:text-discovery-lime transition-colors">Get Quote</span>
-            </Link>
-            <Link href="/success-stories" className="nav-link nav-item">
-              <span className="font-medium">Success Stories</span>
             </Link>
             <Link href="/meet-the-owners" className="nav-link nav-item">
               <span className="font-medium">Meet the Owners</span>
@@ -265,13 +262,6 @@ export function Navigation() {
                 onClick={() => setIsOpen(false)}
               >
                 Get Quote
-              </Link>
-              <Link 
-                href="/success-stories" 
-                className="block px-4 py-3 text-discovery-white hover:text-discovery-gold transition-colors duration-300 rounded-lg hover:bg-white/10"
-                onClick={() => setIsOpen(false)}
-              >
-                Success Stories
               </Link>
               <Link 
                 href="/webinars" 

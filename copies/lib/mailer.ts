@@ -352,7 +352,6 @@ class MailerService {
           <h3 style="color: #2D2D2D; margin-top: 0;">Popular Resources</h3>
           <p><a href="https://www.discoveryhomes.ca/resources/roi-calculator" style="color: #D4AF37;">ROI Calculator</a> - Calculate your potential return</p>
           <p><a href="https://www.discoveryhomes.ca/resources/funding-guide" style="color: #D4AF37;">Funding Guide</a> - Available grants and programs</p>
-          <p><a href="https://www.discoveryhomes.ca/success-stories" style="color: #D4AF37;">Success Stories</a> - Real customer experiences</p>
         </div>
         
         <div style="text-align: center; margin: 30px 0;">

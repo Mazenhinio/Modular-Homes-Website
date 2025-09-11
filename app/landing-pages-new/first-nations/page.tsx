@@ -98,7 +98,7 @@ export default function FirstNationsLandingPage() {
               <div className="text-sm">First Nations Projects</div>
             </div>
             <div className="text-discovery-white">
-              <div className="text-4xl font-bold text-discovery-gold mb-2">100%</div>
+              <div className="text-4xl font-bold text-discovery-gold mb-2">99%</div>
               <div className="text-sm">Community Satisfaction</div>
             </div>
             <div className="text-discovery-white">

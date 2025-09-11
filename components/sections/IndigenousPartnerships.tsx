@@ -39,8 +39,8 @@ export function IndigenousPartnerships() {
 
   const successMetrics = [
     { number: "15+", label: "Years Serving Communities" },
-    { number: "98%", label: "Community Satisfaction" },
-    { number: "250+", label: "Homes Delivered" },
+    { number: "99%", label: "Community Satisfaction" },
+    { number: "25+", label: "Homes Delivered" },
     { number: "50+", label: "Indigenous Partnerships" }
   ]
 

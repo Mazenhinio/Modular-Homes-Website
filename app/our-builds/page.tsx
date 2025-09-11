@@ -6,7 +6,7 @@ import { CTABanner } from '@/components/CTABanner'
 
 export const metadata: Metadata = {
   title: 'Our Builds | Discovery Homes Modular Housing',
-  description: 'Explore Pine, Spruce, Willow, and Custom modular home options. Quality builds starting at $99,000 CAD with flexible layouts and energy-efficient designs.',
+  description: 'Explore Pine, Spruce, Willow, and Custom modular home options. Quality builds starting at $103,950 CAD with flexible layouts and energy-efficient designs.',
 }
 
 const builds = [
@@ -16,7 +16,7 @@ const builds = [
     subtitle: 'The Efficient One',
     sqft: '504 sq/ft',
     bedrooms: '1 Bedroom',
-    startingPrice: '$174,000 CAD',
+    startingPrice: '$182,700 CAD',
     description: 'Ideal for singles, couples, or resort units — blending simplicity with style in a compact footprint.',
     features: [
       'Efficient 504 sq/ft layout',
@@ -48,7 +48,7 @@ const builds = [
     subtitle: 'The Versatile One',
     sqft: '504 sq/ft',
     bedrooms: '2 Bedroom with Loft',
-    startingPrice: '$179,000 CAD',
+    startingPrice: '$187,950 CAD',
     description: 'Perfect for families or rental markets, with extra space and a flexible layout.',
     features: [
       'Versatile 504 sq/ft main floor',
@@ -80,7 +80,7 @@ const builds = [
     subtitle: 'The Minimalist',
     sqft: '240 sq/ft with Loft',
     bedrooms: 'Loft Bedroom',
-    startingPrice: '$99,000 CAD',
+    startingPrice: '$103,950 CAD',
     description: 'A modern, tiny‑home solution — perfect as an office, rental, or weekend retreat.',
     features: [
       'Compact 240 sq/ft design',

@@ -186,12 +186,6 @@ export function HeroSection() {
             >
               Start Building My Home →
             </a>
-            <a 
-              href="/success-stories"
-              className="btn-forest px-6 sm:px-8 py-3 rounded-lg text-base sm:text-lg font-semibold transition-all duration-300 hover:scale-105"
-            >
-              Watch Success Stories
-            </a>
           </div>
           
           {/* Hide Text Button - Smooth animation */}

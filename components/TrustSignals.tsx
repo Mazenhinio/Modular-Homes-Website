@@ -9,7 +9,7 @@ export function TrustSignals() {
 
   const stats = [
     { 
-      number: "100+", 
+      number: "25+", 
       label: "Homes Delivered", 
       icon: <Building2 className="w-8 h-8 text-discovery-gold" />,
       description: "Premium modular homes delivered across Canada"

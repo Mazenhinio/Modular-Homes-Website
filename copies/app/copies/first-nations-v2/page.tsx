@@ -177,7 +177,7 @@ export default function FirstNationsLandingPage() {
               <div className="text-sm">First Nations Projects</div>
             </div>
             <div className="text-discovery-white">
-              <div className="text-4xl font-bold text-discovery-gold mb-2">100%</div>
+              <div className="text-4xl font-bold text-discovery-gold mb-2">99%</div>
               <div className="text-sm">Community Satisfaction</div>
             </div>
             <div className="text-discovery-white">
@@ -428,7 +428,7 @@ export default function FirstNationsLandingPage() {
                       <div className="text-sm text-discovery-charcoal-light">Layout</div>
                     </div>
                     <div className="bg-discovery-gold/10 p-4 rounded-xl">
-                      <div className="text-2xl font-bold text-discovery-charcoal">$174,000</div>
+                      <div className="text-2xl font-bold text-discovery-charcoal">$182,700</div>
                       <div className="text-sm text-discovery-charcoal-light">Starting Price</div>
                     </div>
                     <div className="bg-discovery-gold/10 p-4 rounded-xl">
@@ -476,7 +476,7 @@ export default function FirstNationsLandingPage() {
                       <div className="text-sm text-discovery-charcoal-light">Layout</div>
                     </div>
                     <div className="bg-discovery-gold/10 p-4 rounded-xl">
-                      <div className="text-2xl font-bold text-discovery-charcoal">$179,000</div>
+                      <div className="text-2xl font-bold text-discovery-charcoal">$187,950</div>
                       <div className="text-sm text-discovery-charcoal-light">Starting Price</div>
                     </div>
                     <div className="bg-discovery-gold/10 p-4 rounded-xl">
@@ -524,7 +524,7 @@ export default function FirstNationsLandingPage() {
                       <div className="text-sm text-discovery-charcoal-light">Layout</div>
                     </div>
                     <div className="bg-discovery-gold/10 p-4 rounded-xl">
-                      <div className="text-2xl font-bold text-discovery-charcoal">$99,000</div>
+                      <div className="text-2xl font-bold text-discovery-charcoal">$103,950</div>
                       <div className="text-sm text-discovery-charcoal-light">Starting Price</div>
                     </div>
                     <div className="bg-discovery-gold/10 p-4 rounded-xl">
