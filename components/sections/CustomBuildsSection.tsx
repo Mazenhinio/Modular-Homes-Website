@@ -1,26 +1,27 @@
 import Link from 'next/link'
+import { Home, Leaf, Zap, Feather } from 'lucide-react'
 
 export function CustomBuildsSection() {
   const customOptions = [
     {
       title: "Larger Footprints",
       description: "Expandable designs for growing families or multi-generational living",
-      icon: "🏠"
+      icon: Home
     },
     {
       title: "Net-Zero Ready Kits", 
       description: "Energy-efficient packages with solar and sustainable systems",
-      icon: "🌱"
+      icon: Leaf
     },
     {
       title: "Off-Grid Solutions",
       description: "Complete independence with water, power, and waste systems",
-      icon: "⚡"
+      icon: Zap
     },
     {
       title: "Indigenous-Specific Designs",
       description: "Culturally-respectful layouts honoring traditional values",
-      icon: "🪶"
+      icon: Feather
     }
   ]
 
@@ -38,17 +39,22 @@ export function CustomBuildsSection() {
         </div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
-          {customOptions.map((option, index) => (
-            <div key={index} className="text-center">
-              <div className="text-4xl mb-4">{option.icon}</div>
-              <h3 className="text-xl font-semibold mb-3 text-discovery-gold">
-                {option.title}
-              </h3>
-              <p className="text-discovery-white-soft leading-relaxed">
-                {option.description}
-              </p>
-            </div>
-          ))}
+          {customOptions.map((option, index) => {
+            const IconComponent = option.icon
+            return (
+              <div key={index} className="text-center">
+                <div className="flex justify-center mb-4">
+                  <IconComponent className="w-12 h-12 text-discovery-gold" />
+                </div>
+                 <h3 className="text-xl font-semibold mb-3 text-discovery-gold">
+                   {option.title}
+                 </h3>
+                 <p className="text-discovery-gold leading-relaxed">
+                   {option.description}
+                 </p>
+              </div>
+            )
+          })}
         </div>
 
         <div className="bg-discovery-white rounded-2xl p-8 md:p-12">

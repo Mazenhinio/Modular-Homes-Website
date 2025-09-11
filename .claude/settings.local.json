@@ -1,0 +1,23 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(/C:\\Users\\Work pc\\Documents\\GitHub\\Modular-Homes-Website\\app\\developers/**)",
+      "Read(/C:\\Users\\Work pc\\Documents\\GitHub\\Modular-Homes-Website/**)",
+      "Read(/C:\\Users\\Work pc\\Documents\\GitHub\\Modular-Homes-Website\\app\\developers/**)",
+      "Read(/C:\\Users\\Work pc\\Documents\\GitHub\\Modular-Homes-Website\\app\\land-owners/**)",
+      "Read(/C:\\Users\\Work pc\\Documents\\GitHub\\Modular-Homes-Website\\app\\resort-owners/**)",
+      "Read(/C:\\Users\\Work pc\\Documents\\GitHub\\Modular-Homes-Website\\components/**)",
+      "Read(/C:\\Users\\Work pc\\Documents\\GitHub\\Modular-Homes-Website\\components\\sections/**)",
+      "Read(/C:\\Users\\Work pc\\Documents\\GitHub\\Modular-Homes-Website\\public\\images/**)",
+      "Read(/C:\\Users\\Work pc\\Documents\\GitHub\\Modular-Homes-Website\\app\\developers/**)",
+      "Read(/C:\\Users\\Work pc\\Documents\\GitHub\\Modular-Homes-Website\\app\\land-owners/**)",
+      "Read(/C:\\Users\\Work pc\\Documents\\GitHub\\Modular-Homes-Website\\app\\resort-owners/**)",
+      "Read(/C:\\Users\\Work pc\\Documents\\GitHub\\Modular-Homes-Website\\app\\first-nations/**)",
+      "Read(/C:\\Users\\Work pc\\Documents\\GitHub\\Modular-Homes-Website\\app\\quote-builder/**)",
+      "Read(/C:\\Users\\Work pc\\Documents\\GitHub\\Modular-Homes-Website\\app\\quote-builder-new/**)",
+      "Read(/C:\\Users\\Work pc\\Documents\\GitHub\\Modular-Homes-Website\\app\\our-builds/**)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

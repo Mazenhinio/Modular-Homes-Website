@@ -73,9 +73,9 @@ export function PDFDownloads({ downloads, modelName }: PDFDownloadsProps) {
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className={`${downloads.length === 1 ? 'flex justify-center' : 'grid md:grid-cols-2 lg:grid-cols-3'} gap-8`}>
           {Object.entries(groupedDownloads).map(([category, categoryDownloads]) => (
-            <div key={category} className="space-y-4">
+            <div key={category} className={`space-y-4 ${downloads.length === 1 ? 'max-w-md' : ''}`}>
               <h3 className="text-xl font-semibold text-discovery-charcoal mb-4 flex items-center gap-2">
                 {getCategoryIcon(category)}
                 {categoryTitles[category as keyof typeof categoryTitles]}
