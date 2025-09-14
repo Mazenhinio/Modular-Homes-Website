@@ -89,6 +89,24 @@ export default function RootLayout({
         <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
         <link rel="manifest" href="/site.webmanifest" />
         
+        {/* Meta Pixel Code */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              !function(f,b,e,v,n,t,s)
+              {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+              n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+              if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+              n.queue=[];t=b.createElement(e);t.async=!0;
+              t.src=v;s=b.getElementsByTagName(e)[0];
+              s.parentNode.insertBefore(t,s)}(window, document,'script',
+              'https://connect.facebook.net/en_US/fbevents.js');
+              fbq('init', '24293734826978109');
+              fbq('track', 'PageView');
+            `,
+          }}
+        />
+        
         {/* Force larger favicon display */}
         <meta name="msapplication-TileImage" content="/android-chrome-512x512.png" />
         <meta name="msapplication-TileColor" content="#68A71D" />
@@ -114,6 +132,17 @@ export default function RootLayout({
         <meta name="apple-mobile-web-app-title" content="Discovery Homes" />
       </head>
       <body className="min-h-screen flex flex-col">
+        {/* Meta Pixel Noscript */}
+        <noscript>
+          <img 
+            height="1" 
+            width="1" 
+            style={{display: 'none'}}
+            src="https://www.facebook.com/tr?id=24293734826978109&ev=PageView&noscript=1"
+            alt=""
+          />
+        </noscript>
+        
         <AnimationProvider>
           <SmoothScrollProvider>
             <ToastProvider>
