@@ -2,6 +2,7 @@
 
 import { PartnershipsHero } from '@/components/sections/PartnershipsHero'
 import { IndigenousPartnerships } from '@/components/sections/IndigenousPartnerships'
+import { PartnershipLogos } from '@/components/sections/PartnershipLogos'
 import { CommunityImpact } from '@/components/sections/CommunityImpact'
 import { CTABanner } from '@/components/CTABanner'
 
@@ -12,6 +13,10 @@ export default function PartnershipsPage() {
       
       <div className="animate-section">
         <IndigenousPartnerships />
+      </div>
+      
+      <div className="animate-section">
+        <PartnershipLogos />
       </div>
       
       {/* Hidden sections under "Serving Indigenous Communities Across Western Canada" */}

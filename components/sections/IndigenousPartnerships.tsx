@@ -40,8 +40,7 @@ export function IndigenousPartnerships() {
   const successMetrics = [
     { number: "15+", label: "Years Serving Communities" },
     { number: "99%", label: "Community Satisfaction" },
-    { number: "25+", label: "Homes Delivered" },
-    { number: "50+", label: "Indigenous Partnerships" }
+    { number: "25+", label: "Homes Delivered" }
   ]
 
   return (
@@ -58,7 +57,7 @@ export function IndigenousPartnerships() {
         </div>
 
         {/* Success Metrics */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 mb-16 animate-cards">
+        <div className="grid grid-cols-3 gap-8 mb-16 animate-cards">
           {successMetrics.map((metric, index) => (
             <div key={index} className="text-center card-item micro-interaction">
               <div className="text-4xl md:text-5xl font-bold text-discovery-gold mb-2">
