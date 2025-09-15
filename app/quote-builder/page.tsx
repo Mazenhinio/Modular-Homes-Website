@@ -12,25 +12,22 @@ interface FormData {
   phone: string
   
   // Step 2: Property Details
-  location: string
   landStatus: string
-  // Property proximity (required Yes/No)
-  isWithin150kmOfLloydminster: string
+  // Property postal code
+  postalCode: string
   
   // Step 3: Intended Use
   intendedUse: string
   intendedUseOther: string
   
-  // Step 4: Model Selection
+  // Step 4: Model Selection and Specifications (merged)
   model: string
-  
-  // Step 5: Package Selection
-  packageType: string
-  
-  // Step 5: Specifications
   bedrooms: string
   bathrooms: string
   sqft: string
+  
+  // Step 5: Package Selection
+  packageType: string
   
   // Step 6: Add-ons
   addons: string[]
@@ -51,22 +48,31 @@ interface FormData {
   wallsFinish: string
 
   
-  // Step 7: Budget
-  budget: string
-  
-  // Step 8: Timeline
+  // Step 7: Timeline
   timeline: string
   
-  // Step 9: Indigenous Community
-  isIndigenous: string
-  
-  // Step 10: Number of Homes
+  // Step 8: Number of Homes
   numberOfHomes: string
   customNumberOfHomes: string
   
-  // Step 11: Financing
+  // Step 9: Financing
   financing: string
   needsFinancingHelp: string
+}
+
+// Helper function to determine if postal code is within 150km of Lloydminster
+function isWithin150kmOfLloydminster(postalCode: string): boolean {
+  if (!postalCode) return false
+  
+  // Clean postal code (remove spaces, convert to uppercase)
+  const cleanPostalCode = postalCode.replace(/\s/g, '').toUpperCase()
+  
+  // Lloydminster postal codes start with T9V (Alberta side) and S9V (Saskatchewan side)
+  // We'll consider both as within range since Lloydminster spans both provinces
+  const lloydminsterPrefixes = ['T9V', 'S9V']
+  
+  // Check if postal code starts with Lloydminster prefixes
+  return lloydminsterPrefixes.some(prefix => cleanPostalCode.startsWith(prefix))
 }
 
 export default function QuoteBuilderPage() {
@@ -79,8 +85,8 @@ export default function QuoteBuilderPage() {
   }, [])
   const [formData, setFormData] = useState<FormData>({
     name: '', email: '', phone: '',
-    location: '', landStatus: '',
-    isWithin150kmOfLloydminster: '',
+    landStatus: '',
+    postalCode: '',
     intendedUse: '',
     intendedUseOther: '',
     model: '',
@@ -102,9 +108,7 @@ export default function QuoteBuilderPage() {
     wallsFinish: 'drywall',
 
 
-    budget: '',
     timeline: '',
-    isIndigenous: '',
     numberOfHomes: '',
     customNumberOfHomes: '',
     financing: '',
@@ -112,27 +116,61 @@ export default function QuoteBuilderPage() {
   })
   const [estimatedPrice, setEstimatedPrice] = useState(0)
   const [isSubmitting, setIsSubmitting] = useState(false)
-  const [isGeneratingPDF, setIsGeneratingPDF] = useState(false)
   const [isSubmitted, setIsSubmitted] = useState(false)
   const [submitError, setSubmitError] = useState<string | null>(null)
 
+  // Countdown timer state
+  const [timeLeft, setTimeLeft] = useState({
+    days: 0,
+    hours: 0,
+    minutes: 0,
+    seconds: 0
+  })
 
-  const totalSteps = 13
+  // Set countdown end date (30 days from now)
+  const countdownEndDate = new Date()
+  countdownEndDate.setDate(countdownEndDate.getDate() + 30)
+
+  // Countdown timer effect
+  useEffect(() => {
+    const timer = setInterval(() => {
+      const now = new Date().getTime()
+      const distance = countdownEndDate.getTime() - now
+
+      if (distance > 0) {
+        setTimeLeft({
+          days: Math.floor(distance / (1000 * 60 * 60 * 24)),
+          hours: Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
+          minutes: Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)),
+          seconds: Math.floor((distance % (1000 * 60)) / 1000)
+        })
+      } else {
+        setTimeLeft({ days: 0, hours: 0, minutes: 0, seconds: 0 })
+      }
+    }, 1000)
+
+    return () => clearInterval(timer)
+  }, [])
+
+  // New state management for merged step
+  const [selectedBedrooms, setSelectedBedrooms] = useState<string | null>(null)
+  const [selectedArea, setSelectedArea] = useState<string | null>(null)
+  const [availableAreas, setAvailableAreas] = useState<Array<{value: number, label: string}>>([])
+  const [selectedModel, setSelectedModel] = useState<{name: string, type: string, price: string} | null>(null)
+
+
+  const totalSteps = 9
 
   const steps = [
     { number: 1, title: 'Contact Info', icon: Users },
     { number: 2, title: 'Property Details', icon: MapPin },
     { number: 3, title: 'Intended Use', icon: Home },
-    { number: 4, title: 'Model Selection', icon: Building },
+    { number: 4, title: 'Model Selection and Specifications', icon: Building },
     { number: 5, title: 'Package', icon: Zap },
-    { number: 6, title: 'Specifications', icon: Palette },
-    { number: 7, title: 'Finishes & Options', icon: Palette },
-    { number: 8, title: 'Add-ons', icon: Zap },
-    { number: 9, title: 'Budget Range', icon: DollarSign },
-    { number: 10, title: 'Timeline', icon: Calendar },
-    { number: 11, title: 'Indigenous Community', icon: Heart },
-    { number: 12, title: 'Number of Homes', icon: Home },
-    { number: 13, title: 'Financing', icon: CreditCard }
+    { number: 6, title: 'Add-ons', icon: Zap },
+    { number: 7, title: 'Timeline', icon: Calendar },
+    { number: 8, title: 'Number of Homes', icon: Home },
+    { number: 9, title: 'Financing', icon: CreditCard }
   ]
 
   const formatCurrency = (n: number) => n.toLocaleString()
@@ -141,9 +179,9 @@ export default function QuoteBuilderPage() {
 
   const getModelBasePrice = () => {
     switch (formData.model) {
-      case 'pine1': return 174000
-      case 'pine2': return 179000
-      case 'pine3': return 99000
+      case 'pine1': return 183000
+      case 'pine2': return 188000
+      case 'pine3': return 104000
       case 'custom': {
         const sqftNumber = parseInt(formData.sqft.replace(/\D/g, '')) || 800
         if (sqftNumber <= 800) return 200000
@@ -159,9 +197,9 @@ export default function QuoteBuilderPage() {
   const getModelRangeFor = (model: string) => {
     let base = 0
     switch (model) {
-      case 'pine1': base = 174000; break
-      case 'pine2': base = 179000; break
-      case 'pine3': base = 99000; break
+      case 'pine1': base = 183000; break
+      case 'pine2': base = 188000; break
+      case 'pine3': base = 104000; break
       default: base = 0
     }
     return clampRange(base * 0.95, base * 1.1)
@@ -187,11 +225,11 @@ export default function QuoteBuilderPage() {
   }
 
   const addOnRanges: Record<string, { min: number; max: number }> = {
-    'solar': { min: 15000, max: 20000 },
+    'solar': { min: 10000, max: 15000 },
     'net-zero': { min: 31500, max: 38500 },
     'off-grid': { min: 36000, max: 44000 },
-    'deck': { min: 8000, max: 12000 },
-    'appliances': { min: 12000, max: 15000 },
+    'deck': { min: 8000, max: 10000 },
+    'appliances': { min: 10000, max: 12000 },
     'smart-home': { min: 4500, max: 5500 },
     'fireplace': { min: 5000, max: 8000 },
   }
@@ -293,6 +331,10 @@ export default function QuoteBuilderPage() {
     const pkg = getPackageRange()
     const addons = getAddOnsRange()
     const finishes = getFinishesRange()
+    
+    // Only add buffer for removed finishes step when user has selected model and area
+    const finishesBuffer = (selectedBedrooms && selectedArea) ? { min: 15000, max: 25000 } : { min: 0, max: 0 }
+    
     const homes = (() => {
       if (formData.numberOfHomes === '4+') {
         const customNumber = parseInt(formData.customNumberOfHomes || '4')
@@ -301,8 +343,9 @@ export default function QuoteBuilderPage() {
       const n = parseInt((formData.numberOfHomes || '1').replace(/\D/g, ''))
       return isNaN(n) || n < 1 ? 1 : Math.min(n, 3)
     })()
-    const min = (model.min + pkg.min + addons.min + finishes.min) * homes
-    const max = (model.max + pkg.max + addons.max + finishes.max) * homes
+    
+    const min = (model.min + pkg.min + addons.min + finishes.min + finishesBuffer.min) * homes
+    const max = (model.max + pkg.max + addons.max + finishes.max + finishesBuffer.max) * homes
     return clampRange(min, max)
   }
 
@@ -324,15 +367,15 @@ export default function QuoteBuilderPage() {
         // Custom build pricing based on square footage
         const sqftNumber = parseInt(formData.sqft.replace(/\D/g, '')) || 800
         if (sqftNumber <= 800) {
-          basePrice = 210000
+          basePrice = 200000
         } else if (sqftNumber <= 1200) {
-          basePrice = 294000
+          basePrice = 280000
         } else if (sqftNumber <= 1800) {
-          basePrice = 399000
+          basePrice = 380000
         } else if (sqftNumber <= 2400) {
-          basePrice = 504000
+          basePrice = 480000
         } else {
-          basePrice = 609000 // 3000+ sq ft
+          basePrice = 580000 // 3000+ sq ft
         }
         break
     }
@@ -345,7 +388,7 @@ export default function QuoteBuilderPage() {
       if (formData.packageType === 'off-grid' && addon === 'off-grid') return
       switch (addon) {
         case 'solar':
-          addonCost += 17500 // Midpoint of $15,000-$20,000 range
+          addonCost += 12500 // Midpoint of $10,000-$15,000 range
           break
         case 'net-zero':
           addonCost += 35000
@@ -358,18 +401,18 @@ export default function QuoteBuilderPage() {
           break
         case 'deck':
           // Deck pricing based on 150km range
-          if (formData.isWithin150kmOfLloydminster === 'yes') {
+          if (isWithin150kmOfLloydminster(formData.postalCode)) {
             addonCost += 8000
           } else {
-            addonCost += 12000 // Higher cost for outside 150km range
+            addonCost += 10000 // Higher cost for outside 150km range
           }
           break
         case 'appliances':
           // Appliances pricing based on 150km range (similar to deck)
-          if (formData.isWithin150kmOfLloydminster === 'yes') {
-            addonCost += 12000
+          if (isWithin150kmOfLloydminster(formData.postalCode)) {
+            addonCost += 10000
           } else {
-            addonCost += 15000 // Higher cost for outside 150km range
+            addonCost += 12000 // Higher cost for outside 150km range
           }
           break
         case 'smart-home':
@@ -430,9 +473,8 @@ export default function QuoteBuilderPage() {
         return null
       }
       case 2: {
-        if (!formData.location) return 'Please select your province.'
         if (!formData.landStatus) return 'Please select your land status.'
-        if (!formData.isWithin150kmOfLloydminster) return 'Please indicate whether your property is within 150 km of Lloydminster.'
+        if (!formData.postalCode) return 'Please enter your postal code.'
         return null
       }
       case 3: {
@@ -441,7 +483,10 @@ export default function QuoteBuilderPage() {
         return null
       }
       case 4: {
-        if (!formData.model) return 'Please choose a model.'
+        // Merged Model Selection and Specifications validation
+        if (!selectedBedrooms) return 'Please select the number of bedrooms.'
+        if (!selectedArea) return 'Please select the square footage.'
+        if (!selectedModel) return 'Please complete your model selection.'
         return null
       }
       case 5: {
@@ -449,36 +494,21 @@ export default function QuoteBuilderPage() {
         return null
       }
       case 6: {
-        if (formData.model === 'custom') {
-          if (!formData.bedrooms) return 'Please select the number of bedrooms.'
-          if (!formData.bathrooms) return 'Please select the number of bathrooms.'
-          if (!formData.sqft) return 'Please select square footage.'
-        } else {
-          if (!formData.bedrooms) return 'Please select the number of bedrooms.'
-          if (!formData.sqft) return 'Please select preferred square footage.'
-        }
+        // No validation needed for add-ons
         return null
       }
-      case 9: {
-        if (!formData.budget) return 'Please choose your budget range.'
-        return null
-      }
-      case 10: {
+       case 7: {
         if (!formData.timeline) return 'Please select a project timeline.'
         return null
       }
-      case 11: {
-        if (!formData.isIndigenous) return 'Please indicate Indigenous community status.'
-        return null
-      }
-      case 12: {
+       case 8: {
         if (!formData.numberOfHomes) return 'Please select the number of homes.'
         if (formData.numberOfHomes === '4+' && (!formData.customNumberOfHomes || parseInt(formData.customNumberOfHomes) < 4)) {
           return 'Please enter a valid number of homes (4 or more).'
         }
         return null
       }
-      case 13: {
+       case 9: {
         if (!formData.financing) return 'Please select a financing option.'
         if (!formData.needsFinancingHelp) return 'Please indicate whether you need help with financing.'
         return null
@@ -533,35 +563,6 @@ export default function QuoteBuilderPage() {
   const handlePrev = () => {
     if (currentStep > 1) {
       setCurrentStep(currentStep - 1)
-    }
-  }
-
-  const generatePine1PDF = async () => {
-    try {
-      setIsGeneratingPDF(true)
-      const response = await fetch('/api/quote-builder/generate-pine1-pdf', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData)
-      })
-      
-      if (response.ok) {
-        const blob = await response.blob()
-        const url = window.URL.createObjectURL(blob)
-        const a = document.createElement('a')
-        a.href = url
-        a.download = 'Pine1-Quotation.pdf'
-        a.click()
-        window.URL.revokeObjectURL(url)
-      } else {
-        console.error('Failed to generate PDF')
-      }
-    } catch (error) {
-      console.error('Error generating PDF:', error)
-    } finally {
-      setIsGeneratingPDF(false)
     }
   }
 
@@ -651,6 +652,109 @@ export default function QuoteBuilderPage() {
     }
   }
 
+  // New bedroom options with Studio
+  const bedroomOptions = [
+    { value: '0', label: 'Studio', display: 'Studio' },
+    { value: '1', label: '1BR', display: '1 Bedroom' },
+    { value: '2', label: '2BR', display: '2 Bedrooms' },
+    { value: '3', label: '3BR', display: '3 Bedrooms' }
+  ]
+
+  // Dynamic area filtering logic
+  const getAvailableAreas = (bedrooms: string) => {
+    switch(bedrooms) {
+      case '0': // Studio
+        return [{ value: 250, label: '250 sq ft' }]
+      case '1': // 1BR
+        return [
+          { value: 504, label: '504 sq ft' },
+          { value: 800, label: '800 sq ft' }
+        ]
+      case '2': // 2BR
+        return [
+          { value: 504, label: '504 sq ft' },
+          { value: 800, label: '800 sq ft' },
+          { value: 1200, label: '1200 sq ft' }
+        ]
+      default: // 3BR+
+        return [
+          { value: 800, label: '800 sq ft' },
+          { value: 1200, label: '1200+ sq ft' }
+        ]
+    }
+  }
+
+  // Model assignment logic
+  const determineModel = (bedrooms: string, sqft: number) => {
+    // Studio → Willow
+    if (bedrooms === '0' && sqft === 250) {
+      return { name: 'Willow', type: 'standard', price: '$104,000 CAD' }
+    }
+    
+    // 1BR Logic
+    if (bedrooms === '1') {
+      if (sqft === 504) return { name: 'Pine', type: 'standard', price: '$183,000 CAD' }
+      if (sqft === 800) return { name: 'Custom Build', type: 'custom', price: 'Contact for pricing' }
+    }
+    
+    // 2BR Logic
+    if (bedrooms === '2') {
+      if (sqft === 504) return { name: 'Spruce', type: 'standard', price: '$188,000 CAD' }
+      if (sqft > 504) return { name: 'Custom Build', type: 'custom', price: 'Contact for pricing' }
+    }
+    
+    // 3BR+ Logic
+    if (parseInt(bedrooms) >= 3) {
+      return { name: 'Custom Build', type: 'custom', price: 'Contact for pricing' }
+    }
+    
+    return null
+  }
+
+  // Handle bedroom selection with new logic
+  const handleNewBedroomsChange = (value: string) => {
+    setSelectedBedrooms(value)
+    updateFormData('bedrooms', value)
+    
+    const areas = getAvailableAreas(value)
+    setAvailableAreas(areas)
+    
+    // Reset area selection
+    setSelectedArea(null)
+    updateFormData('sqft', '')
+    
+    // Clear model
+    setSelectedModel(null)
+    updateFormData('model', '')
+    
+    // Auto-select area if only one option (Studio case)
+    if (areas.length === 1) {
+      setSelectedArea(areas[0].label)
+      updateFormData('sqft', areas[0].label)
+      const model = determineModel(value, areas[0].value)
+      setSelectedModel(model)
+      updateFormData('model', model?.type === 'standard' ? 
+        (model.name === 'Pine' ? 'pine1' : 
+         model.name === 'Spruce' ? 'pine2' : 
+         model.name === 'Willow' ? 'pine3' : 'custom') : 'custom')
+    }
+  }
+
+  // Handle area selection with new logic
+  const handleNewAreaChange = (value: string, sqftValue: number) => {
+    setSelectedArea(value)
+    updateFormData('sqft', value)
+    
+    if (selectedBedrooms) {
+      const model = determineModel(selectedBedrooms, sqftValue)
+      setSelectedModel(model)
+      updateFormData('model', model?.type === 'standard' ? 
+        (model.name === 'Pine' ? 'pine1' : 
+         model.name === 'Spruce' ? 'pine2' : 
+         model.name === 'Willow' ? 'pine3' : 'custom') : 'custom')
+    }
+  }
+
   return (
     <div className="min-h-screen bg-eco-radial pt-24 pb-24">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -672,7 +776,53 @@ export default function QuoteBuilderPage() {
                 <div className="text-2xl font-bold text-[#68a71d] mb-2">
                   {(() => { const r = calculatePriceRange(); return `$${formatCurrency(r.min)} - $${formatCurrency(r.max)} CAD` })()}
                 </div>
-                <p className="text-gray-600">Estimated total range for your {formData.model} build</p>
+                <p className="text-gray-600 mb-4">Estimated total range for your {(() => {
+                  switch(formData.model) {
+                    case 'pine1': return 'Pine'
+                    case 'pine2': return 'Spruce'
+                    case 'pine3': return 'Willow'
+                    case 'custom': return 'Custom Build'
+                    default: return formData.model
+                  }
+                })()} build</p>
+                
+                {/* Price Variation Disclaimer */}
+                <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mb-6">
+                  <div className="flex items-start">
+                    <div className="w-5 h-5 bg-yellow-400 rounded-full flex items-center justify-center mr-3 mt-0.5 flex-shrink-0">
+                      <span className="text-white text-xs font-bold">!</span>
+                    </div>
+                    <div className="text-left">
+                      <h4 className="text-sm font-semibold text-yellow-800 mb-2">Important Pricing Information</h4>
+                      <ul className="text-xs text-yellow-700 space-y-1">
+                        <li className="flex items-start">
+                          <span className="text-yellow-600 mr-2 mt-0.5">•</span>
+                          <span>Prices may vary based on market conditions and selected finishes or upgrades</span>
+                        </li>
+                        <li className="flex items-start">
+                          <span className="text-yellow-600 mr-2 mt-0.5">•</span>
+                          <span>This estimate includes a buffer for common upgrades and popular selections not priced individually in this quote</span>
+                        </li>
+                        <li className="flex items-start">
+                          <span className="text-yellow-600 mr-2 mt-0.5">•</span>
+                          <span>Most clients choose different finishes — no two builds are exactly alike, and we quote accordingly</span>
+                        </li>
+                        <li className="flex items-start">
+                          <span className="text-yellow-600 mr-2 mt-0.5">•</span>
+                          <span>Base model is already well-equipped with upgraded features — this is not a bare-bones starting point</span>
+                        </li>
+                        <li className="flex items-start">
+                          <span className="text-yellow-600 mr-2 mt-0.5">•</span>
+                          <span>Layouts are fixed per model unless you're building fully custom (which follows a separate process)</span>
+                        </li>
+                        <li className="flex items-start">
+                          <span className="text-yellow-600 mr-2 mt-0.5">•</span>
+                          <span>Final pricing is confirmed during your consultation, based on your specific preferences and needs</span>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
               </div>
 
 
@@ -710,56 +860,62 @@ export default function QuoteBuilderPage() {
                 </div>
               </div>
               
-              <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
-                <Link
-                  href="/contact"
-                  className="bg-[#68a71d] text-white px-8 py-3 rounded-lg hover:bg-[#5a8f1a] transition-colors font-semibold"
-                >
-                  Schedule Consultation
-                </Link>
-                <Link
-                  href="/our-builds"
-                  className="bg-gray-100 text-[#2D2D2D] px-8 py-3 rounded-lg hover:bg-gray-200 transition-colors font-semibold"
-                >
-                  Explore More Models
-                </Link>
-              </div>
-
-              {/* Limited Time Offer & Call to Action */}
+              {/* Fall Sale Section */}
               <div className="mt-8 bg-gradient-to-r from-[#D4AF37] to-[#B8941F] rounded-2xl p-8 text-center text-white">
                 <div className="flex items-center justify-center mb-4">
                   <div className="bg-white/20 backdrop-blur-sm rounded-full p-3 mr-3">
                     <Zap className="text-white w-8 h-8" />
                   </div>
                   <h2 className="text-3xl md:text-4xl font-bold">
-                    LIMITED TIME OFFER
+                    FALL SALE
                   </h2>
                 </div>
-                <div className="text-2xl md:text-3xl font-bold mb-6">
-                  Save $2,000 - Book Your Call Now!
-                </div>
-                <p className="text-lg mb-8 opacity-90">
-                  Schedule your consultation today and lock in exclusive pricing. Our experts are ready to help you start your modular home journey.
-                </p>
                 
-                {/* GoHighLevel Calendar Integration */}
-                <div className="bg-white rounded-xl p-6 max-w-4xl mx-auto">
-                  <div className="flex items-center justify-center mb-4">
-                    <div className="bg-[#D4AF37] rounded-full p-2 mr-3">
-                      <Calendar className="text-white w-6 h-6" />
-                    </div>
-                    <h3 className="text-xl font-bold text-[#2D2D2D]">
-                      Book Your Free Consultation
-                    </h3>
-                  </div>
-                  <iframe 
-                    src="https://api.leadconnectorhq.com/widget/booking/PTZ3zcQLwvLZ7CizfIdf" 
-                    style={{ width: '100%', height: '600px', border: 'none', overflow: 'auto' }} 
-                    scrolling="yes" 
-                    id="PTZ3zcQLwvLZ7CizfIdf_quote_builder"
-                    className="w-full rounded-lg"
-                  />
+                <div className="text-2xl md:text-3xl font-bold mb-4">
+                  Save Up to $25,000
                 </div>
+                
+                <div className="text-lg mb-6 opacity-90">
+                  5% Discount on All Models
+                    </div>
+
+                {/* Countdown Timer */}
+                <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 mb-8 max-w-2xl mx-auto">
+                  <h3 className="text-xl font-bold mb-4 text-center">Limited Time Offer</h3>
+                  <h4 className="text-lg font-semibold mb-4 text-center">Ends In:</h4>
+                  <div className="grid grid-cols-4 gap-4">
+                    <div className="bg-white/20 rounded-lg p-4 flex flex-col items-center justify-center min-h-[80px]">
+                      <div className="text-3xl font-bold text-white mb-1">{timeLeft.days}</div>
+                      <div className="text-[10px] text-white opacity-90">Days</div>
+                    </div>
+                    <div className="bg-white/20 rounded-lg p-4 flex flex-col items-center justify-center min-h-[80px]">
+                      <div className="text-3xl font-bold text-white mb-1">{timeLeft.hours}</div>
+                      <div className="text-[10px] text-white opacity-90">Hours</div>
+                    </div>
+                    <div className="bg-white/20 rounded-lg p-4 flex flex-col items-center justify-center min-h-[80px]">
+                      <div className="text-3xl font-bold text-white mb-1">{timeLeft.minutes}</div>
+                      <div className="text-[10px] text-white opacity-90">Minutes</div>
+                    </div>
+                    <div className="bg-white/20 rounded-lg p-4 flex flex-col items-center justify-center min-h-[80px]">
+                      <div className="text-3xl font-bold text-white mb-1">{timeLeft.seconds}</div>
+                      <div className="text-[10px] text-white opacity-90">Seconds</div>
+                    </div>
+                  </div>
+                </div>
+
+                <p className="text-lg mb-8 opacity-90">
+                  Don't miss out on this exclusive fall discount. Book your consultation today to secure your savings!
+                </p>
+
+                {/* Book Your Call Button */}
+                <a
+                  href="https://api.leadconnectorhq.com/widget/booking/PTZ3zcQLwvLZ7CizfIdf"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-block bg-white text-[#D4AF37] px-8 py-4 rounded-lg hover:bg-gray-100 transition-colors font-bold text-lg"
+                >
+                  Book Your Call Now
+                </a>
               </div>
             </div>
           </div>
@@ -770,52 +926,85 @@ export default function QuoteBuilderPage() {
           <>
             {/* Header */}
             <div className="text-center mb-12">
-          <h1 className="text-4xl md:text-5xl font-bold text-gradient-nature mb-4 nature-shimmer">
+           <h1 className="text-2xl md:text-3xl font-bold text-gradient-nature mb-4 nature-shimmer">
             Quote Builder
           </h1>
-          <p className="text-xl text-discovery-sage max-w-2xl mx-auto">
+           <p className="text-sm md:text-base text-discovery-sage max-w-2xl mx-auto">
             Get your personalized quote in just a few minutes. We'll guide you through each step 
             to create the perfect modular home solution.
           </p>
         </div>
 
-        {/* Progress Bar */}
-        <div className="bg-white rounded-lg p-6 mb-8 shadow-sage glass-nature">
-          <div className="flex items-center justify-between mb-4">
-            <span className="text-sm font-medium text-discovery-forest">
-              Step {currentStep} of {totalSteps}
-            </span>
-            <span className="text-sm font-medium text-discovery-sage">
-              {Math.round((currentStep / totalSteps) * 100)}% Complete
-            </span>
-          </div>
-          <div className="w-full bg-gray-200 rounded-full h-2 mb-6">
+        {/* Sticky Progress Bar */}
+        <div className="sticky top-4 z-50 bg-white rounded-lg p-4 md:p-6 mb-8 shadow-lg border border-gray-200">
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+            {/* Progress Info */}
+            <div className="flex-1">
+              <div className="w-full bg-gray-200 rounded-full h-2 mb-3">
             <div 
-              className="bg-gradient-to-r from-discovery-sage to-discovery-lime h-2 rounded-full transition-all duration-300 growth-pulse"
+                  className="bg-gradient-to-r from-discovery-sage to-discovery-lime h-2 rounded-full transition-all duration-300"
               style={{ width: `${(currentStep / totalSteps) * 100}%` }}
             />
           </div>
           
-          {/* Step Icons */}
-          <div className="grid grid-cols-4 md:grid-cols-8 gap-2">
-            {steps.map((step) => {
-              const Icon = step.icon
-              const isCompleted = currentStep > step.number
-              const isCurrent = currentStep === step.number
-              
-              return (
-                <div key={step.number} className="text-center">
-                  <div className={`w-10 h-10 mx-auto rounded-full flex items-center justify-center mb-2 ${
-                    isCompleted ? 'bg-[#D4AF37] text-white' :
-                    isCurrent ? 'bg-[#D4AF37] text-white' :
-                    'bg-gray-200 text-gray-400'
-                  }`}>
-                    {isCompleted ? <Check size={16} /> : <Icon size={16} />}
+              {/* Current Step Display */}
+              <div className="flex items-center justify-center">
+                <div className="flex items-center space-x-3">
+                  <div className="w-8 h-8 bg-[#D4AF37] text-white rounded-full flex items-center justify-center">
+                    {(() => {
+                      const currentStepData = steps.find(step => step.number === currentStep)
+                      const Icon = currentStepData?.icon
+                      return Icon ? <Icon size={16} /> : <Check size={16} />
+                    })()}
                   </div>
-                  <p className="text-xs text-gray-600 hidden md:block">{step.title}</p>
+                  <div className="text-center">
+                    <p className="text-sm font-semibold text-gray-800">
+                      {steps.find(step => step.number === currentStep)?.title}
+                    </p>
+                    <p className="text-xs text-gray-500">
+                      Step {currentStep} of {totalSteps} • {Math.round((currentStep / totalSteps) * 100)}% Complete
+                    </p>
+                  </div>
                 </div>
-              )
-            })}
+              </div>
+            </div>
+            
+            {/* Real-time Price Display */}
+            <div className="bg-gradient-to-r from-[#D4AF37]/10 to-[#68a71d]/10 border border-[#D4AF37] rounded-lg p-2 md:p-3 min-w-0 md:min-w-[180px]">
+              <div className="text-center">
+                <div className="text-xs font-medium text-gray-600 mb-1">Current Total</div>
+                <div className="text-sm md:text-base font-bold text-[#D4AF37]">
+                  {(() => { 
+                    // Check if it's a custom build
+                    if (formData.model === 'custom') {
+                      if (formData.addons.length > 0) {
+                        return `Custom Quote + ${formData.addons.length} upgrade${formData.addons.length > 1 ? 's' : ''}`
+                      }
+                      return 'Custom Quote'
+                    }
+                    
+                    // For standard models, show price range
+                    const r = calculatePriceRange()
+                    if (r.min === 0 && r.max === 0) {
+                      return '$0 CAD'
+                    }
+                    return `$${formatCurrency(r.min)} - $${formatCurrency(r.max)} CAD`
+                  })()}
+                  </div>
+                <div className="text-xs text-gray-500 mt-1">
+                  {formData.model === 'custom' 
+                    ? (formData.addons.length > 0 ? 'Contact for pricing' : 'Contact for pricing')
+                    : (formData.addons.length > 0 ? `${formData.addons.length} upgrade(s)` : 'Base price')
+                  }
+                </div>
+                <div className="text-xs text-gray-400 mt-1 italic">
+                  {selectedBedrooms && selectedArea 
+                    ? "Prices may vary due to market changes and selected upgrades/finishes"
+                    : "Complete model selection to see pricing"
+                  }
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -825,10 +1014,10 @@ export default function QuoteBuilderPage() {
           {/* Step 1: Contact Info */}
           {currentStep === 1 && (
             <div>
-              <h2 className="text-2xl font-bold text-[#2D2D2D] mb-6">Contact Information</h2>
+              <h2 className="text-lg md:text-xl font-bold text-[#2D2D2D] mb-4">Contact Information</h2>
               <div className="space-y-6">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Full Name *</label>
+                  <label className="block text-xs font-medium text-gray-700 mb-2">Full Name *</label>
                   <input
                     type="text"
                     value={formData.name}
@@ -839,7 +1028,7 @@ export default function QuoteBuilderPage() {
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Email Address *</label>
+                  <label className="block text-xs font-medium text-gray-700 mb-2">Email Address *</label>
                   <input
                     type="email"
                     value={formData.email}
@@ -850,7 +1039,7 @@ export default function QuoteBuilderPage() {
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Phone Number *</label>
+                  <label className="block text-xs font-medium text-gray-700 mb-2">Phone Number *</label>
                   <input
                     type="tel"
                     value={formData.phone}
@@ -864,29 +1053,25 @@ export default function QuoteBuilderPage() {
             </div>
           )}
 
-          {/* Step 2: Property Details */
-          }
+          {/* Step 2: Property Details */}
           {currentStep === 2 && (
             <div>
-              <h2 className="text-2xl font-bold text-[#2D2D2D] mb-6">Property Details</h2>
+              <h2 className="text-lg md:text-xl font-bold text-[#2D2D2D] mb-4">Property Details</h2>
               <div className="space-y-6">
+                {/* Postal Code (Required) */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Property Location *</label>
-                  <select
-                    value={formData.location}
-                    onChange={(e) => updateFormData('location', e.target.value)}
+                  <label className="block text-xs font-medium text-gray-700 mb-2">Postal Code *</label>
+                  <input
+                    type="text"
+                    value={formData.postalCode}
+                    onChange={(e) => updateFormData('postalCode', e.target.value)}
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#D4AF37] focus:border-transparent"
+                    placeholder="Enter your postal code (e.g., T9V 0A1)"
                     required
-                  >
-                    <option value="">Select your province</option>
-                    <option value="alberta">Alberta</option>
-                    <option value="saskatchewan">Saskatchewan</option>
-                    <option value="british-columbia">British Columbia</option>
-                    <option value="other">Other</option>
-                  </select>
+                  />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-4">Land Status *</label>
+                  <label className="block text-xs font-medium text-gray-700 mb-4">Land Status *</label>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     {[
                       { value: 'own-land', label: 'I own the land' },
@@ -908,28 +1093,6 @@ export default function QuoteBuilderPage() {
                     ))}
                   </div>
                 </div>
-                {/* Within 150 km of Lloydminster (Required) */}
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-4">Is your property within 150 km of Lloydminster? *</label>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    {[
-                      { value: 'yes', label: 'Yes' },
-                      { value: 'no', label: 'No' }
-                    ].map((option) => (
-                      <label key={option.value} className="flex items-center p-4 border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50">
-                        <input
-                          type="radio"
-                          name="isWithin150kmOfLloydminster"
-                          value={option.value}
-                          checked={formData.isWithin150kmOfLloydminster === option.value}
-                          onChange={(e) => updateFormData('isWithin150kmOfLloydminster', e.target.value)}
-                          className="mr-3"
-                        />
-                        <span>{option.label}</span>
-                      </label>
-                    ))}
-                  </div>
-                </div>
               </div>
             </div>
           )}
@@ -937,7 +1100,7 @@ export default function QuoteBuilderPage() {
           {/* Step 3: Intended Use */}
           {currentStep === 3 && (
             <div>
-              <h2 className="text-2xl font-bold text-[#2D2D2D] mb-6">Intended Use</h2>
+              <h2 className="text-lg md:text-xl font-bold text-[#2D2D2D] mb-4">Intended Use</h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {[
                   { value: 'family-home', label: 'Family Home' },
@@ -962,7 +1125,7 @@ export default function QuoteBuilderPage() {
               </div>
               {formData.intendedUse === 'other' && (
                 <div className="mt-6">
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Please specify *</label>
+                  <label className="block text-xs font-medium text-gray-700 mb-2">Please specify *</label>
                   <input
                     type="text"
                     value={formData.intendedUseOther}
@@ -976,141 +1139,174 @@ export default function QuoteBuilderPage() {
             </div>
           )}
 
-                     {/* Step 4: Model Selection */}
-           {currentStep === 4 && (
+          {/* Step 4: Model Selection and Specifications (Merged) */}
+          {currentStep === 4 && (
              <div>
-               <h2 className="text-2xl font-bold text-[#2D2D2D] mb-6">Choose Your Model *</h2>
-               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                 {[
-                    { 
-                     value: 'pine1', 
-                     name: 'Pine - The Efficient One',
-                     specs: '504 sq ft • 1 Bedroom',
-                      price: '',
-                     description: 'Perfect for singles, couples, or resort units',
-                     features: [
-                       'Quartz countertops',
-                       'Maple cabinetry (White, Black, or Wood Grain)',
-                       'Drywall walls with tongue-and-groove plank ceiling',
-                       'Vinyl glue-down flooring',
-                       'Pot lights throughout',
-                       'Tile shower surround + kitchen/bath backsplash',
-                       'Black kitchen sink & faucet (stainless option available)',
-                       'Triple-glaze windows; all paint colors included',
-                       'Hidden-fastener metal roof and metal board-and-batten siding'
-                     ],
-                     icon: '🏠'
-                   },
-                   { 
-                     value: 'pine2', 
-                     name: 'Spruce - The Versatile One',
-                     specs: '504 sq ft • 2 Bedroom with Loft',
-                      price: '',
-                     description: 'Ideal for families or rental markets',
-                     features: [
-                       'Quartz countertops',
-                       'Maple cabinetry (White, Black, or Wood Grain)',
-                       'Drywall walls with tongue-and-groove plank ceiling',
-                       'Vinyl glue-down flooring',
-                       'Pot lights throughout',
-                       'Tile shower surround + kitchen/bath backsplash',
-                       'Black kitchen sink & faucet (stainless option available)',
-                       'Triple-glaze windows; all paint colors included',
-                       'Hidden-fastener metal roof and metal board-and-batten siding'
-                     ],
-                     icon: '🏘️'
-                   },
-                   { 
-                     value: 'pine3', 
-                     name: 'Willow - The Minimalist',
-                     specs: '240 sq ft with Loft',
-                      price: '',
-                     description: 'Modern tiny home solution',
-                     features: [
-                       'Quartz countertops',
-                       'Maple cabinetry (White, Black, or Wood Grain)',
-                       'Drywall walls with tongue-and-groove plank ceiling',
-                       'Vinyl glue-down flooring',
-                       'Pot lights throughout',
-                       'Tile shower surround + kitchen/bath backsplash',
-                       'Black kitchen sink & faucet (stainless option available)',
-                       'Triple-glaze windows; all paint colors included',
-                       'Hidden-fastener metal roof and metal board-and-batten siding'
-                     ],
-                     icon: '🏕️'
-                   },
-                   { 
-                     value: 'custom', 
-                     name: 'Custom Build',
-                     specs: 'Your specifications',
-                     price: 'Quote on request',
-                     description: 'Fully tailored to your needs',
-                     features: [
-                       'Quartz countertops',
-                       'Maple cabinetry (White, Black, or Wood Grain)',
-                       'Drywall walls with tongue-and-groove plank ceiling',
-                       'Vinyl glue-down flooring',
-                       'Pot lights throughout',
-                       'Tile shower surround + kitchen/bath backsplash',
-                       'Black kitchen sink & faucet (stainless option available)',
-                       'Triple-glaze windows; all paint colors included',
-                       'Hidden-fastener metal roof and metal board-and-batten siding'
-                     ],
-                     icon: '✨'
-                   }
-                 ].map((model) => (
-                   <label key={model.value} className={`block p-6 border-2 rounded-lg cursor-pointer transition-all duration-200 hover:shadow-lg ${
-                     formData.model === model.value 
+              <h2 className="text-lg md:text-xl font-bold text-[#2D2D2D] mb-4">Model Selection and Specifications</h2>
+              
+              {/* Bedroom Selection */}
+              <div className="mb-8">
+                <label className="block text-xs font-medium text-gray-700 mb-4">Number of Bedrooms *</label>
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
+                  {bedroomOptions.map((option) => (
+                    <label key={option.value} className={`text-center p-4 border rounded-lg cursor-pointer transition-all duration-200 hover:shadow-lg ${
+                      selectedBedrooms === option.value 
                        ? 'border-[#D4AF37] bg-[#D4AF37]/10 shadow-lg' 
                        : 'border-gray-300 hover:border-[#D4AF37]/50'
                    }`}>
                      <input
                        type="radio"
-                       name="model"
-                       value={model.value}
-                       checked={formData.model === model.value}
-                       onChange={(e) => updateFormData('model', e.target.value)}
+                        name="bedrooms"
+                        value={option.value}
+                        checked={selectedBedrooms === option.value}
+                        onChange={(e) => handleNewBedroomsChange(e.target.value)}
                        className="sr-only"
                      />
-                     <div>
-                        <div className="flex items-center mb-3">
-                          <div>
-                           <h3 className="text-lg font-bold text-[#2D2D2D]">{model.name}</h3>
-                           <p className="text-gray-600 text-sm">{model.specs}</p>
+                      <span className="text-sm font-semibold">{option.display}</span>
+                    </label>
+                  ))}
                          </div>
                        </div>
-                       <p className="text-sm text-gray-600 mb-4">{model.description}</p>
-                       
-                        <div className="mb-4">
-                          <h4 className="font-semibold text-[#2D2D2D] mb-2">Key Features:</h4>
-                          <ul className="space-y-1">
-                            {model.features.map((feature, index) => (
-                              <li key={index} className="flex items-center text-sm text-gray-600">
-                                <span className="w-1.5 h-1.5 bg-[#D4AF37] rounded-full mr-2"></span>
-                                {feature}
-                              </li>
-                            ))}
+
+              {/* Area Selection */}
+              <div className="mb-8">
+                <label className="block text-xs font-medium text-gray-700 mb-4">Square Footage *</label>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-4">
+                  {availableAreas.map((area) => (
+                    <label key={area.value} className={`text-center p-4 border rounded-lg cursor-pointer transition-all duration-200 hover:shadow-lg ${
+                      selectedArea === area.label 
+                        ? 'border-[#D4AF37] bg-[#D4AF37]/10 shadow-lg' 
+                        : 'border-gray-300 hover:border-[#D4AF37]/50'
+                    } ${!selectedBedrooms ? 'opacity-50 cursor-not-allowed' : ''}`}>
+                      <input
+                        type="radio"
+                        name="sqft"
+                        value={area.label}
+                        checked={selectedArea === area.label}
+                        onChange={(e) => handleNewAreaChange(e.target.value, area.value)}
+                        disabled={!selectedBedrooms}
+                        className="sr-only"
+                      />
+                       <span className="text-sm font-semibold">{area.label}</span>
+                    </label>
+                  ))}
+                </div>
+                {!selectedBedrooms && (
+                  <p className="text-sm text-gray-500 mt-2">Please select number of bedrooms first</p>
+                )}
+              </div>
+
+              {/* Selected Model Display */}
+              {selectedModel && (
+                <div className="bg-gradient-to-r from-[#D4AF37]/10 to-[#68a71d]/10 border border-[#D4AF37] rounded-lg p-4 md:p-6 relative">
+                  {/* Mobile Layout */}
+                  <div className="md:hidden">
+                    {/* Header with Image */}
+                    <div className="flex items-start justify-between mb-4">
+                      <div className="flex-1">
+                        <h3 className="text-xl font-bold text-[#2D2D2D]">{selectedModel.name}</h3>
+                        <p className="text-sm text-gray-600">
+                          {selectedBedrooms && bedroomOptions.find(b => b.value === selectedBedrooms)?.display} • {selectedArea}
+                          {selectedModel.name !== 'Custom Build' && ' • Loft'}
+                        </p>
+                      </div>
+                      {/* Mobile Image */}
+                      <div className="w-24 h-24 rounded-lg overflow-hidden ml-4">
+                        <img 
+                          src={
+                            selectedModel.name === 'Willow' ? '/images/new-content/Pine 3- Willow/XF pine 3 scandanavian front right .webp' :
+                            selectedModel.name === 'Pine' ? '/images/new-content/PIne 1 - Pine/xf pine 1 front right scandanavian.webp' :
+                            selectedModel.name === 'Spruce' ? '/images/new-content/Pine 2- Spruce/XF pien 1 and 2 charcoal.webp' :
+                            '/images/new-content/Custom Builds/cb coastal.webp'
+                          }
+                          alt={`${selectedModel.name} model`}
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
+                    </div>
+                    
+                    {/* Mobile Features */}
+                    <div className="mb-4">
+                      <h4 className="font-semibold text-sm text-[#2D2D2D] mb-2">Key Features:</h4>
+                      <ul className="text-sm text-gray-700 space-y-1">
+                        <li className="flex items-start"><span className="w-1.5 h-1.5 bg-[#D4AF37] rounded-full mt-2 mr-2"></span> Quartz countertops</li>
+                        <li className="flex items-start"><span className="w-1.5 h-1.5 bg-[#D4AF37] rounded-full mt-2 mr-2"></span> Maple cabinetry (White / Black / Wood Grain)</li>
+                        <li className="flex items-start"><span className="w-1.5 h-1.5 bg-[#D4AF37] rounded-full mt-2 mr-2"></span> Drywall walls with tongue-and-groove ceiling</li>
+                        <li className="flex items-start"><span className="w-1.5 h-1.5 bg-[#D4AF37] rounded-full mt-2 mr-2"></span> Vinyl glue-down flooring</li>
+                        <li className="flex items-start"><span className="w-1.5 h-1.5 bg-[#D4AF37] rounded-full mt-2 mr-2"></span> Pot lights throughout</li>
+                        <li className="flex items-start"><span className="w-1.5 h-1.5 bg-[#D4AF37] rounded-full mt-2 mr-2"></span> Tile shower surround + kitchen/bath backsplash</li>
+                        <li className="flex items-start"><span className="w-1.5 h-1.5 bg-[#D4AF37] rounded-full mt-2 mr-2"></span> Black kitchen sink & faucet (stainless option available)</li>
+                        <li className="flex items-start"><span className="w-1.5 h-1.5 bg-[#D4AF37] rounded-full mt-2 mr-2"></span> Triple-glaze windows; all paint colors included</li>
+                        <li className="flex items-start"><span className="w-1.5 h-1.5 bg-[#D4AF37] rounded-full mt-2 mr-2"></span> Exterior: Hidden-fastener metal roof and metal board-and-batten siding</li>
                           </ul>
                         </div>
 
-                        <div className="flex items-center justify-between">
-                          <p className="text-xl font-bold text-[#D4AF37]">
-                            {model.value === 'custom' ? 'Quote on request' : (
-                              model.value === 'pine1' ? '$183,000 CAD' :
-                              model.value === 'pine2' ? '$188,000 CAD' :
-                              '$104,000 CAD'
-                            )}
-                          </p>
-                         {formData.model === model.value && (
-                           <div className="w-6 h-6 bg-[#D4AF37] rounded-full flex items-center justify-center">
-                             <Check size={16} className="text-white" />
+                    {/* Mobile Price */}
+                    <div className="text-center">
+                      <div className="text-2xl font-bold text-[#D4AF37]">
+                        {selectedModel.price}
+                      </div>
+                      {selectedModel.type === 'custom' && (
+                        <div className="text-sm text-gray-600 mt-1">
+                          Custom pricing based on specifications
+                        </div>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Desktop Layout */}
+                  <div className="hidden md:block">
+                    {/* Desktop Image - Top Right */}
+                    <div className="absolute top-4 right-4 w-40 h-40 rounded-lg overflow-hidden">
+                      <img 
+                        src={
+                          selectedModel.name === 'Willow' ? '/images/new-content/Pine 3- Willow/XF pine 3 scandanavian front right .webp' :
+                          selectedModel.name === 'Pine' ? '/images/new-content/PIne 1 - Pine/xf pine 1 front right scandanavian.webp' :
+                          selectedModel.name === 'Spruce' ? '/images/new-content/Pine 2- Spruce/XF pien 1 and 2 charcoal.webp' :
+                          '/images/new-content/Custom Builds/cb coastal.webp'
+                        }
+                        alt={`${selectedModel.name} model`}
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                    
+                    {/* Desktop Price - Bottom Right */}
+                    <div className="absolute bottom-4 right-4 text-right">
+                      <div className="text-2xl font-bold text-[#D4AF37]">
+                        {selectedModel.price}
+                      </div>
+                      {selectedModel.type === 'custom' && (
+                        <div className="text-xs text-gray-600 mt-1">
+                          Custom pricing based on specifications
                            </div>
                          )}
                        </div>
+                    
+                    {/* Desktop Main Content */}
+                    <div className="pr-44 pb-16">
+                      <h3 className="text-lg font-bold text-[#2D2D2D]">{selectedModel.name}</h3>
+                      <p className="text-sm text-gray-600">
+                        {selectedBedrooms && bedroomOptions.find(b => b.value === selectedBedrooms)?.display} • {selectedArea}
+                        {selectedModel.name !== 'Custom Build' && ' • Loft'}
+                      </p>
+                      <div className="mt-2">
+                        <h4 className="font-semibold text-sm text-[#2D2D2D] mb-2">Key Features:</h4>
+                        <ul className="text-xs text-gray-700 grid md:grid-cols-2 gap-y-1 gap-x-4">
+                          <li className="flex items-start"><span className="w-1 h-1 bg-[#D4AF37] rounded-full mt-2 mr-2"></span> Quartz countertops</li>
+                          <li className="flex items-start"><span className="w-1 h-1 bg-[#D4AF37] rounded-full mt-2 mr-2"></span> Maple cabinetry (White / Black / Wood Grain)</li>
+                          <li className="flex items-start"><span className="w-1 h-1 bg-[#D4AF37] rounded-full mt-2 mr-2"></span> Drywall walls with tongue-and-groove ceiling</li>
+                          <li className="flex items-start"><span className="w-1 h-1 bg-[#D4AF37] rounded-full mt-2 mr-2"></span> Vinyl glue-down flooring</li>
+                          <li className="flex items-start"><span className="w-1 h-1 bg-[#D4AF37] rounded-full mt-2 mr-2"></span> Pot lights throughout</li>
+                          <li className="flex items-start"><span className="w-1 h-1 bg-[#D4AF37] rounded-full mt-2 mr-2"></span> Tile shower surround + kitchen/bath backsplash</li>
+                          <li className="flex items-start"><span className="w-1 h-1 bg-[#D4AF37] rounded-full mt-2 mr-2"></span> Black kitchen sink & faucet (stainless option available)</li>
+                          <li className="flex items-start"><span className="w-1 h-1 bg-[#D4AF37] rounded-full mt-2 mr-2"></span> Triple-glaze windows; all paint colors included</li>
+                          <li className="flex items-start md:col-span-2"><span className="w-1 h-1 bg-[#D4AF37] rounded-full mt-2 mr-2"></span> Exterior: Hidden-fastener metal roof and metal board-and-batten siding</li>
+                        </ul>
                      </div>
-                   </label>
-                 ))}
+                    </div>
                </div>
+                </div>
+              )}
              </div>
            )}
 
@@ -1118,7 +1314,7 @@ export default function QuoteBuilderPage() {
           {/* Step 5: Package Selection */}
           {currentStep === 5 && (
             <div>
-              <h2 className="text-2xl font-bold text-[#2D2D2D] mb-6">Choose Your Package</h2>
+              <h2 className="text-lg md:text-xl font-bold text-[#2D2D2D] mb-4">Choose Your Package</h2>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 {[{
                   value: 'base',
@@ -1152,427 +1348,46 @@ export default function QuoteBuilderPage() {
                        />
                        <h3 className="text-lg font-bold text-[#2D2D2D] mb-1">{pkg.title}</h3>
                        {isComingSoon && (
-                         <span className="inline-block mb-2 px-2 py-0.5 text-xs font-semibold rounded-full bg-yellow-100 text-yellow-800 border border-yellow-200">Coming Soon</span>
+                         <span className="inline-block mb-2 px-2 py-0.5 text-xs font-semibold rounded-full bg-yellow-100 text-yellow-800 border border-yellow-200">Custom Quote</span>
                        )}
                        <p className="text-sm text-gray-600">{pkg.description}</p>
                      </label>
                    )
                  })}
               </div>
-            </div>
-          )}
-
-          {/* Step 6: Specifications */}
-          {currentStep === 6 && (
-            <div>
-              <h2 className="text-2xl font-bold text-[#2D2D2D] mb-6">Specifications</h2>
               
-              {/* Show different options based on selected model */}
-              {formData.model === 'custom' ? (
-                <div className="space-y-6">
-                  {/* Custom Build - Enhanced Bedroom Options */}
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-4">Number of Bedrooms</label>
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                      {['2', '3', '4', '5+'].map((bed) => (
-                        <label key={bed} className={`text-center p-4 border rounded-lg cursor-pointer ${
-                          formData.bedrooms === bed ? 'border-[#D4AF37] bg-[#D4AF37]/10' : 'border-gray-300'
-                        }`}>
-                          <input
-                            type="radio"
-                            name="bedrooms"
-                            value={bed}
-                            checked={formData.bedrooms === bed}
-                            onChange={(e) => handleBedroomsChange(e.target.value)}
-                            className="sr-only"
-                          />
-                          <span className="font-semibold">{bed}</span>
-                        </label>
-                      ))}
-                    </div>
+              {/* Development Note */}
+              <div className="mt-6 bg-green-50 border border-green-200 rounded-lg p-4">
+                <div className="flex items-start">
+                  <div className="w-5 h-5 bg-green-400 rounded-full flex items-center justify-center mr-3 mt-0.5 flex-shrink-0">
+                    <span className="text-white text-xs font-bold">i</span>
                   </div>
-
-                  {/* Custom Build - Bathroom Options */}
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-4">Number of Bathrooms</label>
-                    <div className="grid grid-cols-2 gap-4">
-                      {['1', '2'].map((bath) => (
-                        <label key={bath} className={`text-center p-4 border rounded-lg cursor-pointer ${
-                          formData.bathrooms === bath ? 'border-[#D4AF37] bg-[#D4AF37]/10' : 'border-gray-300'
-                        }`}>
-                          <input
-                            type="radio"
-                            name="bathrooms"
-                            value={bath}
-                            checked={formData.bathrooms === bath}
-                            onChange={(e) => updateFormData('bathrooms', e.target.value)}
-                            className="sr-only"
-                          />
-                          <span className="font-semibold">{bath}</span>
-                        </label>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* Custom Build - Enhanced Square Footage Options */}
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-4">Square Footage</label>
-                    <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                      {getSqftOptionsForBedrooms(formData.bedrooms).map((sqft) => (
-                        <label key={sqft} className={`text-center p-4 border rounded-lg cursor-pointer ${
-                          formData.sqft === sqft ? 'border-[#D4AF37] bg-[#D4AF37]/10' : 'border-gray-300'
-                        }`}>
-                          <input
-                            type="radio"
-                            name="sqft"
-                            value={sqft}
-                            checked={formData.sqft === sqft}
-                            onChange={(e) => updateFormData('sqft', e.target.value)}
-                            className="sr-only"
-                          />
-                          <span className="font-semibold">{sqft}</span>
-                        </label>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* Custom Build Price Estimate */}
-                  <div className="bg-gradient-to-r from-[#D4AF37]/10 to-[#68a71d]/10 border border-[#D4AF37] rounded-lg p-6">
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <h3 className="text-lg font-semibold text-[#2D2D2D]">Custom Build Estimate</h3>
-                        <p className="text-sm text-gray-600">Based on your specifications</p>
-                      </div>
-                      <div className="text-right">
-                        <div className="text-3xl font-bold text-[#D4AF37]">
-                          ${calculatePrice().toLocaleString()} CAD
-                        </div>
-                        <div className="text-sm text-gray-600">
-                          Starting price for {formData.sqft || '800 sq ft'}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              ) : (
-                <div className="space-y-6">
-                  {/* Standard Models - Original Options */}
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-4">Number of Bedrooms</label>
-                    <div className="grid grid-cols-4 gap-4">
-                      {['1', '2', '3', '4+'].map((bed) => (
-                        <label key={bed} className={`text-center p-4 border rounded-lg cursor-pointer ${
-                          formData.bedrooms === bed ? 'border-[#D4AF37] bg-[#D4AF37]/10' : 'border-gray-300'
-                        }`}>
-                          <input
-                            type="radio"
-                            name="bedrooms"
-                            value={bed}
-                            checked={formData.bedrooms === bed}
-                            onChange={(e) => handleBedroomsChange(e.target.value)}
-                            className="sr-only"
-                          />
-                          <span className="font-semibold">{bed}</span>
-                        </label>
-                      ))}
-                    </div>
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-4">Preferred Square Footage</label>
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                      {getSqftOptionsForBedrooms(formData.bedrooms).map((sqft) => (
-                        <label key={sqft} className={`text-center p-4 border rounded-lg cursor-pointer ${
-                          formData.sqft === sqft ? 'border-[#D4AF37] bg-[#D4AF37]/10' : 'border-gray-300'
-                        }`}>
-                          <input
-                            type="radio"
-                            name="sqft"
-                            value={sqft}
-                            checked={formData.sqft === sqft}
-                            onChange={(e) => updateFormData('sqft', e.target.value)}
-                            className="sr-only"
-                          />
-                          <span className="font-semibold">{sqft}</span>
-                        </label>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* Included Base Features (from Base Units & Upgrades) */}
-                  <div className="mt-8 border rounded-lg p-5 bg-gray-50">
-                    <h3 className="text-md font-semibold text-[#2D2D2D] mb-3">Included Base Features</h3>
-                    <ul className="text-sm text-gray-700 grid md:grid-cols-2 gap-y-2 gap-x-6">
-                      <li className="flex items-start"><span className="w-1.5 h-1.5 bg-[#D4AF37] rounded-full mt-2 mr-2"></span> Quartz countertops</li>
-                      <li className="flex items-start"><span className="w-1.5 h-1.5 bg-[#D4AF37] rounded-full mt-2 mr-2"></span> Maple cabinetry (White / Black / Wood Grain)</li>
-                      <li className="flex items-start"><span className="w-1.5 h-1.5 bg-[#D4AF37] rounded-full mt-2 mr-2"></span> Drywall walls with tongue-and-groove ceiling</li>
-                      <li className="flex items-start"><span className="w-1.5 h-1.5 bg-[#D4AF37] rounded-full mt-2 mr-2"></span> Vinyl glue-down flooring</li>
-                      <li className="flex items-start"><span className="w-1.5 h-1.5 bg-[#D4AF37] rounded-full mt-2 mr-2"></span> Pot lights throughout</li>
-                      <li className="flex items-start"><span className="w-1.5 h-1.5 bg-[#D4AF37] rounded-full mt-2 mr-2"></span> Tile shower surround + kitchen/bath backsplash</li>
-                      <li className="flex items-start"><span className="w-1.5 h-1.5 bg-[#D4AF37] rounded-full mt-2 mr-2"></span> Black kitchen sink & faucet (stainless option available)</li>
-                      <li className="flex items-start"><span className="w-1.5 h-1.5 bg-[#D4AF37] rounded-full mt-2 mr-2"></span> Triple-glaze windows; all paint colors included</li>
-                      <li className="flex items-start md:col-span-2"><span className="w-1.5 h-1.5 bg-[#D4AF37] rounded-full mt-2 mr-2"></span> Exterior: Hidden-fastener metal roof and metal board-and-batten siding</li>
-                    </ul>
-                  </div>
-                </div>
-              )}
-            </div>
-          )}
-
-          {/* Step 7: Finishes & Options */}
-          {currentStep === 7 && (
-            <div>
-              <h2 className="text-2xl font-bold text-[#2D2D2D] mb-6">Finishes & Options</h2>
-              <div className="space-y-6">
-                {/* Siding */}
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Siding</label>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <label className={`p-4 border rounded-lg cursor-pointer ${formData.siding==='base-metal'?'border-[#D4AF37] bg-[#D4AF37]/10':'border-gray-300'}`}>
-                      <input type="radio" name="siding" value="base-metal" className="sr-only" checked={formData.siding==='base-metal'} onChange={(e)=>updateFormData('siding', e.target.value)} />
-                      <div className="font-semibold">Base: Hidden-Fastener Metal</div>
-                      <div className="text-sm text-gray-600">Board-and-batten siding with color selections</div>
-                    </label>
-                    {isWoodGrainEligible() && (
-                      <label className={`p-4 border rounded-lg cursor-pointer ${formData.siding==='wood-grain'?'border-[#D4AF37] bg-[#D4AF37]/10':'border-gray-300'}`}>
-                        <input type="radio" name="siding" value="wood-grain" className="sr-only" checked={formData.siding==='wood-grain'} onChange={(e)=>updateFormData('siding', e.target.value)} />
-                        <div className="font-semibold">Upgrade: Wood Grain Siding</div>
-                        <div className="text-sm text-gray-600">
-                          {(() => {
-                            const sqftNumber = parseInt((formData.sqft || '').replace(/\D/g, ''))
-                            if (sqftNumber <= 240) {
-                              return '+$4,000 – $4,400'
-                            } else {
-                              return '+$6,000 – $6,600'
-                            }
-                          })()}
-                        </div>
-                      </label>
-                    )}
-                  </div>
-                </div>
-
-                {/* Countertops */}
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Countertops</label>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <label className={`p-4 border rounded-lg cursor-pointer ${formData.countertops==='base-quartz'?'border-[#D4AF37] bg-[#D4AF37]/10':'border-gray-300'}`}>
-                      <input type="radio" name="countertops" value="base-quartz" className="sr-only" checked={formData.countertops==='base-quartz'} onChange={(e)=>updateFormData('countertops', e.target.value)} />
-                      <div className="font-semibold">Base: Quartz Counters</div>
-                      <div className="text-sm text-gray-600">Premium quartz countertops included</div>
-                    </label>
-                    <label className={`p-4 border rounded-lg cursor-pointer ${formData.countertops==='upgrade-quartz'?'border-[#D4AF37] bg-[#D4AF37]/10':'border-gray-300'}`}>
-                      <input type="radio" name="countertops" value="upgrade-quartz" className="sr-only" checked={formData.countertops==='upgrade-quartz'} onChange={(e)=>updateFormData('countertops', e.target.value)} />
-                      <div className="font-semibold">Upgrade: Expanded Quartz Options</div>
-                      <div className="text-sm text-gray-600">Multiple color and style selections</div>
-                    </label>
-                  </div>
-                </div>
-
-                {/* Cabinets */}
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Cabinets</label>
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <label className={`p-4 border rounded-lg cursor-pointer ${formData.cabinets==='maple-shaker'?'border-[#D4AF37] bg-[#D4AF37]/10':'border-gray-300'}`}>
-                      <input type="radio" name="cabinets" value="maple-shaker" className="sr-only" checked={formData.cabinets==='maple-shaker'} onChange={(e)=>updateFormData('cabinets', e.target.value)} />
-                      <div className="font-semibold">Base: Maple Cabinets</div>
-                      <div className="text-sm text-gray-600">White, Black, or Wood Grain options</div>
-                    </label>
-                    <label className={`p-4 border rounded-lg cursor-pointer ${formData.cabinets==='painted-thermo'?'border-[#D4AF37] bg-[#D4AF37]/10':'border-gray-300'}`}>
-                      <input type="radio" name="cabinets" value="painted-thermo" className="sr-only" checked={formData.cabinets==='painted-thermo'} onChange={(e)=>updateFormData('cabinets', e.target.value)} />
-                      <div className="font-semibold">Upgrade: Painted/Thermo Options</div>
-                      <div className="text-sm text-gray-600">Additional styles and finishes</div>
-                    </label>
-                    <label className={`p-4 border rounded-lg cursor-pointer ${formData.cabinets==='melamine'?'border-[#D4AF37] bg-[#D4AF37]/10':'border-gray-300'}`}>
-                      <input type="radio" name="cabinets" value="melamine" className="sr-only" checked={formData.cabinets==='melamine'} onChange={(e)=>updateFormData('cabinets', e.target.value)} />
-                      <div className="font-semibold">Downgrade: Melamine</div>
-                      <div className="text-sm text-gray-600">Cost-saving alternative</div>
-                    </label>
-                  </div>
-                </div>
-
-                {/* Walls */}
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Walls</label>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <label className={`p-4 border rounded-lg cursor-pointer ${formData.wallsFinish==='drywall'?'border-[#D4AF37] bg-[#D4AF37]/10':'border-gray-300'}`}>
-                      <input type="radio" name="wallsFinish" value="drywall" className="sr-only" checked={formData.wallsFinish==='drywall'} onChange={(e)=>updateFormData('wallsFinish', e.target.value)} />
-                      <div className="font-semibold">Base: Drywall</div>
-                      <div className="text-sm text-gray-600">Standard drywall with paint options</div>
-                    </label>
-                    <label className={`p-4 border rounded-lg cursor-pointer ${formData.wallsFinish==='woodboard-stained'?'border-[#D4AF37] bg-[#D4AF37]/10':'border-gray-300'}`}>
-                      <input type="radio" name="wallsFinish" value="woodboard-stained" className="sr-only" checked={formData.wallsFinish==='woodboard-stained'} onChange={(e)=>updateFormData('wallsFinish', e.target.value)} />
-                      <div className="font-semibold">Upgrade: Woodboard or Stained</div>
-                      <div className="text-sm text-gray-600">Premium wood finish options</div>
-                    </label>
-                  </div>
-                </div>
-
-                {/* Ceilings */}
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Ceilings</label>
-                  <div className="grid grid-cols-1 gap-4">
-                    <label className="p-4 border border-gray-300 rounded-lg bg-gray-50">
-                      <div className="font-semibold">Base: Tongue & Groove Ceiling</div>
-                      <div className="text-sm text-gray-600">Included in base package</div>
-                    </label>
-                  </div>
-                </div>
-
-                {/* Flooring */}
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Flooring</label>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <label className={`p-4 border rounded-lg cursor-pointer ${formData.flooring==='vinyl-glue-down'?'border-[#D4AF37] bg-[#D4AF37]/10':'border-gray-300'}`}>
-                      <input type="radio" name="flooring" value="vinyl-glue-down" className="sr-only" checked={formData.flooring==='vinyl-glue-down'} onChange={(e)=>updateFormData('flooring', e.target.value)} />
-                      <div className="font-semibold">Base: Vinyl Glue-Down</div>
-                      <div className="text-sm text-gray-600">Various color and price points</div>
-                    </label>
-                    <label className={`p-4 border rounded-lg cursor-pointer ${formData.flooring==='vinyl-upgrade'?'border-[#D4AF37] bg-[#D4AF37]/10':'border-gray-300'}`}>
-                      <input type="radio" name="flooring" value="vinyl-upgrade" className="sr-only" checked={formData.flooring==='vinyl-upgrade'} onChange={(e)=>updateFormData('flooring', e.target.value)} />
-                      <div className="font-semibold">Upgrade: Better Vinyl</div>
-                      <div className="text-sm text-gray-600">Enhanced vinyl options</div>
-                    </label>
-                  </div>
-                </div>
-
-                {/* Lighting */}
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Lighting</label>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <label className={`p-4 border rounded-lg cursor-pointer ${formData.baseLighting?'border-[#D4AF37] bg-[#D4AF37]/10':'border-gray-300'}`}>
-                      <input type="checkbox" checked={formData.baseLighting} onChange={(e)=>updateFormData('baseLighting', e.target.checked)} className="sr-only" />
-                      <div className="font-semibold">Base: Pot Lights</div>
-                      <div className="text-sm text-gray-600">Throughout the home</div>
-                    </label>
-                    <label className={`p-4 border rounded-lg cursor-pointer ${formData.addCeilingFans?'border-[#D4AF37] bg-[#D4AF37]/10':'border-gray-300'}`}>
-                      <input type="checkbox" checked={formData.addCeilingFans} onChange={(e)=>updateFormData('addCeilingFans', e.target.checked)} className="sr-only" />
-                      <div className="font-semibold">Upgrade: Ceiling Fans</div>
-                      <div className="text-sm text-gray-600">+$540 – $660 per bathroom</div>
-                    </label>
-                  </div>
-                </div>
-
-                {/* Faucets */}
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Plumbing Faucets</label>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <label className={`p-4 border rounded-lg cursor-pointer ${formData.faucets==='stainless'?'border-[#D4AF37] bg-[#D4AF37]/10':'border-gray-300'}`}>
-                      <input type="radio" name="faucets" value="stainless" className="sr-only" checked={formData.faucets==='stainless'} onChange={(e)=>updateFormData('faucets', e.target.value)} />
-                      <div className="font-semibold">Base: Stainless Steel Fixtures</div>
-                      <div className="text-sm text-gray-600">Kitchen faucets & sinks in stainless steel</div>
-                    </label>
-                    <label className={`p-4 border rounded-lg cursor-pointer ${formData.faucets==='bronze'?'border-[#D4AF37] bg-[#D4AF37]/10':'border-gray-300'}`}>
-                      <input type="radio" name="faucets" value="bronze" className="sr-only" checked={formData.faucets==='bronze'} onChange={(e)=>updateFormData('faucets', e.target.value)} />
-                      <div className="font-semibold">Upgrade: Bronze</div>
-                      <div className="text-sm text-gray-600">+$450 – $600</div>
-                    </label>
-                  </div>
-                </div>
-
-                {/* Kitchen & Bath Tile */}
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Kitchen & Bath Tile</label>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <label className={`p-4 border rounded-lg cursor-pointer ${formData.baseTile?'border-[#D4AF37] bg-[#D4AF37]/10':'border-gray-300'}`}>
-                      <input type="checkbox" checked={formData.baseTile} onChange={(e)=>updateFormData('baseTile', e.target.checked)} className="sr-only" />
-                      <div className="font-semibold">Base: Tile Features</div>
-                      <div className="text-sm text-gray-600">Shower surround + kitchen/bath backsplash</div>
-                    </label>
-                    <label className={`p-4 border rounded-lg cursor-pointer ${formData.addBedroomFixtures?'border-[#D4AF37] bg-[#D4AF37]/10':'border-gray-300'}`}>
-                      <input type="checkbox" checked={formData.addBedroomFixtures} onChange={(e)=>updateFormData('addBedroomFixtures', e.target.checked)} className="sr-only" />
-                      <div className="font-semibold">Upgrade: Enhanced Tile</div>
-                      <div className="text-sm text-gray-600">+$450 – $550 per kitchen</div>
-                    </label>
-                  </div>
-                </div>
-
-                {/* Windows */}
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Windows</label>
-                  <div className="grid grid-cols-1 gap-4">
-                    <label className="p-4 border border-gray-300 rounded-lg bg-gray-50">
-                      <div className="font-semibold">Base: Triple-Glaze Windows</div>
-                      <div className="text-sm text-gray-600">Black windows with paint/stain options</div>
-                    </label>
-                  </div>
-                </div>
-
-                {/* Paint */}
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Paint</label>
-                  <div className="grid grid-cols-1 gap-4">
-                    <label className="p-4 border border-gray-300 rounded-lg bg-gray-50">
-                      <div className="font-semibold">Base: All Colors Included</div>
-                      <div className="text-sm text-gray-600">Complete paint selection at no extra cost</div>
-                    </label>
-                  </div>
-                </div>
-
-                {/* Appliances */}
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Appliances</label>
-                  <div className="grid grid-cols-1 gap-4">
-                    <label className="p-4 border border-gray-300 rounded-lg bg-gray-50">
-                      <div className="font-semibold">Base: Not Included</div>
-                      <div className="text-sm text-gray-600">Appliances can be added as upgrades</div>
-                    </label>
-                  </div>
-                </div>
-
-                {/* Additional Options */}
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Additional Options</label>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <label className={`p-4 border rounded-lg cursor-pointer ${formData.blinds?'border-[#D4AF37] bg-[#D4AF37]/10':'border-gray-300'}`}>
-                      <input type="checkbox" checked={formData.blinds} onChange={(e)=>updateFormData('blinds', e.target.checked)} className="sr-only" />
-                      <div className="font-semibold">Window Coverings</div>
-                      <div className="text-sm text-gray-600">Blinds and shades (multiple options)</div>
-                    </label>
-                    <label className={`p-4 border rounded-lg cursor-pointer ${formData.featureSurfaces?'border-[#D4AF37] bg-[#D4AF37]/10':'border-gray-300'}`}>
-                      <input type="checkbox" checked={formData.featureSurfaces} onChange={(e)=>updateFormData('featureSurfaces', e.target.checked)} className="sr-only" />
-                      <div className="font-semibold">Feature Surfaces</div>
-                      <div className="text-sm text-gray-600">Accent walls, barnwood, specialty boards</div>
-                    </label>
+                  <div className="text-left">
+                    <p className="text-sm text-green-800 font-medium mb-1">Note: Net Zero Ready and Off-Grid packages are currently in development.</p>
+                    <p className="text-xs text-green-700">Ask us about early access to pilot homes and future-ready upgrades.</p>
                   </div>
                 </div>
               </div>
             </div>
           )}
 
-          {/* Step 8: Add-ons */}
-          {currentStep === 8 && (
-             <div>
-               <h2 className="text-2xl font-bold text-[#2D2D2D] mb-6">Add-ons & Upgrades</h2>
-               
-               {/* Real-time Price Display */}
-               <div className="bg-gradient-to-r from-[#D4AF37]/10 to-[#68a71d]/10 border border-[#D4AF37] rounded-lg p-6 mb-6">
-                 <div className="flex items-center justify-between">
-                   <div>
-                     <h3 className="text-lg font-semibold text-[#2D2D2D]">Current Total</h3>
-                     <p className="text-sm text-gray-600">Base price + selected upgrades</p>
-                   </div>
-                   <div className="text-right">
-                     <div className="text-3xl font-bold text-[#D4AF37]">
-                       {(() => { const r = calculatePriceRange(); return `$${formatCurrency(r.min)} - $${formatCurrency(r.max)} CAD` })()}
-                     </div>
-                     <div className="text-sm text-gray-600">
-                       {formData.addons.length > 0 ? `${formData.addons.length} upgrade(s) selected` : 'No upgrades selected'}
-                     </div>
-                   </div>
-                 </div>
-               </div>
+
+          {/* Step 6: Add-ons */}
+          {currentStep === 6 && (
+            <div>
+               <h2 className="text-lg md:text-xl font-bold text-[#2D2D2D] mb-4">Add-ons & Upgrades</h2>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                  {[
-                   { value: 'solar', label: 'Solar Panels', description: 'Reduce energy costs with solar power' },
-                   { value: 'deck', label: 'Deck (Outdoor Living Space) (within the range of 150km)', description: 'Extend your living area outdoors' },
-                   { value: 'appliances', label: 'Upgraded Appliances (within the range of 150km)', description: 'High-end kitchen and laundry appliances' },
+                   { value: 'solar', label: 'Solar Panels', description: 'Solar Panel prices vary based on energy consumption' },
+                   { value: 'deck', label: 'Deck (Outdoor Living Space)', description: 'Extend your living area outdoors' },
+                   { value: 'appliances', label: 'Upgraded Appliances', description: 'High-end kitchen and laundry appliances' },
                    { value: 'smart-home', label: 'Smart Home Package', description: 'Automated lighting, security, and climate control' },
                    { value: 'off-grid', label: 'Off-Grid Package', description: 'Self-sufficient systems', comingSoon: true },
                    { value: 'fireplace', label: 'Fireplace (Gas / Electric / Wood)', description: 'Select type during consultation' },
                     
                  ].map((addon) => (
-                   <label key={addon.value} className={`flex items-center p-4 border-2 rounded-lg transition-all duration-200 ${
+                   <label key={addon.value} className={`flex items-center p-3 border-2 rounded-lg transition-all duration-200 ${
                      addon.comingSoon ? 'opacity-60 cursor-not-allowed' : 'cursor-pointer hover:shadow-md'
                    } ${
                      formData.addons.includes(addon.value) 
@@ -1584,21 +1399,21 @@ export default function QuoteBuilderPage() {
                        checked={formData.addons.includes(addon.value)}
                        onChange={() => { if (!addon.comingSoon) toggleAddon(addon.value) }}
                        disabled={addon.comingSoon}
-                       className="mr-4 w-5 h-5 text-[#D4AF37] focus:ring-[#D4AF37]"
+                       className="mr-3 w-4 h-4 text-[#D4AF37] focus:ring-[#D4AF37]"
                      />
                       <div className="flex-1">
-                       <div className="flex items-center justify-between mb-2">
+                       <div className="flex items-center justify-between mb-1">
                           <div className="flex items-center">
-                            <span className="font-semibold text-[#2D2D2D]">{addon.label}</span>
+                            <span className="font-semibold text-[#2D2D2D] text-xs">{addon.label}</span>
                             {addon.comingSoon && (
-                              <span className="ml-2 inline-block px-2 py-0.5 text-xs font-semibold rounded-full bg-yellow-100 text-yellow-800 border border-yellow-200">Coming Soon</span>
+                              <span className="ml-0.5 inline-block px-1.5 py-0.5 text-xs font-semibold rounded-full bg-yellow-100 text-yellow-800 border border-yellow-200 whitespace-nowrap">Coming Soon</span>
                             )}
                           </div>
-                          <span className="font-bold text-[#D4AF37] text-lg">
+                          <span className="font-bold text-[#D4AF37] text-xs">
                             {(() => { const r = addOnRanges[addon.value]; return r ? `+$${formatCurrency(r.min)} - $${formatCurrency(r.max)}` : '' })()}
                           </span>
                        </div>
-                       <p className="text-sm text-gray-600 ml-11">{addon.description}</p>
+                       <p className="text-xs text-gray-600 ml-7">{addon.description}</p>
                      </div>
                    </label>
                  ))}
@@ -1633,45 +1448,17 @@ export default function QuoteBuilderPage() {
              </div>
            )}
 
-           {/* Step 9: Budget */}
-          {currentStep === 9 && (
-            <div>
-              <h2 className="text-2xl font-bold text-[#2D2D2D] mb-6">Budget Range</h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {[
-                  '$104,000 - $131,000',
-                  '$125,000 - $200,000',
-                  '$200,000 - $300,000',
-                  '$300,000+'
-                ].map((budget) => (
-                  <label key={budget} className={`text-center p-4 border rounded-lg cursor-pointer ${
-                    formData.budget === budget ? 'border-[#D4AF37] bg-[#D4AF37]/10' : 'border-gray-300'
-                  }`}>
-                    <input
-                      type="radio"
-                      name="budget"
-                      value={budget}
-                      checked={formData.budget === budget}
-                      onChange={(e) => updateFormData('budget', e.target.value)}
-                      className="sr-only"
-                    />
-                    <span className="font-semibold">{budget}</span>
-                  </label>
-                ))}
-              </div>
-            </div>
-          )}
-
-                     {/* Step 10: Timeline */}
-           {currentStep === 10 && (
+           {/* Step 7: Timeline */}
+          {currentStep === 7 && (
              <div>
-               <h2 className="text-2xl font-bold text-[#2D2D2D] mb-6">Project Timeline</h2>
-               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+               <h2 className="text-lg md:text-xl font-bold text-[#2D2D2D] mb-4">When do you want to receive your modular?</h2>
+               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                  {[
-                   'ASAP (within 3 months)',
-                   '3-6 months',
-                   '6-12 months',
-                   '12+ months'
+                   'Ready for delivery in 3 months',
+                   'Ready for delivery in 3-6 months',
+                   'Ready for delivery in 6-12 months',
+                   'Ready for delivery in 12+ months',
+                   'Don\'t know yet'
                  ].map((timeline) => (
                    <label key={timeline} className={`text-center p-4 border rounded-lg cursor-pointer ${
                      formData.timeline === timeline ? 'border-[#D4AF37] bg-[#D4AF37]/10' : 'border-gray-300'
@@ -1684,42 +1471,17 @@ export default function QuoteBuilderPage() {
                        onChange={(e) => updateFormData('timeline', e.target.value)}
                        className="sr-only"
                      />
-                     <span className="font-semibold">{timeline}</span>
+                     <span className="text-sm font-semibold">{timeline}</span>
                    </label>
                  ))}
                </div>
              </div>
            )}
 
-            {/* Step 11: Indigenous Community */}
-          {currentStep === 11 && (
+          {/* Step 8: Number of Homes */}
+          {currentStep === 8 && (
             <div>
-              <h2 className="text-2xl font-bold text-[#2D2D2D] mb-6">Indigenous Community</h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {[
-                  { value: 'yes', label: 'Yes, I am a member of a First Nations or Indigenous community' },
-                  { value: 'no', label: 'No, I am not a member of a First Nations or Indigenous community' }
-                ].map((option) => (
-                  <label key={option.value} className="flex items-center p-4 border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50">
-                    <input
-                      type="radio"
-                      name="isIndigenous"
-                      value={option.value}
-                      checked={formData.isIndigenous === option.value}
-                      onChange={(e) => updateFormData('isIndigenous', e.target.value)}
-                      className="mr-3"
-                    />
-                    <span>{option.label}</span>
-                  </label>
-                ))}
-              </div>
-            </div>
-          )}
-
-           {/* Step 12: Number of Homes */}
-          {currentStep === 12 && (
-            <div>
-              <h2 className="text-2xl font-bold text-[#2D2D2D] mb-6">Number of Homes</h2>
+              <h2 className="text-lg md:text-xl font-bold text-[#2D2D2D] mb-4">Number of Homes</h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {[
                   { value: '1', label: '1 Home' },
@@ -1750,7 +1512,7 @@ export default function QuoteBuilderPage() {
               {/* Custom Number Input for 4+ Homes */}
               {formData.numberOfHomes === '4+' && (
                 <div className="mt-6 p-4 border border-gray-300 rounded-lg bg-gray-50">
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-xs font-medium text-gray-700 mb-2">
                     How many homes do you intend to purchase?
                   </label>
                   <input
@@ -1770,10 +1532,10 @@ export default function QuoteBuilderPage() {
             </div>
           )}
 
-                     {/* Step 13: Financing */}
-           {currentStep === 13 && (
+          {/* Step 9: Financing */}
+          {currentStep === 9 && (
              <div>
-               <h2 className="text-2xl font-bold text-[#2D2D2D] mb-6">Financing</h2>
+               <h2 className="text-lg md:text-xl font-bold text-[#2D2D2D] mb-4">Financing</h2>
                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
                  {[
                    { value: 'cash', label: 'Cash Payment' },
@@ -1797,7 +1559,7 @@ export default function QuoteBuilderPage() {
 
                {/* Financing Help Question */}
                <div className="mt-6">
-                 <label className="block text-sm font-medium text-gray-700 mb-3">
+                 <label className="block text-xs font-medium text-gray-700 mb-3">
                    Do you need help getting financing?
                  </label>
                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -1896,7 +1658,8 @@ export default function QuoteBuilderPage() {
                    </div>
                    
                    <p className="text-sm text-gray-600">
-                     This is a preliminary estimate. Final pricing may vary based on site conditions, permits, and customizations.
+                     This is a preliminary estimate. Final pricing may vary based on site conditions, permits, customizations, and market changes. 
+                     This quote includes a buffer for finishes and upgrades not specified in this estimate. Upgrade availability may vary.
                    </p>
                  </div>
                )}
@@ -1914,30 +1677,30 @@ export default function QuoteBuilderPage() {
             <button
               onClick={handlePrev}
               disabled={currentStep === 1}
-              className={`flex items-center px-6 py-3 rounded-lg transition-colors ${
+              className={`flex items-center px-6 py-4 md:py-3 rounded-lg transition-colors text-sm ${
                 currentStep === 1 
                   ? 'text-gray-400 cursor-not-allowed'
                   : 'text-[#D4AF37] hover:bg-[#D4AF37]/10'
               }`}
             >
-              <ChevronLeft size={20} className="mr-2" />
+              <ChevronLeft size={16} className="mr-2" />
               Previous
             </button>
 
             {currentStep < totalSteps ? (
               <button
                 onClick={handleNext}
-                className="flex items-center px-8 py-3 bg-[#D4AF37] text-white rounded-lg hover:bg-[#B8941F] transition-colors"
+                className="flex items-center px-8 py-4 md:py-3 bg-[#D4AF37] text-white rounded-lg hover:bg-[#B8941F] transition-colors text-sm"
               >
                 Next Step
-                <ChevronRight size={20} className="ml-2" />
+                <ChevronRight size={16} className="ml-2" />
               </button>
             ) : (
               <div className="flex gap-4">
                 <button
                   onClick={handleSubmit}
                   disabled={isSubmitting}
-                  className={`px-8 py-3 rounded-lg transition-colors font-semibold flex items-center ${
+                  className={`px-8 py-4 md:py-3 rounded-lg transition-colors font-semibold flex items-center text-sm ${
                     isSubmitting 
                       ? 'bg-gray-400 text-white cursor-not-allowed' 
                       : 'bg-[#68a71d] text-white hover:bg-[#5a8f1a]'
@@ -1945,34 +1708,13 @@ export default function QuoteBuilderPage() {
                 >
                   {isSubmitting ? (
                     <>
-                      <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin mr-2"></div>
+                      <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin mr-2"></div>
                       Generating PDF...
                     </>
                   ) : (
                     'Get My Quote'
                   )}
                 </button>
-                
-                {formData.model === 'pine1' && (
-                  <button
-                    onClick={generatePine1PDF}
-                    disabled={isGeneratingPDF}
-                    className={`px-6 py-3 rounded-lg transition-colors font-semibold flex items-center border-2 border-[#D4AF37] ${
-                      isGeneratingPDF 
-                        ? 'bg-gray-400 text-white cursor-not-allowed border-gray-400' 
-                        : 'bg-white text-[#D4AF37] hover:bg-[#D4AF37] hover:text-white'
-                    }`}
-                  >
-                    {isGeneratingPDF ? (
-                      <>
-                        <div className="w-5 h-5 border-2 border-[#D4AF37] border-t-transparent rounded-full animate-spin mr-2"></div>
-                        Generating PDF...
-                      </>
-                  ) : (
-                    'Download Pine 1 PDF'
-                  )}
-                  </button>
-                )}
               </div>
             )}
           </div>
@@ -1980,18 +1722,6 @@ export default function QuoteBuilderPage() {
 
 
 
-        {/* Bottom CTA */}
-        <div className="text-center mt-8">
-          <p className="text-gray-600 mb-4">
-            Need help or have questions? Our team is here to assist you.
-          </p>
-          <Link
-            href="/contact"
-            className="inline-block bg-[#2D2D2D] text-white px-6 py-3 rounded-lg hover:bg-gray-800 transition-colors"
-          >
-            Contact Our Experts
-          </Link>
-        </div>
         </>
         )} {/* Close main form conditional */}
         
