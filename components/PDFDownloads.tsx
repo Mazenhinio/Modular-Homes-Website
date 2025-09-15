@@ -121,6 +121,27 @@ export function PDFDownloads({ downloads, modelName }: PDFDownloadsProps) {
           ))}
         </div>
 
+        {/* Floor Plan Credit */}
+        {groupedDownloads.floorplan && (
+          <div className="mt-8 text-center">
+            <div className="inline-flex items-center gap-3 px-6 py-3 bg-white rounded-lg shadow-sm border border-gray-200">
+              <span className="text-sm text-gray-600">Floor plans designed by</span>
+              <a 
+                href="https://www.ruralhausdesignstudio.com/" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="hover:opacity-100 transition-opacity"
+              >
+                <img 
+                  src="/images/rural-haus-logo.png" 
+                  alt="Rural Haus Studio" 
+                  className="h-12 w-auto opacity-80 hover:opacity-100 transition-opacity"
+                />
+              </a>
+            </div>
+          </div>
+        )}
+
         {/* Bulk Download Option */}
         <div className="mt-12 text-center">
           <div className="glass rounded-2xl p-8 max-w-2xl mx-auto">
