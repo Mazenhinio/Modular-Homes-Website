@@ -11,25 +11,25 @@ export function PartnershipLogos() {
       id: 1,
       name: "Blue Spruce Builder",
       logo: "/images/partnerships/blue-spruce-builder-color.jpg",
-      description: "Specialized in custom residential construction with over 20 years of experience in sustainable building practices and innovative design solutions."
+      description: "Founded in 2021 by Jeff Lorenz, a Lloydminster area native with Red Seal certification. Committed to going above and beyond on every project with years of experience and dedication to excellence."
     },
     {
       id: 2,
       name: "D3 General Contracting",
       logo: "/images/partnerships/d3_gen-removebg-preview.png",
-      description: "Full-service general contracting company providing comprehensive construction management, project planning, and quality assurance for residential and commercial projects."
+      description: "Local family-run company founded in 2017, proudly serving the Lakeland and Midwest areas. Specializing in new construction and renovations with a wide range of experience to turn your vision into reality."
     },
     {
       id: 3,
       name: "Kondro Electric",
       logo: "/images/partnerships/kondro.png",
-      description: "Licensed electrical contractors specializing in residential and commercial electrical installations, maintenance, and energy-efficient solutions with certified electricians."
+      description: "Operating since 1967 with a focus on customer retention and long-term relationships. Serving commercial (60%), residential, and rural areas with 70+ employees and specialized underground cabling services."
     },
     {
       id: 4,
       name: "Geordies Woodworking",
       logo: "/images/partnerships/geordies.png",
-      description: "Master craftsmen creating custom woodwork, cabinetry, and millwork with traditional techniques and modern precision for luxury residential projects."
+      description: "Custom woodworking specialists serving the Lloydminster area with traditional craftsmanship and modern precision. Creating bespoke cabinetry, millwork, and custom wood solutions for residential projects."
     }
   ]
 
