@@ -74,8 +74,15 @@ export async function POST(request: NextRequest) {
       })
     }
 
-    // Generate quote number
-    const quoteNumber = `DH-${Date.now()}-${Math.random().toString(36).substr(2, 5).toUpperCase()}`
+    // Generate quote number in format DH-YYYYMMDDHHMMSS
+    const now = new Date()
+    const year = now.getFullYear()
+    const month = String(now.getMonth() + 1).padStart(2, '0')
+    const day = String(now.getDate()).padStart(2, '0')
+    const hours = String(now.getHours()).padStart(2, '0')
+    const minutes = String(now.getMinutes()).padStart(2, '0')
+    const seconds = String(now.getSeconds()).padStart(2, '0')
+    const quoteNumber = `DH-${year}${month}${day}${hours}${minutes}${seconds}`
 
     // Set valid until date (30 days from now)
     const validUntil = new Date()

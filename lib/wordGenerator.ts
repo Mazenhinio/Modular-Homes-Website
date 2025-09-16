@@ -221,6 +221,28 @@ export class WordGeneratorService {
       return `$${minCost.toLocaleString()} - $${maxCost.toLocaleString()} CAD`
     }
 
+    // Calculate finishes buffer display
+    const getFinishesBufferDisplay = () => {
+      if (quoteData.model === 'custom') return ''
+      
+      let bufferMin = 0, bufferMax = 0
+      switch (quoteData.model) {
+        case 'pine1': // Pine
+        case 'pine2': // Spruce
+          bufferMin = 15000
+          bufferMax = 25000
+          break
+        case 'pine3': // Willow
+          bufferMin = 10000
+          bufferMax = 15000
+          break
+        default:
+          return ''
+      }
+      
+      return `+$${bufferMin.toLocaleString()} - $${bufferMax.toLocaleString()} CAD`
+    }
+
     // Calculate total estimated price range
     const getEstimatedPriceRangeDisplay = () => {
       // This should match the calculatePriceRange logic from the frontend
@@ -272,28 +294,6 @@ export class WordGeneratorService {
           finishesBufferMax = 15000
           break
         // Custom builds don't get buffer
-      }
-      
-      // Calculate finishes buffer display
-      const getFinishesBufferDisplay = () => {
-        if (quoteData.model === 'custom') return ''
-        
-        let bufferMin = 0, bufferMax = 0
-        switch (quoteData.model) {
-          case 'pine1': // Pine
-          case 'pine2': // Spruce
-            bufferMin = 15000
-            bufferMax = 25000
-            break
-          case 'pine3': // Willow
-            bufferMin = 10000
-            bufferMax = 15000
-            break
-          default:
-            return ''
-        }
-        
-        return `+$${bufferMin.toLocaleString()} - $${bufferMax.toLocaleString()} CAD`
       }
       
       // Apply number of homes multiplier

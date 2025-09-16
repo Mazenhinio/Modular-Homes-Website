@@ -70,7 +70,7 @@ export async function POST(request: NextRequest) {
     //   model,
     //   estimatedPrice: pricing.total,
     //   pdfBuffer,
-    //   quoteNumber: `DH-${Date.now()}`
+    //   quoteNumber: `DH-${new Date().toISOString().replace(/[-:T.]/g, '').slice(0, 14)}`
     // })
     
     // Send notification to sales team
