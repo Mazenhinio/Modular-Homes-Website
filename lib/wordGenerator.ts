@@ -60,16 +60,41 @@ interface QuoteData {
 }
 
 export class WordGeneratorService {
-  private templatePath: string
+  private templatesDir: string
 
   constructor() {
-    this.templatePath = path.join(process.cwd(), 'public', 'PINE Quotation Template.docx')
+    this.templatesDir = path.join(process.cwd(), 'public', 'templates')
+  }
+
+  private getTemplatePath(model: string): string {
+    switch (model) {
+      case 'pine1':
+        return path.join(this.templatesDir, 'PINE Quotation Template.docx')
+      case 'pine2':
+        return path.join(this.templatesDir, 'Spruce Quotation Template.docx')
+      case 'pine3':
+        return path.join(this.templatesDir, 'Willow Quotation Template.docx')
+      case 'custom':
+        return path.join(this.templatesDir, 'Custom Build Quotation Template.docx')
+      default:
+        // Fallback to Pine template
+        return path.join(this.templatesDir, 'PINE Quotation Template.docx')
+    }
   }
 
   async createQuote(quoteData: QuoteData): Promise<Buffer> {
     try {
+      // Get the correct template path based on model
+      const templatePath = this.getTemplatePath(quoteData.model)
+      
+      // Check if template file exists
+      if (!fs.existsSync(templatePath)) {
+        console.error(`Template file not found: ${templatePath}`)
+        throw new Error(`Template file not found for model: ${quoteData.model}`)
+      }
+      
       // Read the template file
-      const template = fs.readFileSync(this.templatePath)
+      const template = fs.readFileSync(templatePath)
 
       // Prepare data for template replacement
       const templateData = this.prepareTemplateData(quoteData)
@@ -86,7 +111,9 @@ export class WordGeneratorService {
       return Buffer.from(buffer)
     } catch (error) {
       console.error('Error generating Word document:', error)
-      throw new Error('Failed to generate Word document')
+      console.error('Model:', quoteData.model)
+      console.error('Template path:', this.getTemplatePath(quoteData.model))
+      throw new Error(`Failed to generate Word document for model: ${quoteData.model}`)
     }
   }
 
