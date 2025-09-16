@@ -52,19 +52,8 @@ export async function POST(request: NextRequest) {
         basePrice = 104000
         break
       case 'custom':
-        // Custom build pricing based on square footage
-        const sqftNumber = parseInt(sqft?.replace(/\D/g, '') || '800')
-        if (sqftNumber <= 800) {
-          basePrice = 200000
-        } else if (sqftNumber <= 1200) {
-          basePrice = 280000
-        } else if (sqftNumber <= 1800) {
-          basePrice = 380000
-        } else if (sqftNumber <= 2400) {
-          basePrice = 480000
-        } else {
-          basePrice = 580000 // 3000+ sq ft
-        }
+        // Custom builds show "Contact for pricing" - no base price
+        basePrice = 0
         break
     }
 

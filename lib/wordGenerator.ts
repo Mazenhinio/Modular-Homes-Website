@@ -185,19 +185,12 @@ export class WordGeneratorService {
         case 'pine2': basePrice = 188000; break
         case 'pine3': basePrice = 104000; break
         case 'custom': 
-          const sqftNumber = parseInt(quoteData.sqft?.replace(/\D/g, '') || '800')
-          if (sqftNumber <= 800) basePrice = 200000
-          else if (sqftNumber <= 1200) basePrice = 280000
-          else if (sqftNumber <= 1800) basePrice = 380000
-          else if (sqftNumber <= 2400) basePrice = 480000
-          else basePrice = 580000
-          break
+          return 'Contact for pricing'
         default: basePrice = 0
       }
       
-      const min = Math.round(basePrice * 0.95)
-      const max = Math.round(basePrice * 1.1)
-      return `$${min.toLocaleString()} - $${max.toLocaleString()} CAD`
+      // Return exact price instead of range to match website
+      return `$${basePrice.toLocaleString()} CAD`
     }
 
     // Calculate add-ons cost range
@@ -238,13 +231,7 @@ export class WordGeneratorService {
         case 'pine2': baseMin = baseMax = 188000; break
         case 'pine3': baseMin = baseMax = 104000; break
         case 'custom':
-          const sqftNumber = parseInt(quoteData.sqft?.replace(/\D/g, '') || '800')
-          if (sqftNumber <= 800) baseMin = baseMax = 200000
-          else if (sqftNumber <= 1200) baseMin = baseMax = 280000
-          else if (sqftNumber <= 1800) baseMin = baseMax = 380000
-          else if (sqftNumber <= 2400) baseMin = baseMax = 480000
-          else baseMin = baseMax = 580000
-          break
+          return 'Contact for pricing'
       }
       
       // Add package costs
@@ -272,6 +259,43 @@ export class WordGeneratorService {
         }
       })
       
+      // Add finishes buffer based on model
+      let finishesBufferMin = 0, finishesBufferMax = 0
+      switch (quoteData.model) {
+        case 'pine1': // Pine
+        case 'pine2': // Spruce
+          finishesBufferMin = 15000
+          finishesBufferMax = 25000
+          break
+        case 'pine3': // Willow
+          finishesBufferMin = 10000
+          finishesBufferMax = 15000
+          break
+        // Custom builds don't get buffer
+      }
+      
+      // Calculate finishes buffer display
+      const getFinishesBufferDisplay = () => {
+        if (quoteData.model === 'custom') return ''
+        
+        let bufferMin = 0, bufferMax = 0
+        switch (quoteData.model) {
+          case 'pine1': // Pine
+          case 'pine2': // Spruce
+            bufferMin = 15000
+            bufferMax = 25000
+            break
+          case 'pine3': // Willow
+            bufferMin = 10000
+            bufferMax = 15000
+            break
+          default:
+            return ''
+        }
+        
+        return `+$${bufferMin.toLocaleString()} - $${bufferMax.toLocaleString()} CAD`
+      }
+      
       // Apply number of homes multiplier
       let homeMultiplier = 1
       if (quoteData.numberOfHomes === '4+') {
@@ -284,8 +308,8 @@ export class WordGeneratorService {
         if (homeMultiplier > 3) homeMultiplier = 3
       }
       
-      const totalMin = (baseMin + pkgMin + addonsMin) * homeMultiplier
-      const totalMax = (baseMax + pkgMax + addonsMax) * homeMultiplier
+      const totalMin = (baseMin + pkgMin + addonsMin + finishesBufferMin) * homeMultiplier
+      const totalMax = (baseMax + pkgMax + addonsMax + finishesBufferMax) * homeMultiplier
       
       return `$${totalMin.toLocaleString()} - $${totalMax.toLocaleString()} CAD`
     }
@@ -327,6 +351,7 @@ export class WordGeneratorService {
       fireplace: hasAddon('fireplace'),
       base_model_price_range: getBaseModelPriceRange(quoteData.model),
       addons_cost: getAddonsCostRange(quoteData.addons),
+      finishes_buffer: getFinishesBufferDisplay(),
       estimated_price_range_display: getEstimatedPriceRangeDisplay(),
       
       // Common placeholders that might exist in template (defensive programming)
