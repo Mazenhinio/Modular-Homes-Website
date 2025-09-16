@@ -15,7 +15,11 @@
       "Read(/C:\\Users\\Work pc\\Documents\\GitHub\\Modular-Homes-Website\\app\\first-nations/**)",
       "Read(/C:\\Users\\Work pc\\Documents\\GitHub\\Modular-Homes-Website\\app\\quote-builder/**)",
       "Read(/C:\\Users\\Work pc\\Documents\\GitHub\\Modular-Homes-Website\\app\\quote-builder-new/**)",
-      "Read(/C:\\Users\\Work pc\\Documents\\GitHub\\Modular-Homes-Website\\app\\our-builds/**)"
+      "Read(/C:\\Users\\Work pc\\Documents\\GitHub\\Modular-Homes-Website\\app\\our-builds/**)",
+      "Bash(npm run build:*)",
+      "Bash(npm run dev:*)",
+      "WebFetch(domain:docs.aspose.cloud)",
+      "WebSearch"
     ],
     "deny": [],
     "ask": []

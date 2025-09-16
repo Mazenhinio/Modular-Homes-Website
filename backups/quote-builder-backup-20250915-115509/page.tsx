@@ -536,34 +536,6 @@ export default function QuoteBuilderPage() {
     }
   }
 
-  const generatePine1PDF = async () => {
-    try {
-      setIsGeneratingPDF(true)
-      const response = await fetch('/api/quote-builder/generate-pine1-pdf', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData)
-      })
-      
-      if (response.ok) {
-        const blob = await response.blob()
-        const url = window.URL.createObjectURL(blob)
-        const a = document.createElement('a')
-        a.href = url
-        a.download = 'Pine1-Quotation.pdf'
-        a.click()
-        window.URL.revokeObjectURL(url)
-      } else {
-        console.error('Failed to generate PDF')
-      }
-    } catch (error) {
-      console.error('Error generating PDF:', error)
-    } finally {
-      setIsGeneratingPDF(false)
-    }
-  }
 
   const handleSubmit = async () => {
     const finalPrice = calculatePrice()
@@ -573,7 +545,7 @@ export default function QuoteBuilderPage() {
     
     try {
       // Generate PDF quote
-      const response = await fetch('/api/quote-builder/generate-pdf', {
+      const response = await fetch('/api/quote-builder/generate-pdf-n8n', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

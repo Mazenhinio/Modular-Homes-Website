@@ -573,8 +573,8 @@ export default function QuoteBuilderPage() {
     setSubmitError(null)
     
     try {
-      // Generate PDF quote
-      const response = await fetch('/api/quote-builder/generate-pdf', {
+      // Generate PDF quote using n8n workflow
+      const response = await fetch('/api/quote-builder/generate-pdf-n8n', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -586,7 +586,8 @@ export default function QuoteBuilderPage() {
       })
 
       if (!response.ok) {
-        throw new Error('Failed to generate PDF')
+        const errorData = await response.json()
+        throw new Error(errorData.details || 'Failed to generate PDF quote')
       }
 
       // Create blob from PDF response
@@ -836,7 +837,7 @@ export default function QuoteBuilderPage() {
                     </div>
                     <div>
                       <p className="font-medium text-[#2D2D2D]">PDF Quote Downloaded</p>
-                      <p className="text-gray-600 text-sm">Your detailed quote has been downloaded to your device</p>
+                      <p className="text-gray-600 text-sm">Your detailed quote has been downloaded as a PDF to your device</p>
                     </div>
                   </div>
                   <div className="flex items-start">
@@ -1709,7 +1710,7 @@ export default function QuoteBuilderPage() {
                   {isSubmitting ? (
                     <>
                       <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin mr-2"></div>
-                      Generating PDF...
+                      Generating Quote...
                     </>
                   ) : (
                     'Get My Quote'
