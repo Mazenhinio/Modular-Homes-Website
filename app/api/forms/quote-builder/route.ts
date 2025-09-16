@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { crmClient } from '@/lib/crmClient'
 import { mailer } from '@/lib/mailer'
-import { pdfGenerator } from '@/lib/pdfGenerator'
 
 export async function POST(request: NextRequest) {
   try {
@@ -64,37 +63,7 @@ export async function POST(request: NextRequest) {
     // Send to CRM with quote-specific tagging
     const crmResult = await crmClient.createLead(leadData)
     
-    // TODO: Implement template PDF generation
-    // For now, skip PDF generation and email sending
-    // const pdfBuffer = await pdfGenerator.createQuote({
-    //   name,
-    //   email,
-    //   phone,
-    //   model,
-    //   estimatedPrice: pricing.total,
-    //   basePrice: pricing.base,
-    //   addOnsCost: pricing.addOns,
-    //   addOns: Array.isArray(addOns) ? addOns : [],
-    //   propertyLocation: propertyLocation || '',
-    //   timeline: timeline || '',
-    //   quoteNumber: `DH-${Date.now()}`,
-    //   leadId: crmResult.id,
-    //   validUntil: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000), // 30 days
-    //   landStatus: landStatus || '',
-    //   intendedUse: intendedUse || '',
-    //   bedrooms: bedPreferences || '',
-    //   bathrooms: body.bathrooms || '',
-    //   sqft: sqftPreferences || '',
-    //   budget: budgetRange || '',
-    //   isIndigenous: body.isIndigenous || '',
-    //   numberOfHomes: body.numberOfHomes || '',
-    //   customNumberOfHomes: body.customNumberOfHomes || '',
-    //   financing: body.financing || '',
-    //   needsFinancingHelp: body.needsFinancingHelp || ''
-    // })
-    
-    // TODO: Uncomment when template PDF is ready
-    // Send quote via email
+    // Send confirmation email
     // await mailer.sendQuote({
     //   to: email,
     //   name,

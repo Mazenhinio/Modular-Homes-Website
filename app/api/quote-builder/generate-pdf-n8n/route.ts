@@ -138,6 +138,10 @@ export async function POST(request: NextRequest) {
     // Step 2: Send Word document to n8n webhook for PDF conversion
     const n8nWebhookUrl = process.env.N8N_WEBHOOK_URL
 
+    if (!n8nWebhookUrl) {
+      throw new Error('N8N_WEBHOOK_URL environment variable is not set')
+    }
+
     console.log('Sending Word document to n8n webhook:', n8nWebhookUrl)
 
     const n8nResponse = await fetch(n8nWebhookUrl, {
@@ -147,7 +151,7 @@ export async function POST(request: NextRequest) {
         'X-Quote-Number': quoteNumber,
         'X-Customer-Name': name || 'Customer',
       },
-      body: wordBuffer
+      body: new Uint8Array(wordBuffer)
     })
 
     if (!n8nResponse.ok) {

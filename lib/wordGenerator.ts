@@ -80,10 +80,10 @@ export class WordGeneratorService {
         data: templateData,
         cmdDelimiter: ['{{', '}}'], // Using double curly braces as delimiters
         failFast: false, // Don't fail on first error, collect all errors
-        noSandBox: false, // Use sandbox for security
+        noSandbox: false, // Use sandbox for security
       })
 
-      return buffer
+      return Buffer.from(buffer)
     } catch (error) {
       console.error('Error generating Word document:', error)
       throw new Error('Failed to generate Word document')

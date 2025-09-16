@@ -584,6 +584,50 @@ export default function QuoteBuilderPage() {
     }
   }
 
+  const generatePine1PDF = async () => {
+    const finalPrice = calculatePrice()
+    setIsGeneratingPDF(true)
+    
+    try {
+      // Generate PDF quote
+      const response = await fetch('/api/quote-builder/generate-pdf-n8n', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          ...formData,
+          model: 'pine1',
+          estimatedPrice: finalPrice
+        })
+      })
+
+      if (!response.ok) {
+        const errorData = await response.json()
+        throw new Error(errorData.details || 'Failed to generate PDF quote')
+      }
+
+      // Create blob from PDF response
+      const pdfBlob = await response.blob()
+      
+      // Create download link
+      const url = window.URL.createObjectURL(pdfBlob)
+      const link = document.createElement('a')
+      link.href = url
+      link.download = `discovery-homes-pine1-quote-${Date.now()}.pdf`
+      document.body.appendChild(link)
+      link.click()
+      document.body.removeChild(link)
+      window.URL.revokeObjectURL(url)
+      
+    } catch (error) {
+      console.error('PDF generation error:', error)
+      alert('Failed to generate PDF quote. Please try again or contact us directly.')
+    } finally {
+      setIsGeneratingPDF(false)
+    }
+  }
+
   const updateFormData = (field: keyof FormData, value: any) => {
     setFormData(prev => ({ ...prev, [field]: value }))
   }

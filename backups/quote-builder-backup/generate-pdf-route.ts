@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { pdfGenerator } from '@/lib/pdfGenerator'
 
 export async function POST(request: NextRequest) {
   try {

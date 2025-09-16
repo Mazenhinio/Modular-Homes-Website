@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { crmClient } from '@/lib/crmClient'
 import { mailer } from '@/lib/mailer'
-import { pdfGenerator } from '@/lib/pdfGenerator'
 
 export async function POST(request: NextRequest) {
   try {
