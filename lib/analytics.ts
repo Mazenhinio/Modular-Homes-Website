@@ -74,6 +74,11 @@ export const trackBusinessEvent = {
   // Property type interest
   propertyTypeViewed: (type: string) => trackEvent('property_type_viewed', { type }),
   customBuildViewed: (style: string) => trackEvent('custom_build_viewed', { style }),
+  
+  // Device tracking events
+  deviceDetected: (deviceInfo: any) => trackEvent('device_detected', deviceInfo),
+  mobileHeroViewed: () => trackEvent('mobile_hero_viewed'),
+  desktopHeroViewed: () => trackEvent('desktop_hero_viewed'),
 }
 
 // Type declarations for global analytics objects

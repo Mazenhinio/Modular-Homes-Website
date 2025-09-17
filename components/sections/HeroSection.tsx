@@ -7,7 +7,10 @@ export function HeroSection() {
   const [currentSlide, setCurrentSlide] = useState(0)
   const [isPlaying, setIsPlaying] = useState(true)
   const [showText, setShowText] = useState(true)
+  const [imageDimensions, setImageDimensions] = useState({ width: 0, height: 0 })
+  const [isClient, setIsClient] = useState(false)
   const intervalRef = useRef<NodeJS.Timeout>()
+  const imageRef = useRef<HTMLDivElement>(null)
   
   const slides = [
     {
@@ -95,10 +98,41 @@ export function HeroSection() {
     }
   }, [nextSlide, isPlaying])
 
+  // Calculate image dimensions for mobile text container sizing
+  useEffect(() => {
+    setIsClient(true)
+    
+    const calculateImageDimensions = () => {
+      if (!imageRef.current) return
+
+      const container = imageRef.current
+      const containerWidth = container.offsetWidth
+      const containerHeight = container.offsetHeight
+      
+      // For mobile, calculate the actual image dimensions that will be visible
+      const imageAspectRatio = 16 / 9 // Assuming landscape images
+      let visibleWidth = containerWidth
+      let visibleHeight = containerWidth / imageAspectRatio
+      
+      // If the calculated height exceeds container height, adjust
+      if (visibleHeight > containerHeight) {
+        visibleHeight = containerHeight
+        visibleWidth = containerHeight * imageAspectRatio
+      }
+      
+      setImageDimensions({ width: visibleWidth, height: visibleHeight })
+    }
+
+    calculateImageDimensions()
+    window.addEventListener('resize', calculateImageDimensions)
+    
+    return () => window.removeEventListener('resize', calculateImageDimensions)
+  }, [])
+
   return (
-    <section className="relative min-h-screen h-screen pt-16 overflow-hidden">
+    <section className="relative min-h-screen h-screen pt-16 overflow-hidden bg-discovery-charcoal">
       {/* Carousel Background */}
-      <div className="absolute inset-0">
+      <div className="absolute inset-0" ref={imageRef}>
         {slides.map((slide, index) => (
           <div
             key={slide.image}
@@ -109,7 +143,7 @@ export function HeroSection() {
             <img
               src={slide.image}
               alt={`Discovery Homes Slide ${index + 1}`}
-              className="w-full h-full object-cover"
+              className="w-full h-full object-contain md:object-cover"
             />
           </div>
         ))}
@@ -156,37 +190,54 @@ export function HeroSection() {
           ? 'opacity-100 translate-y-0' 
           : 'opacity-0 translate-y-8 pointer-events-none'
       }`}>
-        <div className={`text-center text-yellow-400 max-w-4xl px-6 sm:px-8 py-12 sm:py-16 md:py-20 transition-all duration-500 ease-out delay-100 relative mx-4 sm:mx-6 ${
-          showText ? 'scale-100' : 'scale-95'
-        }`}>
+        <div 
+          className={`text-center text-yellow-400 px-6 sm:px-8 py-12 sm:py-16 md:py-20 transition-all duration-500 ease-out delay-100 relative mx-4 sm:mx-6 ${
+            showText ? 'scale-100' : 'scale-95'
+          }`}
+          style={{
+            // On mobile, ensure text container is smaller than visible image area
+            ...(isClient && window.innerWidth < 768 && imageDimensions.width > 0 && {
+              maxWidth: `${Math.min(imageDimensions.width * 0.6, 300)}px`
+            }),
+            // On desktop, use the original max-width
+            ...(isClient && window.innerWidth >= 768 && {
+              maxWidth: '1024px'
+            })
+          }}
+        >
           {/* Dark backdrop for better contrast */}
           <div className="absolute inset-0 bg-black/14 rounded-3xl -z-10 -m-2 sm:-m-4 md:-m-6"></div>
           
-                                  <h1 className={`text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black mb-4 sm:mb-6 leading-[1.1] sm:leading-tight transition-all duration-600 ease-out drop-shadow-2xl text-discovery-lime nature-shimmer leading-normal pt-4 pb-2 ${
-                          showText ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4'
-                        }`}>
-            {slides[currentSlide].title}
-          </h1>
-          <p className={`text-lg sm:text-xl md:text-2xl mb-3 sm:mb-4 font-bold transition-all duration-600 ease-out delay-100 text-discovery-sage ${
-            showText ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4'
-          }`}>
-            {slides[currentSlide].subtitle}
-          </p>
-          <p className={`text-sm sm:text-base md:text-lg mb-6 sm:mb-8 max-w-3xl mx-auto leading-relaxed text-white transition-all duration-600 ease-out delay-150 ${
-            showText ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4'
-          }`}>
-            High-quality, culturally-respectful modular housing that respects the land, empowers communities, and helps Canadians unlock the potential of their property.
-          </p>
-          <div className={`flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center mb-6 sm:mb-8 transition-all duration-600 ease-out delay-200 ${
-            showText ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4'
-          }`}>
-            <a 
-              href="/quote-builder"
-              className="btn-nature px-6 sm:px-8 py-3 rounded-lg text-base sm:text-lg font-semibold glow-green growth-pulse transition-all duration-300 hover:scale-105"
-            >
-              Start Building My Home →
-            </a>
-          </div>
+           {/* Single Line Text Content */}
+           <div className={`flex flex-col items-center justify-center space-y-4 sm:space-y-6 md:space-y-8 transition-all duration-600 ease-out ${
+             showText ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4'
+           }`}>
+             {/* Title - Single Line */}
+             <h1 className={`text-xl sm:text-2xl md:text-3xl lg:text-4xl font-black leading-none whitespace-nowrap transition-all duration-600 ease-out drop-shadow-2xl text-discovery-lime nature-shimmer ${
+               showText ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4'
+             }`}>
+               {slides[currentSlide].title}
+             </h1>
+             
+             {/* Subtitle - Single Line */}
+             <p className={`text-base sm:text-lg md:text-xl font-bold leading-none whitespace-nowrap transition-all duration-600 ease-out delay-100 text-discovery-sage ${
+               showText ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4'
+             }`}>
+               {slides[currentSlide].subtitle}
+             </p>
+             
+             {/* Button - Single Line */}
+             <div className={`transition-all duration-600 ease-out delay-200 ${
+               showText ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4'
+             }`}>
+               <a 
+                 href="/quote-builder"
+                 className="btn-nature px-4 sm:px-5 md:px-7 py-2 sm:py-3 rounded-lg text-sm sm:text-base md:text-lg font-semibold glow-green growth-pulse transition-all duration-300 hover:scale-105 whitespace-nowrap"
+               >
+                 Start Building My Home →
+               </a>
+             </div>
+           </div>
           
           {/* Hide Text Button - Smooth animation */}
           <button

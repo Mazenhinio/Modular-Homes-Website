@@ -113,16 +113,32 @@ export default function LandOwnersLandingPage() {
   return (
     <div className="min-h-screen bg-discovery-white">
       {/* Hero Section */}
-      <section className="relative h-screen flex items-center justify-center overflow-hidden">
+      <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
         {/* Background Image */}
-        <div className="absolute inset-0">
-          <Image
-            src="/assets/images/new-content/Landing Page- Land Owners/CB-PrairieFarm-Hero__Prairie Farm – Hero__Custom-Build__v01.webp"
-            alt="Land Development Investment"
-            fill
-            className="object-cover"
-            priority
-          />
+        <div className="absolute inset-0 flex items-center justify-center">
+          {/* Mobile: Show complete image */}
+          <div className="block md:hidden w-full h-full flex items-center justify-center">
+            <Image
+              src="/assets/images/new-content/Landing Page- Land Owners/CB-PrairieFarm-Hero__Prairie Farm – Hero__Custom-Build__v01.webp"
+              alt="Land Development Investment"
+              width={800}
+              height={450}
+              className="w-full h-auto max-h-full"
+              priority
+            />
+          </div>
+          
+          {/* Desktop: Full screen cover */}
+          <div className="hidden md:block absolute inset-0">
+            <Image
+              src="/assets/images/new-content/Landing Page- Land Owners/CB-PrairieFarm-Hero__Prairie Farm – Hero__Custom-Build__v01.webp"
+              alt="Land Development Investment"
+              fill
+              className="object-cover"
+              priority
+            />
+          </div>
+          
           <div className="absolute inset-0 bg-discovery-charcoal/60" />
         </div>
 
@@ -132,10 +148,6 @@ export default function LandOwnersLandingPage() {
             Transform Your Land 
             <span className="block text-discovery-gold">Into Opportunity</span>
           </h1>
-          <p className="text-xl md:text-2xl mb-8 max-w-4xl mx-auto leading-relaxed">
-            Discovery Homes helps land owners unlock the full potential of their properties with 
-            sustainable modular development solutions that maximize value and minimize environmental impact.
-          </p>
           
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
@@ -162,7 +174,7 @@ export default function LandOwnersLandingPage() {
       </section>
 
       {/* Development Statistics */}
-      <section className="py-16 bg-discovery-charcoal">
+      <section className="py-16 bg-discovery-charcoal -mt-px">
         <div className="max-w-7xl mx-auto px-4">
           <div className="grid md:grid-cols-4 gap-8 text-center">
             <div className="text-discovery-white">
