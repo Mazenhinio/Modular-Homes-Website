@@ -58,3 +58,4 @@ if (typeof window !== 'undefined') {
   (window as any).testDeviceDetection = testDeviceDetection
   (window as any).testAnalyticsIntegration = testAnalyticsIntegration
 }
+
