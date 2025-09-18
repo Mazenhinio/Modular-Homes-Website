@@ -4,8 +4,6 @@ import { useState, useEffect } from 'react'
 import Image from 'next/image'
 import { ArrowRight, Download, Calendar, MessageCircle, Star, Users, Home, Heart, Shield, Award, DollarSign, TrendingUp, Building, Calculator, MapPin } from 'lucide-react'
 import { LeadCaptureForm } from '@/components/LeadCaptureForm'
-
-
 import { CTABanner } from '@/components/CTABanner'
 
 export default function RealEstateRentalLandingPage() {

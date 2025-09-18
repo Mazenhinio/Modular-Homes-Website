@@ -7,8 +7,6 @@ export function HeroSection() {
   const [currentSlide, setCurrentSlide] = useState(0)
   const [isPlaying, setIsPlaying] = useState(true)
   const [showText, setShowText] = useState(true)
-  const [imageDimensions, setImageDimensions] = useState({ width: 0, height: 0 })
-  const [isClient, setIsClient] = useState(false)
   const intervalRef = useRef<NodeJS.Timeout>()
   const imageRef = useRef<HTMLDivElement>(null)
   
@@ -98,39 +96,8 @@ export function HeroSection() {
     }
   }, [nextSlide, isPlaying])
 
-  // Calculate image dimensions for mobile text container sizing
-  useEffect(() => {
-    setIsClient(true)
-    
-    const calculateImageDimensions = () => {
-      if (!imageRef.current) return
-
-      const container = imageRef.current
-      const containerWidth = container.offsetWidth
-      const containerHeight = container.offsetHeight
-      
-      // For mobile, calculate the actual image dimensions that will be visible
-      const imageAspectRatio = 16 / 9 // Assuming landscape images
-      let visibleWidth = containerWidth
-      let visibleHeight = containerWidth / imageAspectRatio
-      
-      // If the calculated height exceeds container height, adjust
-      if (visibleHeight > containerHeight) {
-        visibleHeight = containerHeight
-        visibleWidth = containerHeight * imageAspectRatio
-      }
-      
-      setImageDimensions({ width: visibleWidth, height: visibleHeight })
-    }
-
-    calculateImageDimensions()
-    window.addEventListener('resize', calculateImageDimensions)
-    
-    return () => window.removeEventListener('resize', calculateImageDimensions)
-  }, [])
-
   return (
-    <section className="relative min-h-screen h-screen pt-16 overflow-hidden bg-discovery-charcoal">
+    <section className="relative min-h-screen h-screen pt-16 overflow-hidden">
       {/* Carousel Background */}
       <div className="absolute inset-0" ref={imageRef}>
         {slides.map((slide, index) => (
@@ -143,7 +110,14 @@ export function HeroSection() {
             <img
               src={slide.image}
               alt={`Discovery Homes Slide ${index + 1}`}
-              className="w-full h-full object-contain md:object-cover"
+              className="w-full h-full object-cover"
+              style={{
+                width: '100%',
+                height: '100%',
+                objectFit: 'cover',
+                objectPosition: 'center',
+                display: 'block'
+              }}
             />
           </div>
         ))}
@@ -195,14 +169,7 @@ export function HeroSection() {
             showText ? 'scale-100' : 'scale-95'
           }`}
           style={{
-            // On mobile, ensure text container is smaller than visible image area
-            ...(isClient && window.innerWidth < 768 && imageDimensions.width > 0 && {
-              maxWidth: `${Math.min(imageDimensions.width * 0.6, 300)}px`
-            }),
-            // On desktop, use the original max-width
-            ...(isClient && window.innerWidth >= 768 && {
-              maxWidth: '1024px'
-            })
+            maxWidth: '1024px'
           }}
         >
           {/* Dark backdrop for better contrast */}

@@ -4,8 +4,6 @@ import { useState, useEffect } from 'react'
 import Image from 'next/image'
 import { ArrowRight, Download, Calendar, MessageCircle, Star, Users, Home, Heart, Shield, Award } from 'lucide-react'
 import { LeadCaptureForm } from '@/components/LeadCaptureForm'
-
-
 import { CTABanner } from '@/components/CTABanner'
 import { FirstNationsScheduler } from '@/components/FirstNationsScheduler'
 import { FirstNationsAnalytics } from '@/components/FirstNationsAnalytics'
