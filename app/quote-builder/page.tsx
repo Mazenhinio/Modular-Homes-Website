@@ -457,7 +457,7 @@ export default function QuoteBuilderPage() {
         }
       } catch (error) {
         console.error('❌ Error sending contact information to webhook:', error)
-        // Continue with the form even if webhook fails
+        // Continue with form progression even if webhook fails
       }
     }
     
@@ -482,7 +482,33 @@ export default function QuoteBuilderPage() {
     setSubmitError(null)
     
     try {
-      // Generate PDF quote using n8n workflow
+      // Step 1: Send complete form data to Go High Level webhook FIRST
+      console.log('🔄 Sending data to Go High Level webhook...')
+      const webhookResponse = await fetch('/api/forms/quote-builder-webhook', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          ...formData,
+          estimatedPrice: finalPrice
+        })
+      })
+
+      if (!webhookResponse.ok) {
+        const errorData = await webhookResponse.json()
+        throw new Error(`GHL webhook failed: ${errorData.error || 'Unknown error'}`)
+      }
+
+      const webhookResult = await webhookResponse.json()
+      if (!webhookResult.ghlSuccess) {
+        throw new Error('GHL webhook delivery failed')
+      }
+
+      console.log('✅ Complete quote data sent to Go High Level webhook successfully')
+
+      // Step 2: Generate PDF quote using n8n workflow AFTER GHL webhook success
+      console.log('🔄 Generating PDF quote...')
       const response = await fetch('/api/quote-builder/generate-pdf-n8n', {
         method: 'POST',
         headers: {
@@ -512,13 +538,16 @@ export default function QuoteBuilderPage() {
       document.body.removeChild(link)
       window.URL.revokeObjectURL(url)
       
+      console.log('✅ PDF quote generated and downloaded successfully')
+      
       // Mark as successfully submitted
       setIsSubmitted(true)
       setIsSubmitting(false)
       
     } catch (error) {
       console.error('Submission error:', error)
-      setSubmitError('Failed to generate PDF quote. Please try again or contact us directly.')
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred'
+      setSubmitError(`Failed to process quote: ${errorMessage}. Please try again or contact us directly.`)
       setIsSubmitting(false)
     }
   }
