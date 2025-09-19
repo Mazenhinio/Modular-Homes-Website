@@ -69,7 +69,7 @@ export default function BlogPage() {
       date: "2024-02-10",
       readTime: "10 min read",
       category: "Indigenous",
-      image: "/images/blog/indigenous-funding-hero.jpg",
+      image: "/images/blog/indigenous-funding-hero.webp",
       featured: true,
       downloadUrl: "/downloads/indigenous-funding-guide.pdf",
       leadMagnetTitle: "Funding Guide Download",
@@ -84,7 +84,7 @@ export default function BlogPage() {
       date: "2024-03-05",
       readTime: "9 min read",
       category: "Resort Owners",
-      image: "/images/blog/resort-modular-hero.jpg",
+      image: "/images/blog/resort-modular-hero-new.webp",
       featured: false,
       downloadUrl: "/downloads/resort-roi-guide.pdf",
       leadMagnetTitle: "Resort ROI Guide",
@@ -99,7 +99,7 @@ export default function BlogPage() {
       date: "2024-04-12",
       readTime: "7 min read",
       category: "Developers",
-      image: "/images/blog/developer-mistakes-hero.jpg",
+      image: "/images/blog/developer-mistakes-hero.webp",
       featured: false,
       downloadUrl: "/downloads/developer-planning-checklist.pdf",
       leadMagnetTitle: "Developer Planning Checklist",
@@ -114,7 +114,7 @@ export default function BlogPage() {
       date: "2024-05-20",
       readTime: "12 min read",
       category: "Net-Zero",
-      image: "/images/blog/off-grid-living-hero.jpg",
+      image: "/images/blog/resort-modular-hero.webp",
       featured: false,
       downloadUrl: "/downloads/off-grid-planning-guide.pdf",
       leadMagnetTitle: "Off-Grid Planning Guide",
@@ -129,7 +129,7 @@ export default function BlogPage() {
       date: "2024-06-08",
       readTime: "11 min read",
       category: "Rural Living",
-      image: "/images/blog/acreage-success-hero.jpg",
+      image: "/images/blog/acreage-success-hero.webp",
       featured: false,
       downloadUrl: "/contact",
       leadMagnetTitle: "Book a Consultation",
@@ -214,9 +214,6 @@ export default function BlogPage() {
             </div>
             <div className="bg-white/20 backdrop-blur-sm px-6 py-3 rounded-lg">
               <span className="text-white font-semibold">Industry Expertise</span>
-            </div>
-            <div className="bg-white/20 backdrop-blur-sm px-6 py-3 rounded-lg">
-              <span className="text-white font-semibold">Free Downloads</span>
             </div>
           </div>
         </div>
@@ -313,24 +310,13 @@ export default function BlogPage() {
                     
                     <div className="flex items-center justify-between">
                       <span className="text-sm text-gray-500">{post.readTime}</span>
-                      <div className="flex items-center gap-3">
-                        {post.downloadUrl && (
-                          <a
-                            href={post.downloadUrl}
-                            className="flex items-center text-[#D4AF37] hover:text-[#B8941F] transition-colors"
-                          >
-                            <Download size={16} className="mr-1" />
-                            {post.leadMagnetTitle === "Book a Consultation" ? "Consult" : "Download"}
-                          </a>
-                        )}
-                        <Link
-                          href={`/blog/${post.id}`}
-                          className="flex items-center text-[#D4AF37] hover:text-[#B8941F] transition-colors font-semibold"
-                        >
-                          Read More
-                          <ArrowRight size={16} className="ml-1" />
-                        </Link>
-                      </div>
+                      <Link
+                        href={`/blog/${post.id}`}
+                        className="flex items-center text-[#D4AF37] hover:text-[#B8941F] transition-colors font-semibold"
+                      >
+                        Read More
+                        <ArrowRight size={16} className="ml-1" />
+                      </Link>
                     </div>
                   </div>
                 </article>
@@ -391,22 +377,12 @@ export default function BlogPage() {
                       <User size={12} className="mr-1" />
                       {post.author} • {post.readTime}
                     </div>
-                    <div className="flex items-center gap-2">
-                      {post.downloadUrl && (
-                        <a
-                          href={post.downloadUrl}
-                          className="text-[#D4AF37] hover:text-[#B8941F] transition-colors"
-                        >
-                          <Download size={16} />
-                        </a>
-                      )}
-                      <Link
-                        href={`/blog/${post.id}`}
-                        className="text-[#D4AF37] hover:text-[#B8941F] transition-colors"
-                      >
-                        <ArrowRight size={16} />
-                      </Link>
-                    </div>
+                    <Link
+                      href={`/blog/${post.id}`}
+                      className="text-[#D4AF37] hover:text-[#B8941F] transition-colors"
+                    >
+                      <ArrowRight size={16} />
+                    </Link>
                   </div>
                 </div>
               </article>
@@ -520,55 +496,6 @@ export default function BlogPage() {
         </div>
       </section>
 
-      {/* Resource Library */}
-      <section className="py-16 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-[#2D2D2D] mb-6">
-              Free Resource Library
-            </h2>
-            <p className="text-xl text-gray-600">
-              Download our comprehensive guides and resources
-            </p>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {[
-              {
-                title: "Free ROI Calculator",
-                description: "Calculate your land's income potential with modular homes",
-                downloadUrl: "/downloads/roi-calculator",
-                icon: "💰"
-              },
-              {
-                title: "Indigenous Funding Guide",
-                description: "Complete guide to housing grants and funding programs for Indigenous communities",
-                downloadUrl: "/downloads/indigenous-funding-guide.pdf",
-                icon: "🏠"
-              },
-              {
-                title: "Off-Grid Planning Guide",
-                description: "Your complete guide to energy independence and sustainable living",
-                downloadUrl: "/downloads/off-grid-planning-guide.pdf",
-                icon: "🌱"
-              }
-            ].map((resource, index) => (
-              <div key={index} className="bg-gray-50 rounded-xl p-8 text-center hover:shadow-lg transition-shadow">
-                <div className="text-4xl mb-4">{resource.icon}</div>
-                <h3 className="text-xl font-bold text-[#2D2D2D] mb-4">{resource.title}</h3>
-                <p className="text-gray-600 mb-6">{resource.description}</p>
-                <a
-                  href={resource.downloadUrl}
-                  className="inline-flex items-center bg-[#D4AF37] text-white px-6 py-3 rounded-lg font-semibold hover:bg-[#B8941F] transition-colors"
-                >
-                  <Download className="mr-2" size={20} />
-                  Download Free
-                </a>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
     </div>
   )
 } 

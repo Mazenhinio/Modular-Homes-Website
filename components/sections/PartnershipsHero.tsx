@@ -3,8 +3,17 @@ import { ArrowRight, Heart, Users, Home } from 'lucide-react'
 
 export function PartnershipsHero() {
   return (
-    <section className="relative py-20 bg-gradient-to-br from-discovery-charcoal via-discovery-charcoal-light to-discovery-charcoal text-discovery-white hero-element">
-      <div className="container-custom">
+    <section className="relative py-20 text-discovery-white hero-element overflow-hidden">
+      {/* Background Image */}
+      <div className="absolute inset-0">
+        <img
+          src="/images/partnerships-hero.png"
+          alt="Partnerships Success Stories"
+          className="w-full h-full object-cover"
+        />
+        <div className="absolute inset-0 bg-black/40" />
+      </div>
+      <div className="container-custom relative z-10">
         <div className="max-w-4xl mx-auto text-center px-6 py-8">
           <div className="flex items-center justify-center gap-3 mb-6">
             <Heart className="text-discovery-gold" size={32} />
@@ -40,19 +49,13 @@ export function PartnershipsHero() {
             </div>
           </div>
           
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <div className="flex justify-center">
             <Link
               href="/contact"
               className="btn-luxury text-lg px-8 py-4 shadow-gold hover:shadow-luxury-lg micro-interaction"
             >
               Book a Consultation
               <ArrowRight className="ml-2" size={20} />
-            </Link>
-            <Link
-              href="#funding-resources"
-              className="glass border-2 border-discovery-white text-discovery-white px-8 py-4 rounded-lg text-lg font-semibold hover:glass-dark transition-all duration-500 micro-interaction"
-            >
-              View Grant Resources
             </Link>
           </div>
         </div>

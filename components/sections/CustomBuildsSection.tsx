@@ -26,13 +26,13 @@ export function CustomBuildsSection() {
   ]
 
   return (
-    <section className="section bg-gradient-to-br from-discovery-charcoal via-discovery-charcoal-light to-discovery-charcoal text-discovery-white">
+    <section className="section bg-gradient-to-br from-discovery-gold via-discovery-gold/90 to-discovery-gold-dark text-discovery-charcoal">
       <div className="container-custom">
         <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-serif font-bold mb-6">
+          <h2 className="text-3xl md:text-4xl font-serif font-bold mb-6 text-discovery-charcoal">
             Custom Build Options
           </h2>
-          <p className="text-xl max-w-4xl mx-auto leading-relaxed mb-8">
+          <p className="text-xl max-w-4xl mx-auto leading-relaxed mb-8 text-discovery-charcoal">
             Fully tailored modular homes: larger footprints, net-zero ready kits, off-grid solutions, 
             or culturally-specific Indigenous designs — crafted to fit each customer's unique needs.
           </p>
@@ -44,12 +44,12 @@ export function CustomBuildsSection() {
             return (
               <div key={index} className="text-center">
                 <div className="flex justify-center mb-4">
-                  <IconComponent className="w-12 h-12 text-discovery-gold" />
+                  <IconComponent className="w-12 h-12 text-discovery-charcoal" />
                 </div>
-                 <h3 className="text-xl font-semibold mb-3 text-discovery-gold">
+                 <h3 className="text-xl font-semibold mb-3 text-discovery-charcoal">
                    {option.title}
                  </h3>
-                 <p className="text-discovery-gold leading-relaxed">
+                 <p className="text-discovery-charcoal leading-relaxed">
                    {option.description}
                  </p>
               </div>

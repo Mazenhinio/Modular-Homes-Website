@@ -88,18 +88,50 @@ const teamQuotes = [
 export default function MeetTheOwnersPage() {
   return (
     <>
-      <section className="section-lg bg-gradient-to-br from-discovery-charcoal via-discovery-charcoal-light to-discovery-charcoal text-discovery-white">
-        <div className="container-custom">
-          <div className="max-w-4xl mx-auto text-center">
-            <h1 className="text-4xl md:text-6xl font-serif font-bold mb-6 text-gradient-nature">
-              Meet the Owners
-            </h1>
-            <h2 className="text-2xl md:text-3xl font-serif font-light text-discovery-gold mb-8">
-              The Heart Behind Discovery Homes
-            </h2>
-            <p className="text-xl leading-relaxed">
-              At Discovery Homes, we believe that a house is more than just walls and a roof — it's a foundation for family, for growth, and for a better future. We are three family men, lifelong neighbours and childhood friends, united by a shared vision: to build homes that empower families, respect communities, and make smarter, more sustainable living possible for everyone.
-            </p>
+      <section className="section-lg bg-gradient-to-br from-discovery-charcoal via-discovery-charcoal-light to-discovery-charcoal text-discovery-white relative overflow-hidden">
+        {/* Background Pattern */}
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute top-10 left-10 w-32 h-32 bg-discovery-gold/20 rounded-full blur-xl"></div>
+          <div className="absolute bottom-20 right-20 w-40 h-40 bg-discovery-sage/20 rounded-full blur-2xl"></div>
+          <div className="absolute top-1/2 left-1/4 w-20 h-20 bg-discovery-lime/20 rounded-full blur-lg"></div>
+        </div>
+        
+        <div className="container-custom relative z-10">
+          <div className="max-w-6xl mx-auto">
+            {/* Header Text */}
+            <div className="text-center mb-16">
+              <h1 className="text-4xl md:text-6xl font-serif font-bold mb-6 text-gradient-nature">
+                Meet the Owners
+              </h1>
+              <h2 className="text-2xl md:text-3xl font-serif font-light text-discovery-gold mb-8">
+                The Heart Behind Discovery Homes
+              </h2>
+            </div>
+
+            {/* Owner Photos */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+              {owners.map((owner, index) => (
+                <div key={owner.name} className="text-center group">
+                  <div className="relative mb-6">
+                    <div className="w-48 h-48 mx-auto rounded-full overflow-hidden shadow-2xl border-4 border-discovery-gold/30 group-hover:border-discovery-gold transition-all duration-300 group-hover:scale-105">
+                      <img
+                        src={owner.image}
+                        alt={owner.name}
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                    {/* Decorative ring */}
+                    <div className="absolute inset-0 rounded-full border-2 border-discovery-gold/20 group-hover:border-discovery-gold/40 transition-all duration-300"></div>
+                  </div>
+                  <h3 className="text-2xl font-serif font-bold text-discovery-white mb-2">
+                    {owner.name}
+                  </h3>
+                  <p className="text-discovery-gold font-medium">
+                    {owner.title}
+                  </p>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </section>
