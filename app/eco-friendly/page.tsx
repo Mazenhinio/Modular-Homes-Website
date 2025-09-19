@@ -85,11 +85,16 @@ export default function EcoFriendlyPage() {
                 </p>
               </div>
 
-              <div className="bg-gradient-to-br from-discovery-sage/20 to-discovery-lime/20 rounded-2xl p-8">
-                <div className="text-center">
-                  <Home className="w-24 h-24 text-discovery-forest mx-auto mb-6" />
-                  <h3 className="text-2xl font-bold text-discovery-charcoal mb-4">Climate-Ready Design</h3>
-                  <p className="text-discovery-charcoal-light">
+              <div className="relative rounded-2xl overflow-hidden shadow-xl">
+                <img
+                  src="/images/eco-friendly/climate-ready-image.webp"
+                  alt="Climate-Ready Modular Home Design"
+                  className="w-full h-full object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-discovery-charcoal/60 to-transparent" />
+                <div className="absolute bottom-6 left-6 right-6">
+                  <h3 className="text-2xl font-bold text-discovery-white mb-2">Climate-Ready Design</h3>
+                  <p className="text-discovery-white/90">
                     Engineered specifically for Western Canada's challenging weather conditions
                   </p>
                 </div>
@@ -221,7 +226,11 @@ export default function EcoFriendlyPage() {
           <div className="max-w-4xl mx-auto text-center">
             <div className="flex items-center justify-center gap-4 mb-8">
               <div className="w-16 h-16 bg-discovery-forest rounded-full flex items-center justify-center">
-                <Battery className="w-8 h-8 text-discovery-white" />
+                <img 
+                  src="/images/eco-friendly/unplugged.png" 
+                  alt="Unplugged Icon" 
+                  className="w-8 h-8"
+                />
               </div>
               <h2 className="text-3xl md:text-4xl font-serif font-bold text-discovery-charcoal">
                 Off-Grid Package — Coming Soon
@@ -254,14 +263,12 @@ export default function EcoFriendlyPage() {
                 </ul>
               </div>
 
-              <div className="bg-discovery-gold/10 rounded-2xl p-6 flex items-center justify-center">
-                <div className="text-center">
-                  <Battery className="w-16 h-16 text-discovery-gold mx-auto mb-4" />
-                  <h3 className="text-xl font-bold text-discovery-charcoal mb-2">Complete Independence</h3>
-                  <p className="text-discovery-charcoal-light">
-                    Full energy independence for remote locations
-                  </p>
-                </div>
+              <div className="flex items-center justify-center">
+                <img 
+                  src="/images/eco-friendly/independence.png" 
+                  alt="Independence Icon" 
+                  className="w-full h-auto rounded-2xl"
+                />
               </div>
             </div>
 
