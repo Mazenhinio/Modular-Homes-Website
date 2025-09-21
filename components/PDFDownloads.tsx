@@ -133,7 +133,7 @@ export function PDFDownloads({ downloads, modelName }: PDFDownloadsProps) {
                 className="hover:opacity-100 transition-opacity"
               >
                 <img 
-                  src="/images/rural-haus-logo.png" 
+                  src="/images/rural-haus-logo.webp" 
                   alt="Rural Haus Studio" 
                   className="h-12 w-auto opacity-80 hover:opacity-100 transition-opacity"
                 />

@@ -15,7 +15,7 @@ export default function EcoFriendlyPage() {
         {/* Background Image */}
         <div className="absolute inset-0 z-0">
           <img
-            src="/images/eco-friendly/hero-image.png"
+            src="/images/eco-friendly/hero-image.webp"
             alt="Eco-Friendly Modular Home"
             className="w-full h-full object-cover"
           />
@@ -238,7 +238,7 @@ export default function EcoFriendlyPage() {
             <div className="flex items-center justify-center gap-4 mb-8">
               <div className="w-16 h-16 bg-discovery-forest rounded-full flex items-center justify-center">
                 <img 
-                  src="/images/eco-friendly/unplugged.png" 
+                  src="/images/eco-friendly/unplugged.webp" 
                   alt="Unplugged Icon" 
                   className="w-8 h-8"
                 />
@@ -276,7 +276,7 @@ export default function EcoFriendlyPage() {
 
               <div className="flex items-center justify-center">
                 <img 
-                  src="/images/eco-friendly/independence.png" 
+                  src="/images/eco-friendly/independence.webp" 
                   alt="Independence Icon" 
                   className="w-full h-auto rounded-2xl"
                 />

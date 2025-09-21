@@ -663,7 +663,7 @@ export default function ResortOwnersPage() {
                 <Image
                   src={
                     activeTab === 'pine' ? '/images/new-content/PIne 1 - Pine/xf pine 1 front right scandanavian.webp' :
-                    activeTab === 'spruce' ? '/images/new-content/Pine 2- Spruce/XF pine 2 cedar front left.png' :
+                    activeTab === 'spruce' ? '/images/new-content/Pine 2- Spruce/XF pine 2 cedar front left.webp' :
                     activeTab === 'willow' ? '/images/new-content/Pine 3- Willow/XF pine 3 scandanavian front right .webp' :
                     '/images/new-content/Custom Builds/CB-LakesideRetreat-Front__Lakeside-Retreat__CustomBuild__v01.webp'
                   }
@@ -708,7 +708,7 @@ export default function ResortOwnersPage() {
                 ))}
 
                 {activeTab === 'willow' && [
-                  '/images/new-content/Pine 3- Willow/IF pine 3 Nordic Whitw.png',
+                  '/images/new-content/Pine 3- Willow/IF pine 3 Nordic Whitw.webp',
                   '/images/new-content/Pine 3- Willow/IF Pine3-kitchen-NW.webp',
                   '/images/new-content/Pine 3- Willow/IF Pine3-kitchen-E&S.webp',
                   '/images/new-content/Pine 3- Willow/IF Pine3-room-E&S.webp'

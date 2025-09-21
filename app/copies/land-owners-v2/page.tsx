@@ -425,7 +425,7 @@ export default function LandOwnersLandingPage() {
                 ))}
 
                 {activeTab === 'willow' && [
-                  '/assets/images/new-content/Pine 3- Willow/IF pine 3 Nordic Whitw.png',
+                  '/assets/images/new-content/Pine 3- Willow/IF pine 3 Nordic Whitw.webp',
                   '/assets/images/new-content/Pine 3- Willow/IF Pine3-kitchen-NW.webp',
                   '/assets/images/new-content/Pine 3- Willow/IF Pine3-kitchen-E&S.webp',
                   '/assets/images/new-content/Pine 3- Willow/IF Pine3-room-E&S.webp'

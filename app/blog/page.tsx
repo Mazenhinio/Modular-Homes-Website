@@ -114,7 +114,7 @@ export default function BlogPage() {
       date: "2024-05-20",
       readTime: "12 min read",
       category: "Net-Zero",
-      image: "/images/blog/resort-modular-hero.webp",
+      image: "/images/blog/off-grid-living-hero.webp",
       featured: false,
       downloadUrl: "/downloads/off-grid-planning-guide.pdf",
       leadMagnetTitle: "Off-Grid Planning Guide",

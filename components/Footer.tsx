@@ -8,7 +8,7 @@ export function Footer() {
           {/* Company Info */}
           <div className="col-span-1 md:col-span-2">
             <img
-              src="/images/logo-footer-white.png"
+              src="/images/logo-footer-white.webp"
               alt="Discovery Homes"
               className="h-20 w-auto mb-4"
             />

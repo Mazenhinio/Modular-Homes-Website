@@ -7,7 +7,7 @@ export function PartnershipsHero() {
       {/* Background Image */}
       <div className="absolute inset-0">
         <img
-          src="/images/partnerships-hero.png"
+          src="/images/partnerships-hero.webp"
           alt="Partnerships Success Stories"
           className="w-full h-full object-cover"
         />

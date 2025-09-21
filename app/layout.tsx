@@ -37,7 +37,7 @@ export const metadata: Metadata = {
     siteName: 'Discovery Homes',
     images: [
       {
-        url: '/images/OG PIC.png',
+        url: '/images/OG PIC.webp',
         width: 1200,
         height: 630,
         alt: 'Discovery Homes - Affordable Modular Housing',
@@ -49,7 +49,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Discovery Homes | Affordable Modular Homes',
     description: 'High-quality, sustainable, culturally-respectful modular housing across Western Canada.',
-    images: ['/images/OG PIC.png'],
+    images: ['/images/OG PIC.webp'],
   },
   robots: {
     index: true,
@@ -120,7 +120,7 @@ export default function RootLayout({
         <meta property="og:image:type" content="image/png" />
         <meta property="og:image:alt" content="Discovery Homes - Affordable Modular Housing" />
         <meta name="twitter:image:alt" content="Discovery Homes - Affordable Modular Housing" />
-        <meta property="og:image" content="/images/OG PIC.png" />
+        <meta property="og:image" content="/images/OG PIC.webp" />
         <meta name="twitter:site" content="@discoveryhomes" />
         <meta name="twitter:creator" content="@discoveryhomes" />
         <link rel="canonical" href="https://www.discoveryhomes.ca" />
