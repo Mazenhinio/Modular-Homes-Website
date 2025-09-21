@@ -44,6 +44,13 @@ export function Pine2Client() {
       filename: '/images/pine2/Floor Plan.pdf',
       category: 'floorplan' as const,
       size: '2.8 MB'
+    },
+    {
+      title: 'Customer Responsibility & Site Prep Guide',
+      description: 'Complete guide for site preparation, utilities, and customer responsibilities',
+      filename: '/resources/CustomerResp-SitePrep-DHGuide2025.pdf',
+      category: 'technical' as const,
+      size: '23.7 MB'
     }
   ]
 

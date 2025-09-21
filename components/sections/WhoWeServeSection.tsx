@@ -65,14 +65,7 @@ export function WhoWeServeSection() {
                 </ul>
               </div>
               
-              <div className="text-center">
-                <Link
-                  href={segment.href}
-                  className="inline-block bg-[#D4AF37] text-white px-6 py-3 rounded-lg font-semibold hover:bg-[#B8941F] transition-colors"
-                >
-                  Learn More →
-                </Link>
-              </div>
+              {/* Learn More buttons hidden */}
             </div>
           ))}
         </div>

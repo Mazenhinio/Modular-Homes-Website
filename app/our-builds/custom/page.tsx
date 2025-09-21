@@ -1,7 +1,7 @@
 import { Metadata } from 'next'
 import Link from 'next/link'
 import Image from 'next/image'
-import { ArrowLeft, Check } from 'lucide-react'
+import { ArrowLeft, Check, Download, FileText, Home, Leaf, Zap, Feather } from 'lucide-react'
 import CustomBuildsCarousel from '@/components/CustomBuildsCarousel'
 
 export const metadata: Metadata = {
@@ -137,7 +137,7 @@ export default function CustomBuildsPage() {
     {
       title: "Larger Footprints",
       description: "Expandable designs for growing families or multi-generational living. Scale up with additional modules and flexible configurations.",
-      icon: "🏠",
+      icon: <Home className="w-8 h-8 text-discovery-gold" />,
       features: [
         "Multi-module configurations",
         "Expandable designs",
@@ -149,7 +149,7 @@ export default function CustomBuildsPage() {
     {
       title: "Net-Zero Ready Kits", 
       description: "Energy-efficient packages with solar panels, high-performance insulation, and sustainable building systems.",
-      icon: "🌱",
+      icon: <Leaf className="w-8 h-8 text-discovery-gold" />,
       features: [
         "Solar panel systems",
         "High-efficiency HVAC",
@@ -161,7 +161,7 @@ export default function CustomBuildsPage() {
     {
       title: "Off-Grid Solutions",
       description: "Complete independence with water wells, solar power, septic systems, and backup generators for remote living.",
-      icon: "⚡",
+      icon: <Zap className="w-8 h-8 text-discovery-gold" />,
       features: [
         "Solar + battery systems",
         "Water well integration",
@@ -173,7 +173,7 @@ export default function CustomBuildsPage() {
     {
       title: "Indigenous-Specific Designs",
       description: "Culturally-respectful layouts honoring traditional values, community needs, and ceremonial spaces.",
-      icon: "🪶",
+      icon: <Feather className="w-8 h-8 text-discovery-gold" />,
       features: [
         "Cultural consultation",
         "Traditional layouts",
@@ -298,7 +298,7 @@ export default function CustomBuildsPage() {
             {customOptions.map((option, index) => (
               <div key={index} className="bg-discovery-white rounded-2xl p-8 hover:shadow-lg transition-shadow">
                 <div className="flex items-start gap-4 mb-6">
-                  <div className="text-4xl flex-shrink-0">{option.icon}</div>
+                  <div className="flex-shrink-0">{option.icon}</div>
                   <div>
                     <h3 className="text-2xl font-serif font-bold text-discovery-charcoal mb-2">
                       {option.title}
@@ -406,6 +406,44 @@ export default function CustomBuildsPage() {
               <p className="text-sm text-neutral-600 mt-4">
                 *Prices vary based on size, features, and location. Contact us for a detailed quote.
               </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Site Prep Guide Download */}
+      <section className="section bg-neutral-50">
+        <div className="container-custom">
+          <div className="max-w-4xl mx-auto text-center">
+            <h2 className="text-3xl md:text-4xl font-serif font-bold text-discovery-charcoal mb-6">
+              Site Preparation Guide
+            </h2>
+            <p className="text-xl text-neutral-600 mb-8">
+              Download our comprehensive guide for site preparation, utilities, and customer responsibilities for your custom modular home.
+            </p>
+            
+            <div className="bg-discovery-white rounded-2xl p-8 shadow-lg max-w-md mx-auto">
+              <div className="w-16 h-16 bg-discovery-gold rounded-full flex items-center justify-center mx-auto mb-4">
+                <FileText className="text-discovery-charcoal" size={24} />
+              </div>
+              <h3 className="text-xl font-semibold text-discovery-charcoal mb-2">
+                Customer Responsibility & Site Prep Guide
+              </h3>
+              <p className="text-neutral-600 mb-4">
+                Complete guide for site preparation, utilities, and customer responsibilities
+              </p>
+              <p className="text-sm text-neutral-500 mb-6">
+                File size: 23.7 MB
+              </p>
+              <a
+                href="/resources/CustomerResp-SitePrep-DHGuide2025.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-luxury shadow-gold hover:shadow-luxury-lg transition-all duration-300 inline-flex items-center"
+              >
+                <Download size={16} className="mr-2" />
+                Download Site Prep Guide
+              </a>
             </div>
           </div>
         </div>

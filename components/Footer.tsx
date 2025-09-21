@@ -45,24 +45,6 @@ export function Footer() {
                   Blog
                 </Link>
               </li>
-              <li className="pt-2">
-                <span className="block text-sm text-gray-400 uppercase tracking-wide">Segments</span>
-              </li>
-              <li>
-                <Link href="/first-nations" className="text-gray-300 hover:text-[#D4AF37] transition-colors">
-                  First Nations Communities
-                </Link>
-              </li>
-              <li>
-                <Link href="/land-owners" className="text-gray-300 hover:text-[#D4AF37] transition-colors">
-                  Land Owners
-                </Link>
-              </li>
-              <li>
-                <Link href="/real-estate-rental" className="text-gray-300 hover:text-[#D4AF37] transition-colors">
-                  Real Estate & Rental Investors
-                </Link>
-              </li>
             </ul>
           </div>
 
