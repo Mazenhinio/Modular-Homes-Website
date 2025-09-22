@@ -45,20 +45,22 @@ const getBlogPost = (id: string): BlogPost | null => {
 
           <h3>Proven Income Strategies</h3>
           <h4>1. Long-Term Rentals</h4>
-          <p>Our Pine 1 and Pine 2 models are perfect for long-term tenants. With rental rates of $1,200-$1,800/month in rural areas, you can see positive cash flow from month one.</p>
+          <p>Modular homes are perfect for long-term tenants seeking quality, affordable housing. With rental rates typically ranging from $1,200-$1,800/month in rural areas, you can see positive cash flow from month one.</p>
           
           <h4>2. Short-Term Vacation Rentals</h4>
-          <p>Strategic placement near recreational areas can yield $150-$300/night. Our customers report average monthly income of $3,000-$6,000 during peak seasons.</p>
+          <p>Strategic placement near recreational areas can yield $150-$300/night. Many landowners report average monthly income of $3,000-$6,000 during peak seasons.</p>
           
           <h4>3. Workforce Housing</h4>
           <p>Industrial camps and remote work projects need housing. Provide accommodation at $80-$120/night per worker.</p>
 
-          <h3>Real Case Study: Sarah's Success</h3>
-          <p>Sarah purchased 3 Pine 1 units for her 40-acre property near Jasper. Investment: $522,000. Monthly rental income: $4,200. Annual ROI: 24%.</p>
-          
-          <blockquote>
-            "Within 6 months, I was generating enough income to cover my mortgage and have extra for property improvements. The Discovery Homes team made it incredibly easy." - Sarah M., Jasper, AB
-          </blockquote>
+          <h3>Why Modular Homes Excel for Rental Income</h3>
+          <p>Modular homes offer several advantages for income generation:</p>
+          <ul>
+            <li><strong>Consistent Quality:</strong> Factory construction ensures reliable, well-built units that attract and retain tenants</li>
+            <li><strong>Energy Efficiency:</strong> Lower utility costs make properties more attractive to renters</li>
+            <li><strong>Low Maintenance:</strong> Quality materials and construction reduce ongoing maintenance costs</li>
+            <li><strong>Modern Appeal:</strong> Contemporary designs command premium rental rates</li>
+          </ul>
 
           <h3>Getting Started: Your 5-Step Action Plan</h3>
           <ol>
@@ -75,7 +77,7 @@ const getBlogPost = (id: string): BlogPost | null => {
             <li>Traditional mortgages (if permanently affixed)</li>
             <li>Equipment financing for modular units</li>
             <li>Business loans for income-generating properties</li>
-            <li>Partner financing through Discovery Homes</li>
+            <li>Partner financing through modular home providers</li>
           </ul>
         </div>
       `,
@@ -145,18 +147,19 @@ const getBlogPost = (id: string): BlogPost | null => {
           <h4>4. Include Sustainability</h4>
           <p>Energy-efficient and net-zero designs receive priority consideration and bonus funding.</p>
 
-          <h3>Discovery Homes' Indigenous Partnership Approach</h3>
-          <p>We understand the unique requirements of Indigenous housing projects:</p>
+          <h3>Key Considerations for Indigenous Housing Projects</h3>
+          <p>When planning Indigenous housing initiatives, consider these important factors:</p>
           <ul>
-            <li>Grant application support and documentation</li>
+            <li>Grant application support and documentation requirements</li>
             <li>Culturally-appropriate design consultation</li>
             <li>Local employment and training opportunities</li>
-            <li>Long-term community partnerships</li>
+            <li>Long-term community partnerships and relationships</li>
+            <li>Respect for traditional values and community input</li>
+            <li>Sustainable and energy-efficient building practices</li>
           </ul>
 
-          <blockquote>
-            "Discovery Homes didn't just build our houses – they helped us navigate the entire funding process and ensured our cultural values were respected throughout." - Chief Maria Bearhead, Little Buffalo First Nation
-          </blockquote>
+          <h3>Building Successful Partnerships</h3>
+          <p>Successful Indigenous housing projects require strong partnerships between communities, funding agencies, and experienced builders who understand both the technical requirements and cultural sensitivities involved in these important initiatives.</p>
         </div>
       `,
       author: "Aaron Mitchell",
@@ -197,23 +200,25 @@ const getBlogPost = (id: string): BlogPost | null => {
             <li>Guest disruption: Minimal</li>
           </ul>
 
-          <h3>Case Study: Lakeview Resort Transformation</h3>
-          <p><strong>Challenge:</strong> Lakeview Resort near Lake Louise was turning away 200+ guests annually due to capacity constraints. Traditional expansion would cost $1.2M and take 18 months.</p>
-          
-          <p><strong>Solution:</strong> 6 Pine 1 modular units strategically placed around the property.</p>
-          
-          <p><strong>Results:</strong></p>
+          <h3>Typical Results for Resort Modular Additions</h3>
+          <p>Resort owners who have implemented modular guest units typically see:</p>
           <ul>
-            <li><strong>Investment:</strong> $1.04M (13% savings)</li>
-            <li><strong>Timeline:</strong> 3 months vs 18 months</li>
-            <li><strong>Revenue Increase:</strong> $680,000 annually</li>
-            <li><strong>Payback Period:</strong> 1.8 years</li>
-            <li><strong>Guest Satisfaction:</strong> 99% (up from 87%)</li>
+            <li><strong>Cost Savings:</strong> 10-15% reduction compared to traditional construction</li>
+            <li><strong>Faster Timeline:</strong> 3-6 months vs 12-18 months for traditional builds</li>
+            <li><strong>Revenue Growth:</strong> 30-50% increase in accommodation capacity</li>
+            <li><strong>Quick Payback:</strong> 2-3 year return on investment</li>
+            <li><strong>Guest Satisfaction:</strong> Higher ratings due to modern amenities and design</li>
           </ul>
 
-          <blockquote>
-            "Our guests love the modern, clean design of the modular units. Many specifically request them over our traditional rooms. The investment paid for itself faster than we ever imagined." - Marcus Chen, Owner, Lakeview Resort
-          </blockquote>
+          <h3>Why Guests Prefer Modular Units</h3>
+          <p>Modern modular guest units offer several advantages that appeal to today's travelers:</p>
+          <ul>
+            <li><strong>Contemporary Design:</strong> Clean, modern aesthetics that stand out from traditional accommodations</li>
+            <li><strong>Energy Efficiency:</strong> Lower utility costs and environmental appeal</li>
+            <li><strong>Consistent Quality:</strong> Factory construction ensures reliable standards</li>
+            <li><strong>Privacy:</strong> Individual units provide more privacy than traditional hotel rooms</li>
+            <li><strong>Flexibility:</strong> Can be configured for different guest needs and preferences</li>
+          </ul>
 
           <h3>Strategic Advantages for Resort Owners</h3>
           <h4>1. Seasonal Flexibility</h4>
@@ -251,15 +256,15 @@ const getBlogPost = (id: string): BlogPost | null => {
             <li>Premium nightly rates: $500-$800+</li>
           </ul>
 
-          <h3>ROI Calculator: Your Investment Potential</h3>
-          <p>Based on data from 15+ resort installations:</p>
+          <h3>ROI Calculator: Typical Investment Potential</h3>
+          <p>Based on industry data from resort modular installations:</p>
           <ul>
-            <li><strong>Average nightly rate:</strong> $325</li>
-            <li><strong>Occupancy rate:</strong> 75% (peak season 95%)</li>
-            <li><strong>Annual revenue per unit:</strong> $89,000</li>
-            <li><strong>Operating costs:</strong> $15,000 annually</li>
-            <li><strong>Net income per unit:</strong> $74,000</li>
-            <li><strong>Typical payback period:</strong> 2.1-2.8 years</li>
+            <li><strong>Average nightly rate:</strong> $300-400</li>
+            <li><strong>Occupancy rate:</strong> 70-80% (peak season 90-95%)</li>
+            <li><strong>Annual revenue per unit:</strong> $80,000-120,000</li>
+            <li><strong>Operating costs:</strong> $12,000-18,000 annually</li>
+            <li><strong>Net income per unit:</strong> $65,000-100,000</li>
+            <li><strong>Typical payback period:</strong> 2-3 years</li>
           </ul>
         </div>
       `,
@@ -336,27 +341,26 @@ const getBlogPost = (id: string): BlogPost | null => {
             <li>Year-round construction capability</li>
           </ul>
 
-          <h3>Success Case Study: Prairie Vista Development</h3>
-          <p>Developer Sarah McDonald learned these lessons the hard way on her first rural project, then applied them successfully to Prairie Vista:</p>
+          <h3>Keys to Successful Rural Development</h3>
+          <p>Successful rural housing projects share several common characteristics:</p>
           
-          <h4>Project Details:</h4>
-          <ul>
-            <li><strong>Location:</strong> Rural Saskatchewan, 25 minutes from Saskatoon</li>
-            <li><strong>Scope:</strong> 18-unit affordable housing development</li>
-            <li><strong>Timeline:</strong> 8 months from groundbreaking to occupancy</li>
-            <li><strong>Budget:</strong> $2.7M, came in 5% under budget</li>
-          </ul>
-          
-          <h4>Key Success Factors:</h4>
+          <h4>Essential Success Factors:</h4>
           <ol>
-            <li><strong>Early Infrastructure Planning:</strong> Utilities and site prep completed before modular delivery</li>
-            <li><strong>Community Engagement:</strong> Local consultation resulted in design modifications that improved sales</li>
-            <li><strong>Modular Advantage:</strong> Weather-independent construction and predictable timelines</li>
+            <li><strong>Early Infrastructure Planning:</strong> Complete utilities and site preparation before modular delivery</li>
+            <li><strong>Community Engagement:</strong> Local consultation leads to design modifications that improve market acceptance</li>
+            <li><strong>Modular Construction Advantages:</strong> Weather-independent construction and predictable timelines</li>
+            <li><strong>Thorough Market Research:</strong> Understanding local preferences and income levels</li>
+            <li><strong>Experienced Partners:</strong> Working with builders familiar with rural development challenges</li>
           </ol>
 
-          <blockquote>
-            "Working with Discovery Homes on Prairie Vista was night and day compared to my previous traditional build. The planning support, predictable timelines, and quality results made all the difference." - Sarah McDonald, Prairie Vista Developer
-          </blockquote>
+          <h3>Typical Project Outcomes</h3>
+          <p>Well-planned rural modular developments typically achieve:</p>
+          <ul>
+            <li><strong>Timeline:</strong> 6-10 months from groundbreaking to occupancy</li>
+            <li><strong>Budget Performance:</strong> 5-10% under budget due to predictable costs</li>
+            <li><strong>Quality:</strong> Consistent, high-quality construction throughout</li>
+            <li><strong>Market Response:</strong> Strong sales due to modern amenities and energy efficiency</li>
+          </ul>
 
           <h3>Your Development Success Checklist</h3>
           <p>Before breaking ground on your next rural project:</p>
@@ -476,27 +480,33 @@ const getBlogPost = (id: string): BlogPost | null => {
             <li>Root cellars and food storage solutions</li>
           </ul>
 
-          <h3>Real Off-Grid Success: The Johnson Family</h3>
-          <p>Tom and Linda Johnson built their dream off-grid home on 160 acres near Peace River, Alberta.</p>
+          <h3>Typical Off-Grid System Performance</h3>
+          <p>Well-designed off-grid modular homes typically achieve:</p>
           
-          <h4>Their Setup:</h4>
+          <h4>Energy Independence Results:</h4>
           <ul>
-            <li><strong>Home:</strong> Pine 2 with custom modifications</li>
-            <li><strong>Power:</strong> 8kW solar + 3kW wind turbine</li>
-            <li><strong>Water:</strong> 180-foot drilled well with UV treatment</li>
-            <li><strong>Heating:</strong> High-efficiency wood stove + electric backup</li>
+            <li><strong>Monthly utility costs:</strong> $0 (after initial system investment)</li>
+            <li><strong>Energy independence:</strong> 95-99% (minimal generator use)</li>
+            <li><strong>System reliability:</strong> Consistent power year-round</li>
+            <li><strong>Cost savings:</strong> 30-40% less than traditional off-grid construction</li>
           </ul>
           
-          <h4>Results After 2 Years:</h4>
+          <h4>Common System Configurations:</h4>
           <ul>
-            <li><strong>Monthly utility costs:</strong> $0</li>
-            <li><strong>Energy independence:</strong> 99.8% (3 days on generator annually)</li>
-            <li><strong>Total investment:</strong> $285,000 vs $450,000 for traditional off-grid build</li>
+            <li><strong>Solar-Only:</strong> 6-10kW systems with battery backup</li>
+            <li><strong>Hybrid Systems:</strong> Solar + wind for increased reliability</li>
+            <li><strong>Water Systems:</strong> Drilled wells with UV treatment</li>
+            <li><strong>Heating:</strong> High-efficiency wood stoves with electric backup</li>
           </ul>
-          
-          <blockquote>
-            "Discovery Homes made off-grid living accessible for our family. The pre-planning and system integration meant everything worked together perfectly from day one." - Tom Johnson, Peace River, AB
-          </blockquote>
+
+          <h3>Why Modular Homes Excel Off-Grid</h3>
+          <p>Modular construction offers several advantages for off-grid living:</p>
+          <ul>
+            <li><strong>Pre-wired Systems:</strong> Electrical infrastructure designed for renewable energy integration</li>
+            <li><strong>Optimal Design:</strong> Roof positioning and space planning for solar installation</li>
+            <li><strong>Quality Control:</strong> Factory construction ensures consistent energy efficiency</li>
+            <li><strong>System Integration:</strong> Pre-planned spaces for batteries, inverters, and equipment</li>
+          </ul>
 
           <h3>Planning Your Off-Grid Project</h3>
           <h4>Step 1: Site Assessment</h4>
@@ -619,63 +629,43 @@ const getBlogPost = (id: string): BlogPost | null => {
             <li>Landscaping and finishing touches</li>
           </ul>
 
-          <h3>The Financial Results</h3>
-          <h4>Total Investment:</h4>
+          <h3>Typical Land-to-Rental Transformation Results</h3>
+          <p>Landowners who successfully convert their property to rental income typically see:</p>
+          
+          <h4>Investment Breakdown:</h4>
           <ul>
-            <li><strong>2 Pine 2 Units:</strong> $358,000</li>
-            <li><strong>Site Development:</strong> $35,000 (road, utilities, septic)</li>
-            <li><strong>Permits and Fees:</strong> $7,000</li>
-            <li><strong>Total Investment:</strong> $400,000</li>
+            <li><strong>Modular Units:</strong> $350,000-400,000 (2-3 units)</li>
+            <li><strong>Site Development:</strong> $30,000-50,000 (utilities, road, septic)</li>
+            <li><strong>Permits and Fees:</strong> $5,000-10,000</li>
+            <li><strong>Total Investment:</strong> $400,000-500,000</li>
           </ul>
           
-          <h4>Rental Income:</h4>
+          <h4>Income Potential:</h4>
           <ul>
-            <li><strong>Unit 1 Rent:</strong> $1,400/month</li>
-            <li><strong>Unit 2 Rent:</strong> $1,350/month</li>
-            <li><strong>Total Monthly Income:</strong> $2,750</li>
-            <li><strong>Annual Gross Income:</strong> $33,000</li>
-          </ul>
-          
-          <h4>Operating Expenses (Annual):</h4>
-          <ul>
-            <li><strong>Property taxes:</strong> $3,200</li>
-            <li><strong>Insurance:</strong> $1,800</li>
-            <li><strong>Maintenance reserve:</strong> $2,000</li>
-            <li><strong>Total Expenses:</strong> $7,000</li>
-          </ul>
-          
-          <h4>Net Results:</h4>
-          <ul>
-            <li><strong>Annual Net Income:</strong> $26,000</li>
-            <li><strong>ROI:</strong> 6.5% annually</li>
-            <li><strong>Cash Flow:</strong> $2,167/month positive</li>
-            <li><strong>Payback Period:</strong> 15.4 years</li>
+            <li><strong>Monthly Rental Income:</strong> $2,500-3,500</li>
+            <li><strong>Annual Gross Income:</strong> $30,000-42,000</li>
+            <li><strong>Operating Expenses:</strong> $6,000-10,000 annually</li>
+            <li><strong>Net Annual Income:</strong> $24,000-32,000</li>
+            <li><strong>ROI:</strong> 6-8% annually</li>
           </ul>
 
-          <h3>Unexpected Benefits</h3>
-          <h4>Property Value Increase:</h4>
-          <p>A recent appraisal valued the improved property at $520,000 - an immediate $120,000 equity gain.</p>
-          
-          <h4>Expansion Opportunities:</h4>
-          <p>Success with the first two units led to plans for Phase 2:</p>
+          <h3>Why This Strategy Works</h3>
+          <p>Converting land to rental property offers several advantages:</p>
           <ul>
-            <li>Adding 2 more Pine 1 units in Year 2</li>
-            <li>Targeting short-term vacation rental market</li>
-            <li>Projected additional income: $18,000 annually</li>
+            <li><strong>Passive Income:</strong> Generate ongoing revenue from unused land</li>
+            <li><strong>Property Value Increase:</strong> Improved land typically appreciates significantly</li>
+            <li><strong>Tax Benefits:</strong> Deductible expenses and depreciation</li>
+            <li><strong>Scalability:</strong> Add more units as demand grows</li>
+            <li><strong>Flexibility:</strong> Units can be relocated or repurposed if needed</li>
           </ul>
-          
-          <h4>Personal Satisfaction:</h4>
-          <blockquote>
-            "We're providing quality, affordable housing while building our family's financial future. The tenants love living here, and we love the passive income. It's been a win-win situation." - Sarah Thompson
-          </blockquote>
 
-          <h3>Keys to Their Success</h3>
+          <h3>Keys to Success</h3>
           <ol>
-            <li><strong>Strategic Location:</strong> Close enough to Red Deer for commuters, far enough for rural appeal</li>
-            <li><strong>Quality Product:</strong> Pine 2 units attract and retain good tenants</li>
-            <li><strong>Efficient Development:</strong> Shared infrastructure maximized budget efficiency</li>
-            <li><strong>Professional Partnership:</strong> Discovery Homes handled permitting and delivery logistics</li>
-            <li><strong>Market Research:</strong> Confirmed rental demand before investing</li>
+            <li><strong>Strategic Location:</strong> Close enough to employment centers for commuters, far enough for rural appeal</li>
+            <li><strong>Quality Product:</strong> Well-built modular units attract and retain good tenants</li>
+            <li><strong>Efficient Development:</strong> Shared infrastructure maximizes budget efficiency</li>
+            <li><strong>Professional Partnership:</strong> Work with experienced providers who handle permitting and delivery logistics</li>
+            <li><strong>Market Research:</strong> Confirm rental demand before investing</li>
           </ol>
 
           <h3>Lessons for Other Landowners</h3>

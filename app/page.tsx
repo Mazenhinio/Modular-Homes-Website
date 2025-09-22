@@ -1,5 +1,6 @@
 import { HeroSection } from '@/components/sections/HeroSection'
 import { WhoWeAreSection } from '@/components/sections/WhoWeAreSection'
+import { WhyDiscoveryHomesSection } from '@/components/sections/WhyDiscoveryHomesSection'
 import { OurBuildsSection } from '@/components/sections/OurBuildsSection'
 import { WhoWeServeSection } from '@/components/sections/WhoWeServeSection'
 import { NewsletterSection } from '@/components/sections/NewsletterSection'
@@ -17,6 +18,10 @@ export default function HomePage() {
       
       <div className="animate-section section-luxury">
         <WhoWeAreSection />
+      </div>
+      
+      <div className="animate-section section-luxury">
+        <WhyDiscoveryHomesSection />
       </div>
       
       <div className="animate-section section-luxury">
