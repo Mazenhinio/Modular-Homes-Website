@@ -21,7 +21,7 @@ export function TrustSignals() {
       description: "Indigenous and remote communities nationwide"
     },
     { 
-      number: "15+", 
+      number: "25+", 
       label: "Years Experience", 
       icon: <Clock className="w-8 h-8 text-discovery-gold" />,
       description: "Decades of expertise in modular construction"

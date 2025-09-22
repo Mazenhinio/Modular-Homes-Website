@@ -38,7 +38,7 @@ export function IndigenousPartnerships() {
   ]
 
   const successMetrics = [
-    { number: "15+", label: "Years Serving Communities" },
+    { number: "25+", label: "Years Serving Communities" },
     { number: "99%", label: "Community Satisfaction" },
     { number: "25+", label: "Homes Delivered" }
   ]
@@ -51,7 +51,7 @@ export function IndigenousPartnerships() {
             Indigenous Community Partnerships
           </h2>
           <p className="text-xl text-neutral-600 max-w-3xl mx-auto">
-            For over 15 years, we've been honored to work alongside Indigenous communities, 
+            For over 25 years, we've been honored to work alongside Indigenous communities, 
             building homes that respect cultural traditions while providing modern comfort and efficiency.
           </p>
         </div>

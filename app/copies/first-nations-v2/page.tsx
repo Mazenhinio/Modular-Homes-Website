@@ -169,7 +169,7 @@ export default function FirstNationsLandingPage() {
         <div className="max-w-7xl mx-auto px-4">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
             <div className="text-discovery-white">
-              <div className="text-4xl font-bold text-discovery-gold mb-2">15+</div>
+              <div className="text-4xl font-bold text-discovery-gold mb-2">25+</div>
               <div className="text-sm">Years Experience</div>
             </div>
             <div className="text-discovery-white">

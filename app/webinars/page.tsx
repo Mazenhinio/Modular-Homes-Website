@@ -407,7 +407,7 @@ export default function WebinarsPage() {
                                         <div className="w-16 h-16 bg-discovery-gold rounded-full flex items-center justify-center mx-auto mb-4">
                      <Award className="w-8 h-8 text-discovery-charcoal" />
                    </div>
-                     <h4 className="font-semibold text-discovery-charcoal mb-2">15+ Years Experience</h4>
+                     <h4 className="font-semibold text-discovery-charcoal mb-2">25+ Years Experience</h4>
                      <p className="text-sm text-discovery-charcoal-light">Modular housing specialists</p>
                    </div>
                    <div className="bg-discovery-white p-6 rounded-xl shadow-lg text-center">
@@ -469,7 +469,7 @@ export default function WebinarsPage() {
                  Co-Founder & Construction Director, Discovery Homes
                </p>
               <p className="text-discovery-charcoal-light leading-relaxed">
-                With 15+ years in modular housing and remote builds, Jeff has helped hundreds of people across Alberta and Saskatchewan turn raw land into liveable, efficient, and beautiful homes. From custom cabins to full Indigenous community builds, Jeff knows exactly how to make modular work for any location.
+                With 25+ years in modular housing and remote builds, Jeff has helped hundreds of people across Alberta and Saskatchewan turn raw land into liveable, efficient, and beautiful homes. From custom cabins to full Indigenous community builds, Jeff knows exactly how to make modular work for any location.
               </p>
             </div>
 
