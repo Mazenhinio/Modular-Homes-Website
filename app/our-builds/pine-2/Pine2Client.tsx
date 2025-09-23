@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { ArrowLeft } from 'lucide-react'
 import { ImageCarousel } from '@/components/ImageCarousel'
 import { PDFDownloads } from '@/components/PDFDownloads'
+import { OptimizedVideo } from '@/components/OptimizedVideo'
 
 export function Pine2Client() {
 
@@ -59,13 +60,9 @@ export function Pine2Client() {
       {/* Hero Section */}
       <section className="relative h-screen flex items-center justify-center overflow-hidden text-discovery-white hero-element">
         {/* Background Video */}
-        <video 
-          className="absolute inset-0 w-full h-full object-cover"
-          autoPlay
-          muted
-          loop
-          playsInline
-          preload="metadata"
+        <OptimizedVideo
+          src="/videos/Pine 1 & 2 Final.mp4"
+          poster="/images/new-content/Pine 2- Spruce/IF pine1-kitchen-E&S.webp"
           style={{
             minWidth: '100%',
             minHeight: '100%',
@@ -75,9 +72,7 @@ export function Pine2Client() {
             top: '50%',
             left: '50%'
           }}
-        >
-          <source src="/videos/Pine 1 & 2 Final.mp4" type="video/mp4" />
-        </video>
+        />
         
         {/* Overlay */}
         <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-transparent" />
