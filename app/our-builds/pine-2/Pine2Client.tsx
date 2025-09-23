@@ -61,7 +61,7 @@ export function Pine2Client() {
       <section className="relative h-screen flex items-center justify-center overflow-hidden text-discovery-white hero-element">
         {/* Background Video */}
         <OptimizedVideo
-          src="/videos/Pine 1 & 2 Final.mp4"
+          src="/videos/Pine 1 & 2 Final_optimized.mp4"
           poster="/images/new-content/Pine 2- Spruce/IF pine1-kitchen-E&S.webp"
           style={{
             minWidth: '100%',

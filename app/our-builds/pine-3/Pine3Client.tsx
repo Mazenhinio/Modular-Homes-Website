@@ -61,7 +61,7 @@ export function Pine3Client() {
       <section className="relative h-screen flex items-center justify-center overflow-hidden text-discovery-white hero-element">
         {/* Background Video */}
         <OptimizedVideo
-          src="/videos/Pine 3 Final.mp4"
+          src="/videos/Pine 3 Final_optimized.mp4"
           poster="/images/new-content/Pine 3- Willow/XF pine 3 scandanavian front right .webp"
           style={{
             minWidth: '100%',
