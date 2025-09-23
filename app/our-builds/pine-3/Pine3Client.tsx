@@ -76,7 +76,7 @@ export function Pine3Client() {
             left: '50%'
           }}
         >
-          <source src="/videos/Pine 3.mp4" type="video/mp4" />
+          <source src="/videos/Pine 3 Final.mp4" type="video/mp4" />
         </video>
         
         {/* Overlay */}

@@ -408,7 +408,7 @@ export default function WebinarsPage() {
                      <Award className="w-8 h-8 text-discovery-charcoal" />
                    </div>
                      <h4 className="font-semibold text-discovery-charcoal mb-2">25+ Years Experience</h4>
-                     <p className="text-sm text-discovery-charcoal-light">Modular housing specialists</p>
+                     <p className="text-sm text-discovery-charcoal-light">Residential construction specialists</p>
                    </div>
                    <div className="bg-discovery-white p-6 rounded-xl shadow-lg text-center">
                      <div className="w-16 h-16 bg-discovery-gold rounded-full flex items-center justify-center mx-auto mb-4">

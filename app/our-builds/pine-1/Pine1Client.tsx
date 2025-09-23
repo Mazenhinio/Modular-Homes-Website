@@ -77,7 +77,7 @@ export function Pine1Client() {
             left: '50%'
           }}
         >
-          <source src="/videos/Pine 1 & 2.mp4" type="video/mp4" />
+          <source src="/videos/Pine 1 & 2 Final.mp4" type="video/mp4" />
         </video>
         
         {/* Overlay */}

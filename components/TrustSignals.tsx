@@ -10,9 +10,9 @@ export function TrustSignals() {
   const stats = [
     { 
       number: "25+", 
-      label: "Homes Delivered", 
+      label: "Projects Delivered", 
       icon: <Building2 className="w-8 h-8 text-discovery-gold" />,
-      description: "Premium modular homes delivered across Canada"
+      description: "Premium residential housing projects delivered across Canada"
     },
     { 
       number: "10+", 
@@ -24,7 +24,7 @@ export function TrustSignals() {
       number: "25+", 
       label: "Years Experience", 
       icon: <Clock className="w-8 h-8 text-discovery-gold" />,
-      description: "Decades of expertise in modular construction"
+      description: "Decades of expertise in residential construction"
     },
     { 
       number: "99%", 
