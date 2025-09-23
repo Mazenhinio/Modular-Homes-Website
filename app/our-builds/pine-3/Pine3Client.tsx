@@ -62,7 +62,6 @@ export function Pine3Client() {
         {/* Background Video */}
         <OptimizedVideo
           src="/videos/Pine 3 Final_optimized.mp4"
-          poster="/images/new-content/Pine 3- Willow/XF pine 3 scandanavian front right .webp"
           style={{
             minWidth: '100%',
             minHeight: '100%',

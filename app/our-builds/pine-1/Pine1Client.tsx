@@ -63,7 +63,6 @@ export function Pine1Client() {
         {/* Background Video */}
         <OptimizedVideo
           src="/videos/Pine 1 & 2 Final_optimized.mp4"
-          poster="/images/new-content/PIne 1 - Pine/xf pine 1 front right scandanavian.webp"
           style={{
             minWidth: '100%',
             minHeight: '100%',

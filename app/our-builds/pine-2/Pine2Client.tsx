@@ -62,7 +62,6 @@ export function Pine2Client() {
         {/* Background Video */}
         <OptimizedVideo
           src="/videos/Pine 1 & 2 Final_optimized.mp4"
-          poster="/images/new-content/Pine 2- Spruce/IF pine1-kitchen-E&S.webp"
           style={{
             minWidth: '100%',
             minHeight: '100%',
