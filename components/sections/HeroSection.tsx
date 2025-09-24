@@ -97,7 +97,7 @@ export function HeroSection() {
   }, [nextSlide, isPlaying])
 
   return (
-    <section className="relative min-h-screen h-screen pt-16 overflow-hidden">
+    <section className="relative w-full aspect-video overflow-hidden">
       {/* Carousel Background */}
       <div className="absolute inset-0" ref={imageRef}>
         {slides.map((slide, index) => (
@@ -149,7 +149,7 @@ export function HeroSection() {
       {/* Show Text Arrow Button - Smooth animation */}
       <button
         onClick={showTextOverlay}
-        className={`absolute bottom-16 sm:bottom-20 left-1/2 transform -translate-x-1/2 glass-eco text-discovery-lime p-3 sm:p-4 rounded-full hover:glow-lime transition-all duration-500 ease-out z-20 growth-pulse ${
+        className={`absolute bottom-4 sm:bottom-6 left-1/2 transform -translate-x-1/2 glass-eco text-discovery-lime p-3 sm:p-4 rounded-full hover:glow-lime transition-all duration-500 ease-out z-20 growth-pulse ${
           !showText 
             ? 'opacity-100 translate-y-0 scale-100 pointer-events-auto' 
             : 'opacity-0 translate-y-4 scale-75 pointer-events-none'
@@ -159,7 +159,7 @@ export function HeroSection() {
       </button>
 
       {/* Text Content - Smooth animation */}
-      <div className={`absolute inset-0 flex items-center justify-center z-10 transition-all duration-700 ease-out overflow-visible pt-16 sm:pt-20 ${
+      <div className={`absolute inset-0 flex items-center justify-center z-10 transition-all duration-700 ease-out overflow-visible ${
         showText 
           ? 'opacity-100 translate-y-0' 
           : 'opacity-0 translate-y-8 pointer-events-none'
@@ -205,6 +205,9 @@ export function HeroSection() {
                </a>
              </div>
            </div>
+           
+           {/* Spacer between button and chevron */}
+           <div className="h-6 sm:h-8 md:h-10"></div>
           
           {/* Hide Text Button - Smooth animation */}
           <button
@@ -213,13 +216,13 @@ export function HeroSection() {
               showText ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
             }`}
           >
-            <ChevronDown size={20} />
+            <ChevronDown size={12} />
           </button>
         </div>
       </div>
 
       {/* Slide Indicators */}
-      <div className="absolute bottom-4 sm:bottom-8 left-1/2 transform -translate-x-1/2 flex space-x-1 sm:space-x-2 z-10">
+      <div className="absolute bottom-2 sm:bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-1 sm:space-x-2 z-10">
         {slides.map((_, index) => (
           <button
             key={index}

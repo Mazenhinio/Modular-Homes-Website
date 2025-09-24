@@ -11,7 +11,7 @@ export default function EcoFriendlyPage() {
   return (
     <div className="min-h-screen bg-discovery-white">
       {/* Hero Section */}
-      <section className="relative py-20 text-discovery-white hero-element overflow-hidden">
+      <section className="relative w-full aspect-video text-discovery-white hero-element overflow-hidden">
         {/* Background Image */}
         <div className="absolute inset-0 z-0">
           <img
@@ -23,7 +23,7 @@ export default function EcoFriendlyPage() {
         </div>
         
         {/* Content */}
-        <div className="relative z-10 container-custom">
+        <div className="relative z-10 container-custom h-full flex items-center justify-center">
           <div className="max-w-4xl mx-auto text-center px-6 py-8">
             <div className="flex items-center justify-center gap-3 mb-6">
               <Leaf className="text-discovery-gold" size={32} />

@@ -54,7 +54,7 @@ export default function WebinarsPage() {
   return (
     <div className="min-h-screen bg-discovery-white">
       {/* Hero */}
-      <section className="relative overflow-hidden">
+      <section className="relative w-full aspect-video overflow-hidden">
         <div className="absolute inset-0">
           <Image
             src="/images/hero-carousel/hero-slide-5.webp"
@@ -66,7 +66,7 @@ export default function WebinarsPage() {
           <div className="absolute inset-0 bg-discovery-charcoal/70" />
         </div>
 
-        <div className="relative z-10 max-w-7xl mx-auto px-4 py-28 text-center text-discovery-white">
+        <div className="relative z-10 max-w-7xl mx-auto px-4 h-full flex items-center justify-center text-center text-discovery-white">
           <div className="inline-flex items-center gap-2 bg-white/10 px-4 py-2 rounded-full mb-6">
             <PlayCircle className="w-5 h-5" />
             <span className="text-sm">Live Webinar</span>

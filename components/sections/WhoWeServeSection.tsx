@@ -65,7 +65,17 @@ export function WhoWeServeSection() {
                 </ul>
               </div>
               
-              {/* Learn More buttons hidden */}
+              {/* Learn More Button */}
+              <div className="mt-6">
+                <a
+                  href="https://build.discoveryhomes.ca"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-block bg-[#D4AF37] text-white px-6 py-3 rounded-lg text-sm font-semibold hover:bg-[#B8941F] transition-colors w-full text-center"
+                >
+                  Learn More
+                </a>
+              </div>
             </div>
           ))}
         </div>

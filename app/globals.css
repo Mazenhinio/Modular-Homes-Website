@@ -77,7 +77,7 @@
   /* Ensure navigation stays in desktop mode unless explicitly mobile */
   nav {
     position: fixed !important;
-    z-index: 50 !important;
+    z-index: 60 !important;
   }
 
   /* Ensure VapiWidget doesn't interfere with navigation layout */

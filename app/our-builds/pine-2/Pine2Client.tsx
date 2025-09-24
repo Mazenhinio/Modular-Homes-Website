@@ -58,7 +58,7 @@ export function Pine2Client() {
   return (
     <>
       {/* Hero Section */}
-      <section className="relative h-screen flex items-center justify-center overflow-hidden text-discovery-white hero-element">
+      <section className="relative w-full aspect-video flex items-center justify-center overflow-hidden text-discovery-white hero-element">
         {/* Background Video */}
         <OptimizedVideo
           src="/videos/Pine 1 & 2 Final_optimized.mp4"
