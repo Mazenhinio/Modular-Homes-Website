@@ -117,7 +117,7 @@ export default function ResortOwnersLandingPage() {
         {/* Background Image */}
         <div className="absolute inset-0">
           <Image
-            src="/assets/images/new-content/Landing Page - Real Estate Rental/CB-LakesideRetreat-Hero__Lakeside-Retreat–Hero__CustomBuild__v01.webp"
+            src="/images/new-content/Landing Page - Real Estate Rental/CB-LakesideRetreat-Hero__Lakeside-Retreat–Hero__CustomBuild__v01.webp"
             alt="Resort Revenue Investment"
             fill
             className="object-cover"
@@ -367,10 +367,10 @@ export default function ResortOwnersLandingPage() {
               <div className="relative h-96 rounded-2xl overflow-hidden shadow-2xl">
                 <Image
                   src={
-                    activeTab === 'pine' ? '/assets/images/new-content/PIne 1 - Pine/xf pine 1 front right scandanavian.webp' :
-                    activeTab === 'spruce' ? '/assets/images/new-content/Spruce- Spruce/XF pien 1 and 2 charcoal.webp' :
-                    activeTab === 'willow' ? '/assets/images/new-content/Willow- Willow/XF pine 3 scandanavian front right .webp' :
-                    '/assets/images/new-content/Custom Builds/CB-LakesideRetreat-Front__Lakeside-Retreat__CustomBuild__v01.webp'
+                    activeTab === 'pine' ? '/images/new-content/PIne 1 - Pine/xf pine 1 front right scandanavian.webp' :
+                    activeTab === 'spruce' ? '/images/new-content/Pine 2- Spruce/XF pien 1 and 2 charcoal.webp' :
+                    activeTab === 'willow' ? '/images/new-content/Pine 3- Willow/XF pine 3 scandanavian front right .webp' :
+                    '/images/new-content/Custom Builds/CB-LakesideRetreat-Front__Lakeside-Retreat__CustomBuild__v01.webp'
                   }
                   alt={`${activeTab} model`}
                   fill
@@ -946,7 +946,7 @@ export default function ResortOwnersLandingPage() {
               <div className="bg-gradient-to-br from-discovery-sage/20 to-discovery-gold/20 rounded-2xl p-8 border border-discovery-gold/30">
                 <div className="relative h-80 rounded-xl overflow-hidden shadow-lg">
                   <Image
-                    src="/assets/images/new-content/Spruce- Spruce/XF pien 1 and 2 charcoal.webp"
+                    src="/images/new-content/Pine 2- Spruce/XF pien 1 and 2 charcoal.webp"
                     alt="Spruce Model - The Versatile One"
                     fill
                     className="object-cover"

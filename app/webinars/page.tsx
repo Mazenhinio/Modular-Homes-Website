@@ -26,8 +26,8 @@ export default function WebinarsPage() {
 
   const upcoming = {
     title: 'Turning Land Into Legacy: Modular Homes for Families, Communities & Investors',
-    dateTimeLabel: 'Thursday, Sep 26 · 12:00 PM PT / 3:00 PM ET',
-    sessionDateTimeISO: '2025-09-26T12:00:00-07:00'
+    dateTimeLabel: 'Saturday, Nov 15 · 12:00 PM PT / 3:00 PM ET',
+    sessionDateTimeISO: '2025-11-15T12:00:00-07:00'
   }
 
   const getTimeLeft = () => {
@@ -346,7 +346,7 @@ export default function WebinarsPage() {
                  
                  <div className="relative h-48 rounded-xl overflow-hidden shadow-xl">
                    <Image
-                     src="/images/pine2/kitchen.webp"
+                     src="/images/pine2/Kitchen.webp"
                      alt="Spruce Kitchen Interior"
                      fill
                      className="object-cover"

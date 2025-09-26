@@ -120,7 +120,7 @@ export default function FirstNationsLandingPage() {
         {/* Background Image */}
         <div className="absolute inset-0">
           <Image
-            src="/assets/images/new-content/Landing Page - Indigenous/CB indegen1_bloom_low_6x.webp"
+            src="/images/new-content/Landing Page - Indigenous/CB indegen1_bloom_low_6x.webp"
             alt="First Nations Community Housing"
             fill
             className="object-cover"
@@ -365,7 +365,7 @@ export default function FirstNationsLandingPage() {
               {activeTab === 'pine' && (
                 <div className="relative h-96 rounded-2xl overflow-hidden shadow-2xl">
                   <Image
-                    src="/assets/images/new-content/PIne 1 - Pine/xf pine 1 front right scandanavian.webp"
+                    src="/images/new-content/PIne 1 - Pine/xf pine 1 front right scandanavian.webp"
                     alt="Pine Model - The Classic"
                     fill
                     className="object-cover"
@@ -375,7 +375,7 @@ export default function FirstNationsLandingPage() {
               {activeTab === 'spruce' && (
                 <div className="relative h-96 rounded-2xl overflow-hidden shadow-2xl">
                   <Image
-                    src="/assets/images/new-content/Spruce- Spruce/XF pien 1 and 2 charcoal.webp"
+                    src="/images/new-content/Pine 2- Spruce/XF pien 1 and 2 charcoal.webp"
                     alt="Spruce Model - The Versatile"
                     fill
                     className="object-cover"
@@ -385,7 +385,7 @@ export default function FirstNationsLandingPage() {
               {activeTab === 'willow' && (
                 <div className="relative h-96 rounded-2xl overflow-hidden shadow-2xl">
                   <Image
-                    src="/assets/images/new-content/Willow- Willow/XF pine 3 scandanavian front right .webp"
+                    src="/images/new-content/Pine 3- Willow/XF pine 3 scandanavian front right .webp"
                     alt="Willow Model - The Spacious"
                     fill
                     className="object-cover"
@@ -395,7 +395,7 @@ export default function FirstNationsLandingPage() {
               {activeTab === 'custom' && (
                 <div className="relative h-96 rounded-2xl overflow-hidden shadow-2xl">
                   <Image
-                    src="/assets/images/new-content/Landing Page - Indigenous/CB indegen.webp"
+                    src="/images/new-content/Landing Page - Indigenous/CB indegen.webp"
                     alt="Custom Build - The Unique"
                     fill
                     className="object-cover"
@@ -895,7 +895,7 @@ export default function FirstNationsLandingPage() {
             <div className="space-y-8">
               <div className="relative h-96 rounded-2xl overflow-hidden shadow-2xl">
                 <Image
-                  src="/assets/images/new-content/Spruce- Spruce/XF pien 1 and 2 charcoal.webp"
+                  src="/images/new-content/Pine 2- Spruce/XF pien 1 and 2 charcoal.webp"
                   alt="Spruce Model - The Versatile One"
                   fill
                   className="object-cover"

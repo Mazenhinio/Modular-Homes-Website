@@ -12,7 +12,7 @@ export function HeroSection() {
   
   const slides = [
     {
-      image: '/images/new-content/Home Page Hero Carousel/H1__Forest Sunrise__Pine__v01.webp',
+      image: '/images/new-content/Home Page Hero Carousel/H1__Forest Sunrise__Pine 1__v01.webp',
       title: 'Smart, Sustainable Modular Homes',
       subtitle: 'Built for Western Canada'
     },
@@ -97,7 +97,7 @@ export function HeroSection() {
   }, [nextSlide, isPlaying])
 
   return (
-    <section className="relative w-full aspect-video overflow-hidden">
+    <section className="relative w-full h-[60vh] overflow-hidden">
       {/* Carousel Background */}
       <div className="absolute inset-0" ref={imageRef}>
         {slides.map((slide, index) => (
