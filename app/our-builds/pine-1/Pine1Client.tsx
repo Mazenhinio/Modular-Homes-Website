@@ -59,7 +59,7 @@ export function Pine1Client() {
   return (
     <>
       {/* Hero Section */}
-      <section className="relative w-full aspect-video flex items-center justify-center overflow-hidden text-discovery-white hero-element">
+      <section className="relative w-full h-[60vh] flex items-center justify-center overflow-hidden text-discovery-white hero-element">
         {/* Background Video */}
         <OptimizedVideo
           src="/videos/Pine 1 & 2 Final_optimized.mp4"
@@ -89,11 +89,6 @@ export function Pine1Client() {
             </Link>
             
             <div className="text-center">
-              <div className="flex items-center justify-center gap-3 mb-4">
-                <span className="text-discovery-gold font-semibold text-xl">Pine</span>
-                <span className="text-discovery-white-soft">•</span>
-                <span className="text-discovery-white-soft">The Efficient One</span>
-              </div>
               <h1 className="text-4xl md:text-6xl font-serif font-bold mb-6 text-discovery-lime nature-shimmer">
                 Pine — The Efficient One
               </h1>

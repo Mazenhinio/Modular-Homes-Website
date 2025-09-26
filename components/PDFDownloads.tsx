@@ -155,7 +155,7 @@ export function PDFDownloads({ downloads, modelName }: PDFDownloadsProps) {
               Contact us to receive a complete package of all {modelName} documentation including specifications, warranties, and building guides.
             </p>
             <a
-              href="/contact"
+              href="/quote-builder"
               className="btn-luxury shadow-gold hover:shadow-luxury-lg transition-all duration-300"
             >
               Request Complete Package

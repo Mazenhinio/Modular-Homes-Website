@@ -91,7 +91,7 @@ export function NewsletterSection() {
   return (
     <section className="py-16 bg-[#2D2D2D] text-white">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <h2 className="text-3xl md:text-4xl font-bold mb-4">
+        <h2 className="text-3xl md:text-4xl font-bold mb-4 text-white">
           Sign Up for Monthly Insights & Opportunities
         </h2>
         <p className="text-xl mb-8 opacity-90">

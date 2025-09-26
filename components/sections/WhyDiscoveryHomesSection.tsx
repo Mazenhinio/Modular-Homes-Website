@@ -155,7 +155,7 @@ export function WhyDiscoveryHomesSection() {
                   View Our Builds
                 </a>
                 <a
-                  href="/contact"
+                  href="/quote-builder"
                   className="border-2 border-discovery-forest text-discovery-forest px-6 py-3 rounded-lg font-semibold hover:bg-discovery-forest hover:text-white transition-colors text-center"
                 >
                   Start Your Project
