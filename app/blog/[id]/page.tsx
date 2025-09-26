@@ -234,14 +234,14 @@ const getBlogPost = (id: string): BlogPost | null => {
           <p>Add units as demand grows without major infrastructure disruption.</p>
 
           <h3>Popular Configurations for Resorts</h3>
-          <h4>Pine 1 - Perfect for Couples</h4>
+          <h4>Pine - Perfect for Couples</h4>
           <ul>
             <li>504 sq ft of efficient luxury</li>
             <li>High-end finishes and appliances</li>
             <li>Average nightly rate: $280-$350</li>
           </ul>
 
-          <h4>Pine 2 - Family-Friendly Option</h4>
+          <h4>Spruce - Family-Friendly Option</h4>
           <ul>
             <li>2 bedrooms plus loft space</li>
             <li>Accommodates up to 6 guests</li>
@@ -455,7 +455,7 @@ const getBlogPost = (id: string): BlogPost | null => {
           </ul>
 
           <h3>Discovery Homes Off-Grid Packages</h3>
-          <h4>Pine 1 Off-Grid Package</h4>
+          <h4>Pine Off-Grid Package</h4>
           <ul>
             <li><strong>Base Home:</strong> $183,000</li>
             <li><strong>Solar System:</strong> $30,000 (6kW with battery backup)</li>
@@ -463,7 +463,7 @@ const getBlogPost = (id: string): BlogPost | null => {
             <li><strong>Total Package:</strong> Starting at $224,000</li>
           </ul>
           
-          <h4>Pine 2 Off-Grid Package</h4>
+          <h4>Spruce Off-Grid Package</h4>
           <ul>
             <li><strong>Base Home:</strong> $188,000</li>
             <li><strong>Solar System:</strong> $35,000 (8kW with extended battery)</li>
@@ -555,7 +555,7 @@ const getBlogPost = (id: string): BlogPost | null => {
     {
       id: 6,
       title: "Success Story: From Empty Acreage to Cash-Generating Rentals in 60 Days",
-      excerpt: "Real case study: How the Thompson family transformed 40 acres into a profitable rental property using Pine 2 modular homes.",
+      excerpt: "Real case study: How the Thompson family transformed 40 acres into a profitable rental property using Spruce modular homes.",
       content: `
         <div class="prose prose-lg max-w-none">
           <h2>The Thompson Family's 60-Day Transformation</h2>
@@ -578,8 +578,8 @@ const getBlogPost = (id: string): BlogPost | null => {
             <li><strong>Risk:</strong> Weather delays, cost overruns, permit complications</li>
           </ul>
 
-          <h3>The Modular Solution: Pine 2 Rental Units</h3>
-          <h4>Why Pine 2 Made Perfect Sense:</h4>
+          <h3>The Modular Solution: Spruce Rental Units</h3>
+          <h4>Why Spruce Made Perfect Sense:</h4>
           <ul>
             <li><strong>Size:</strong> 504 sq ft with loft - perfect for couples and small families</li>
             <li><strong>Cost:</strong> $188,000 per unit - budget for 2 units plus site development</li>
@@ -588,7 +588,7 @@ const getBlogPost = (id: string): BlogPost | null => {
           </ul>
           
           <h4>Strategic Placement:</h4>
-          <p>The Thompsons positioned the two Pine 2 units to maximize privacy while sharing utility infrastructure:</p>
+          <p>The Thompsons positioned the two Spruce units to maximize privacy while sharing utility infrastructure:</p>
           <ul>
             <li>Units placed 100 feet apart for privacy</li>
             <li>Shared well and septic system to reduce costs</li>
@@ -623,7 +623,7 @@ const getBlogPost = (id: string): BlogPost | null => {
           
           <h4>Weeks 7-8: Home Delivery and Setup</h4>
           <ul>
-            <li>Pine 2 units delivered and placed</li>
+            <li>Spruce units delivered and placed</li>
             <li>Utility connections completed</li>
             <li>Final inspections and occupancy permits</li>
             <li>Landscaping and finishing touches</li>

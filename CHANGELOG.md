@@ -8,7 +8,7 @@ This release delivers a complete, production-ready website for Discovery Homes w
 
 ### ✅ Pages Implemented
 - **Homepage** - Hero carousel, who we are, our builds, who we serve, newsletter signup, CTAs
-- **Our Builds** - Pine 1, Pine 2, Pine 3, and Custom build options with specifications from docs
+- **Our Builds** - Pine, Spruce, Willow, and Custom build options with specifications from docs
 - **Quote Builder** - 8-step wizard with pricing calculation and PDF generation
 - **Success Stories** - Testimonials from Indigenous Chiefs, farmers, resort owners with before/after galleries
 - **Partnerships** - Indigenous communities focus with cultural respect and funding resources
@@ -45,7 +45,7 @@ This release delivers a complete, production-ready website for Discovery Homes w
   - Rural Families → Kyle Zellweger
 
 ### 🎯 Lead Generation Features
-- **Quote Builder**: 8-step wizard with pricing for Pine 1 ($174k), Pine 2 ($179k), Pine 3 ($99k)
+- **Quote Builder**: 8-step wizard with pricing for Pine ($174k), Spruce ($179k), Willow ($99k)
 - **Gated Content**: ROI Calculator, Funding Guides, Developer Checklists
 - **Newsletter**: Monthly insights signup with segment preferences
 - **Maya Chatbot**: AI widget stub with culturally-aware messaging

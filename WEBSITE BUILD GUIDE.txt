@@ -28,17 +28,17 @@ ________________________________________
 
 ________________________________________
 🏗️ Our Builds
-🔷 Pine 1 — The Efficient One
+🔷 Pine — The Efficient One
 📐 504 sq/ft, 1 Bedroom
  💰 Starting at $174,000 CAD
  Ideal for singles, couples, or resort units — blending simplicity with style in a compact footprint.
 ________________________________________
-🔷 Pine 2 — The Versatile One
+🔷 Spruce — The Versatile One
 📐 504 sq/ft, 2 Bedroom with Loft
  💰 Starting at $179,000 CAD
  Perfect for families or rental markets, with extra space and a flexible layout.
 ________________________________________
-🔷 Pine 3 — The Minimalist
+🔷 Willow — The Minimalist
 📐 240 sq/ft with Loft
  💰 Starting at $99,000 CAD
  A modern, tiny‑home solution — perfect as an office, rental, or weekend retreat.
@@ -64,7 +64,7 @@ ________________________________________
 🗂️ Navigation
 Menu Item	Content
 Home	Hero, story, trust
-Our Builds	Pine 1, Pine 2, Pine 3, Custom
+Our Builds	Pine, Spruce, Willow, Custom
 Quote Builder	Guided Wizard
 Success Stories	Testimonials & Galleries
 Partnerships	First Nations Focus
@@ -140,11 +140,11 @@ ________________________________________
 
 ●	Three featured boxes below hero:
 
-○	Pine 1 – The Efficient One: 504 sq ft, 1 bed – from $174k
+○	Pine – The Efficient One: 504 sq ft, 1 bed – from $174k
 
-○	Pine 2 – The Versatile One: 504 sq ft, 2 bed loft – from $179k
+○	Spruce – The Versatile One: 504 sq ft, 2 bed loft – from $179k
 
-○	Pine 3 – The Minimalist: 240 sq ft loft – from $99k
+○	Willow – The Minimalist: 240 sq ft loft – from $99k
 
 ○	[Button: See Our Builds]
 
@@ -175,9 +175,9 @@ ________________________________________
 ________________________________________
 🔷 Our Builds
 Dedicated product showcase with detailed specs, use cases, and downloadable PDFs:
- ✅ Pine 1 – The Efficient One (504 sq ft, 1 bed – from $174k)
- ✅ Pine 2 – The Versatile One (504 sq ft, 2 bed loft – from $179k)
- ✅ Pine 3 – The Minimalist (240 sq ft loft – from $99k)
+ ✅ Pine – The Efficient One (504 sq ft, 1 bed – from $174k)
+ ✅ Spruce – The Versatile One (504 sq ft, 2 bed loft – from $179k)
+ ✅ Willow – The Minimalist (240 sq ft loft – from $99k)
  ✅ Custom Build Options (for unique designs, larger footprints, Indigenous‑specific layouts, off‑grid kits)
 Each section includes:
 ●	Lifestyle image of the home in context
@@ -197,7 +197,7 @@ The primary lead capture experience:
  ✅ Name, email, phone
  ✅ Property location, land status
  ✅ Intended use: family home, rental, resort, workforce, other
- ✅ Model: Pine 1, 2, 3, or Custom
+ ✅ Model: Pine, 2, 3, or Custom
  ✅ Sq ft / bed preferences
  ✅ Add‑ons: solar, net‑zero, off‑grid
  ✅ Budget range

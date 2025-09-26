@@ -30,7 +30,7 @@ Discovery Homes WEBSITE/
 ├── app/                          # Next.js App Router
 │   ├── (pages)/                  # Main pages
 │   │   ├── page.tsx              # Homepage
-│   │   ├── our-builds/           # Pine 1, 2, 3 + Custom
+│   │   ├── our-builds/           # Pine, 2, 3 + Custom
 │   │   ├── quote-builder/        # 8-step quote wizard
 │   │   ├── success-stories/      # Testimonials & case studies
 │   │   ├── partnerships/         # Indigenous communities focus
@@ -119,7 +119,7 @@ npm start
 ### ✅ Completed Features
 
 - **Homepage** with hero carousel, who we are, our builds, and CTAs
-- **Our Builds** pages for Pine 1, Pine 2, Pine 3, and Custom options
+- **Our Builds** pages for Pine, Spruce, Willow, and Custom options
 - **Quote Builder** 8-step wizard with pricing calculation
 - **Success Stories** with testimonials and before/after galleries
 - **Partnerships** page focused on Indigenous communities

@@ -67,26 +67,28 @@ export default function WebinarsPage() {
         </div>
 
         <div className="relative z-10 max-w-7xl mx-auto px-4 h-full flex items-center justify-center text-center text-discovery-white">
-          <div className="inline-flex items-center gap-2 bg-white/10 px-4 py-2 rounded-full mb-6">
-            <PlayCircle className="w-5 h-5" />
-            <span className="text-sm">Live Webinar</span>
-          </div>
-          <h1 className="text-4xl md:text-6xl font-serif font-bold leading-tight text-discovery-white text-shadow-lg">
-            Discover How to Turn Raw Land into a Cash-Flowing Modular Home Investment in Under 90 Days
-          </h1>
-          <div className="mt-6 mb-8">
-            <p className="text-lg md:text-xl text-discovery-gold font-semibold mb-2">
-              Live Only • No Replays • Only 50 Spots Available
-            </p>
-            <p className="text-lg md:text-xl text-discovery-sage max-w-3xl mx-auto">
-              Learn how Discovery Homes is reshaping housing in Western Canada with customizable modular builds perfect for rural properties, cabins, Indigenous communities, and workforce housing.
-            </p>
-          </div>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center mt-10">
-            <a href="#register" className="bg-discovery-gold hover:bg-discovery-gold-dark text-discovery-charcoal px-8 py-4 rounded-lg font-semibold inline-flex items-center gap-2 shadow-2xl transform hover:scale-105 transition-all duration-300 animate-pulse">
-              Register Now – Live Access Only + Free Bonuses
-              <ArrowRight className="w-5 h-5" />
-            </a>
+          <div className="flex flex-col items-center space-y-6">
+            <div className="inline-flex items-center gap-2 bg-white/10 px-4 py-2 rounded-full">
+              <PlayCircle className="w-5 h-5" />
+              <span className="text-sm">Live Webinar</span>
+            </div>
+            <h1 className="text-4xl md:text-6xl font-serif font-bold leading-tight text-discovery-white text-shadow-lg">
+              Discover How to Turn Raw Land into a Cash-Flowing Modular Home Investment in Under 90 Days
+            </h1>
+            <div className="space-y-4">
+              <p className="text-lg md:text-xl text-discovery-gold font-semibold">
+                Live Only • No Replays • Only 50 Spots Available
+              </p>
+              <p className="text-lg md:text-xl text-discovery-sage max-w-3xl mx-auto">
+                Learn how Discovery Homes is reshaping housing in Western Canada with customizable modular builds perfect for rural properties, cabins, Indigenous communities, and workforce housing.
+              </p>
+            </div>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center mt-4">
+              <a href="#register" className="bg-discovery-gold hover:bg-discovery-gold-dark text-discovery-charcoal px-8 py-4 rounded-lg font-semibold inline-flex items-center gap-2 shadow-2xl transform hover:scale-105 transition-all duration-300 animate-pulse">
+                Register Now – Live Access Only + Free Bonuses
+                <ArrowRight className="w-5 h-5" />
+              </a>
+            </div>
           </div>
         </div>
       </section>
@@ -272,14 +274,14 @@ export default function WebinarsPage() {
                <div className="relative h-96 rounded-2xl overflow-hidden shadow-2xl">
                  <Image
                    src="/images/pine1/exterior-1.webp"
-                   alt="Pine 1 Modular Home Exterior"
+                   alt="Pine Modular Home Exterior"
                    fill
                    className="object-cover"
                  />
                  <div className="absolute inset-0 bg-gradient-to-t from-discovery-charcoal/60 to-transparent" />
                                    <div className="absolute bottom-4 left-4 text-discovery-white">
-                    <h3 className="text-2xl font-serif font-bold text-discovery-white">Pine 1 Series</h3>
-                    <p className="text-discovery-sage">Customizable 2-bedroom modular home</p>
+                    <h3 className="text-2xl font-serif font-bold text-discovery-white">Pine Series</h3>
+                    <p className="text-discovery-sage">Customizable 1-bedroom modular home</p>
                   </div>
                </div>
                
@@ -287,7 +289,7 @@ export default function WebinarsPage() {
                  <div className="relative h-48 rounded-xl overflow-hidden shadow-xl">
                    <Image
                      src="/images/pine1/kitchen.webp"
-                     alt="Pine 1 Kitchen Interior"
+                     alt="Pine Kitchen Interior"
                      fill
                      className="object-cover"
                    />
@@ -300,7 +302,7 @@ export default function WebinarsPage() {
                  <div className="relative h-48 rounded-xl overflow-hidden shadow-xl">
                    <Image
                      src="/images/pine1/living-room.webp"
-                     alt="Pine 1 Living Room Interior"
+                     alt="Pine Living Room Interior"
                      fill
                      className="object-cover"
                    />
@@ -317,14 +319,14 @@ export default function WebinarsPage() {
                                <div className="relative h-80 rounded-2xl overflow-hidden shadow-2xl">
                   <Image
                     src="/images/pine2/Front Elevation.webp"
-                    alt="Pine 2 Modular Home Exterior"
+                    alt="Spruce Modular Home Exterior"
                     fill
                     className="object-cover"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-discovery-charcoal/60 to-transparent" />
                   <div className="absolute bottom-4 left-4 text-discovery-white">
-                    <h3 className="text-2xl font-serif font-bold text-discovery-white">Pine 2 Series</h3>
-                    <p className="text-discovery-sage">Spacious 3-bedroom with loft option</p>
+                    <h3 className="text-2xl font-serif font-bold text-discovery-white">Spruce Series</h3>
+                    <p className="text-discovery-sage">Spacious 2-bedroom with loft option</p>
                   </div>
                 </div>
                
@@ -332,7 +334,7 @@ export default function WebinarsPage() {
                  <div className="relative h-48 rounded-xl overflow-hidden shadow-xl">
                    <Image
                      src="/images/pine3/kitchen.webp"
-                     alt="Pine 3 Kitchen Interior"
+                     alt="Willow Kitchen Interior"
                      fill
                      className="object-cover"
                    />
@@ -345,7 +347,7 @@ export default function WebinarsPage() {
                  <div className="relative h-48 rounded-xl overflow-hidden shadow-xl">
                    <Image
                      src="/images/pine2/kitchen.webp"
-                     alt="Pine 2 Kitchen Interior"
+                     alt="Spruce Kitchen Interior"
                      fill
                      className="object-cover"
                    />

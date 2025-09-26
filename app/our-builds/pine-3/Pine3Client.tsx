@@ -31,11 +31,11 @@ export function Pine3Client() {
   ]
 
   const gallery = [
-    { src: '/images/new-content/Pine 3- Willow/XF pine 3 scandanavian front right .webp', alt: 'Willow Scandinavian Front Right View' },
-    { src: '/images/new-content/Pine 3- Willow/IF pine 3 Nordic Whitw.webp', alt: 'Willow Nordic White Exterior' },
-    { src: '/images/new-content/Pine 3- Willow/IF Pine3-kitchen-E&S.webp', alt: 'Willow Earth & Sky Kitchen' },
-    { src: '/images/new-content/Pine 3- Willow/IF Pine3-kitchen-NW.webp', alt: 'Willow Nordic White Kitchen' },
-    { src: '/images/new-content/Pine 3- Willow/IF Pine3-room-E&S.webp', alt: 'Willow Earth & Sky Living Room' }
+    { src: '/images/new-content/Willow- Willow/XF pine 3 scandanavian front right .webp', alt: 'Willow Scandinavian Front Right View' },
+    { src: '/images/new-content/Willow- Willow/IF pine 3 Nordic Whitw.webp', alt: 'Willow Nordic White Exterior' },
+    { src: '/images/new-content/Willow- Willow/IF Pine3-kitchen-E&S.webp', alt: 'Willow Earth & Sky Kitchen' },
+    { src: '/images/new-content/Willow- Willow/IF Pine3-kitchen-NW.webp', alt: 'Willow Nordic White Kitchen' },
+    { src: '/images/new-content/Willow- Willow/IF Pine3-room-E&S.webp', alt: 'Willow Earth & Sky Living Room' }
   ]
 
   const pdfDownloads = [
@@ -61,7 +61,7 @@ export function Pine3Client() {
       <section className="relative w-full aspect-video flex items-center justify-center overflow-hidden text-discovery-white hero-element">
         {/* Background Video */}
         <OptimizedVideo
-          src="/videos/Pine 3 Final_optimized.mp4"
+          src="/videos/Willow Final_optimized.mp4"
           style={{
             minWidth: '100%',
             minHeight: '100%',

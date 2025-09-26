@@ -33,7 +33,7 @@ export function Pine1Client() {
   const gallery = [
     { src: '/images/new-content/PIne 1 - Pine/xf pine 1 front right scandanavian.webp', alt: 'Pine Front Right Scandinavian View' },
     { src: '/images/new-content/PIne 1 - Pine/XF pien 1 and 2 charcoal.webp', alt: 'Pine and Spruce Charcoal Exterior' },
-    { src: '/images/new-content/PIne 1 - Pine/IF Pine 1 - nordic white - living room.webp', alt: 'Pine Nordic White Living Room' },
+    { src: '/images/new-content/PIne 1 - Pine/IF Pine - nordic white - living room.webp', alt: 'Pine Nordic White Living Room' },
     { src: '/images/new-content/PIne 1 - Pine/IF pine1-kitchen-NW.webp', alt: 'Pine Nordic White Kitchen' },
     { src: '/images/new-content/PIne 1 - Pine/IF pine1-bedroom-NW.webp', alt: 'Pine Nordic White Bedroom' },
     { src: '/images/new-content/PIne 1 - Pine/IF Pine1-bathroom-NW.webp', alt: 'Pine Nordic White Bathroom' }
@@ -62,7 +62,7 @@ export function Pine1Client() {
       <section className="relative w-full aspect-video flex items-center justify-center overflow-hidden text-discovery-white hero-element">
         {/* Background Video */}
         <OptimizedVideo
-          src="/videos/Pine 1 & 2 Final_optimized.mp4"
+          src="/videos/Pine & 2 Final_optimized.mp4"
           style={{
             minWidth: '100%',
             minHeight: '100%',

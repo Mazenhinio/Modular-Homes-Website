@@ -18,7 +18,7 @@ export function OurBuildsSection() {
       description: "Perfect for families or rental markets, with extra space and a flexible layout.",
       specs: "504 sq ft • 2 Bedroom with Loft",
       price: "Starting at $188,000 CAD",
-      image: "/images/new-content/Pine 2- Spruce/XF pien 1 and 2 charcoal.webp",
+      image: "/images/new-content/Spruce- Spruce/XF pien 1 and 2 charcoal.webp",
       href: "/our-builds/pine-2",
       features: ["Flexible layout", "Family friendly", "Loft space"]
     },
@@ -28,7 +28,7 @@ export function OurBuildsSection() {
       description: "A modern, tiny-home solution — perfect as an office, rental, or weekend retreat.",
       specs: "240 sq ft with Loft",
       price: "Starting at $104,000 CAD",
-      image: "/images/new-content/Pine 3- Willow/XF pine 3 scandanavian front right .webp", 
+      image: "/images/new-content/Willow- Willow/XF pine 3 scandanavian front right .webp", 
       href: "/our-builds/pine-3",
       features: ["Tiny home design", "Affordable option", "Multi-purpose"]
     }

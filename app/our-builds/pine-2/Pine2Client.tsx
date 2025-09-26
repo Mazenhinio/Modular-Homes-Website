@@ -31,11 +31,11 @@ export function Pine2Client() {
   ]
 
   const gallery = [
-    { src: '/images/new-content/Pine 2- Spruce/IF pine1-kitchen-E&S.webp', alt: 'Spruce Earth & Sky Kitchen' },
-    { src: '/images/new-content/Pine 2- Spruce/IF pine1-bedroom-E&S.webp', alt: 'Spruce Earth & Sky Bedroom' },
-    { src: '/images/new-content/Pine 2- Spruce/IF pine1-bedroom-IC.webp', alt: 'Spruce Indigenous Collection Bedroom' },
-    { src: '/images/new-content/Pine 2- Spruce/IFpine1-living-E&S.webp', alt: 'Spruce Earth & Sky Living Room' },
-    { src: '/images/new-content/Pine 2- Spruce/IF Pine1-bathrrom-IC.webp', alt: 'Spruce Indigenous Collection Bathroom' }
+    { src: '/images/new-content/Spruce- Spruce/IF pine1-kitchen-E&S.webp', alt: 'Spruce Earth & Sky Kitchen' },
+    { src: '/images/new-content/Spruce- Spruce/IF pine1-bedroom-E&S.webp', alt: 'Spruce Earth & Sky Bedroom' },
+    { src: '/images/new-content/Spruce- Spruce/IF pine1-bedroom-IC.webp', alt: 'Spruce Indigenous Collection Bedroom' },
+    { src: '/images/new-content/Spruce- Spruce/IFpine1-living-E&S.webp', alt: 'Spruce Earth & Sky Living Room' },
+    { src: '/images/new-content/Spruce- Spruce/IF Pine1-bathrrom-IC.webp', alt: 'Spruce Indigenous Collection Bathroom' }
   ]
 
   const pdfDownloads = [
@@ -61,7 +61,7 @@ export function Pine2Client() {
       <section className="relative w-full aspect-video flex items-center justify-center overflow-hidden text-discovery-white hero-element">
         {/* Background Video */}
         <OptimizedVideo
-          src="/videos/Pine 1 & 2 Final_optimized.mp4"
+          src="/videos/Pine & 2 Final_optimized.mp4"
           style={{
             minWidth: '100%',
             minHeight: '100%',

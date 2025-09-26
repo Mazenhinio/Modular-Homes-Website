@@ -46,7 +46,7 @@ const propertyTypes = [
     benefits: ['Premium guest experience', 'Flexible room inventory', 'Seasonal expansion'],
     caseStudy: {
       property: 'Mountain View Resort, BC',
-      result: '6 Pine 1 units generated $180,000 additional annual revenue'
+      result: '6 Pine units generated $180,000 additional annual revenue'
     }
   },
   {
@@ -56,7 +56,7 @@ const propertyTypes = [
     benefits: ['Weather-independent revenue', 'Higher profit margins', 'Extended season'],
     caseStudy: {
       property: 'Lakeside Campground, AB',
-      result: '4 Pine 3 units increased average nightly rate by 35%'
+      result: '4 Willow units increased average nightly rate by 35%'
     }
   },
   {
@@ -66,7 +66,7 @@ const propertyTypes = [
     benefits: ['Multiple revenue streams', 'Risk diversification', 'Scalable investment'],
     caseStudy: {
       property: 'Prairie View Rentals, SK',
-      result: '3 Pine 2 units on 10 acres generating $95,000 annually'
+      result: '3 Spruce units on 10 acres generating $95,000 annually'
     }
   }
 ]

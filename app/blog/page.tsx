@@ -123,7 +123,7 @@ export default function BlogPage() {
     {
       id: 6,
       title: "Success Story: From Empty Acreage to Cash-Generating Rentals in 60 Days",
-      excerpt: "Real case study: How the Thompson family transformed 40 acres into a profitable rental property using Pine 2 modular homes.",
+      excerpt: "Real case study: How the Thompson family transformed 40 acres into a profitable rental property using Spruce modular homes.",
       content: "Success story content...",
       author: "Kyle Zellweger",
       date: "2024-06-08",

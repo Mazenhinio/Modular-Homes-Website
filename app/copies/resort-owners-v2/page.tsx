@@ -368,8 +368,8 @@ export default function ResortOwnersLandingPage() {
                 <Image
                   src={
                     activeTab === 'pine' ? '/assets/images/new-content/PIne 1 - Pine/xf pine 1 front right scandanavian.webp' :
-                    activeTab === 'spruce' ? '/assets/images/new-content/Pine 2- Spruce/XF pien 1 and 2 charcoal.webp' :
-                    activeTab === 'willow' ? '/assets/images/new-content/Pine 3- Willow/XF pine 3 scandanavian front right .webp' :
+                    activeTab === 'spruce' ? '/assets/images/new-content/Spruce- Spruce/XF pien 1 and 2 charcoal.webp' :
+                    activeTab === 'willow' ? '/assets/images/new-content/Willow- Willow/XF pine 3 scandanavian front right .webp' :
                     '/assets/images/new-content/Custom Builds/CB-LakesideRetreat-Front__Lakeside-Retreat__CustomBuild__v01.webp'
                   }
                   alt={`${activeTab} model`}
@@ -381,7 +381,7 @@ export default function ResortOwnersLandingPage() {
               {/* Image Gallery */}
               <div className="grid grid-cols-2 gap-4">
                 {activeTab === 'pine' && [
-                  '/assets/images/new-content/PIne 1 - Pine/IF Pine 1 - nordic white - living room.webp',
+                  '/assets/images/new-content/PIne 1 - Pine/IF Pine - nordic white - living room.webp',
                   '/assets/images/new-content/PIne 1 - Pine/IF pine1-kitchen-NW.webp',
                   '/assets/images/new-content/PIne 1 - Pine/IF pine1-bedroom-NW.webp',
                   '/assets/images/new-content/PIne 1 - Pine/IF Pine1-bathroom-NW.webp'
@@ -397,10 +397,10 @@ export default function ResortOwnersLandingPage() {
                 ))}
 
                 {activeTab === 'spruce' && [
-                  '/assets/images/new-content/Pine 2- Spruce/IF pine1-kitchen-E&S.webp',
-                  '/assets/images/new-content/Pine 2- Spruce/IF pine1-living-E&S.webp',
-                  '/assets/images/new-content/Pine 2- Spruce/IF pine1-bedroom-E&S.webp',
-                  '/assets/images/new-content/Pine 2- Spruce/IF pine1-bedroom-IC.webp'
+                  '/assets/images/new-content/Spruce- Spruce/IF pine1-kitchen-E&S.webp',
+                  '/assets/images/new-content/Spruce- Spruce/IF pine1-living-E&S.webp',
+                  '/assets/images/new-content/Spruce- Spruce/IF pine1-bedroom-E&S.webp',
+                  '/assets/images/new-content/Spruce- Spruce/IF pine1-bedroom-IC.webp'
                 ].map((src, index) => (
                   <div key={index} className="relative h-32 rounded-xl overflow-hidden shadow-lg">
                     <Image
@@ -413,10 +413,10 @@ export default function ResortOwnersLandingPage() {
                 ))}
 
                 {activeTab === 'willow' && [
-                  '/assets/images/new-content/Pine 3- Willow/IF pine 3 Nordic Whitw.webp',
-                  '/assets/images/new-content/Pine 3- Willow/IF Pine3-kitchen-NW.webp',
-                  '/assets/images/new-content/Pine 3- Willow/IF Pine3-kitchen-E&S.webp',
-                  '/assets/images/new-content/Pine 3- Willow/IF Pine3-room-E&S.webp'
+                  '/assets/images/new-content/Willow- Willow/IF pine 3 Nordic Whitw.webp',
+                  '/assets/images/new-content/Willow- Willow/IF Pine3-kitchen-NW.webp',
+                  '/assets/images/new-content/Willow- Willow/IF Pine3-kitchen-E&S.webp',
+                  '/assets/images/new-content/Willow- Willow/IF Pine3-room-E&S.webp'
                 ].map((src, index) => (
                   <div key={index} className="relative h-32 rounded-xl overflow-hidden shadow-lg">
                     <Image
@@ -680,7 +680,7 @@ export default function ResortOwnersLandingPage() {
                 {
                   title: "Glamping Experience",
                   description: "Created unique glamping experience with luxury modular units increasing guest satisfaction",
-                  image: "/assets/images/new-content/Landing Page- Land Owners/LP-CAB-3__Cabin Living — Seasonal appeal – winter__Pine 2__v01.webp"
+                  image: "/assets/images/new-content/Landing Page- Land Owners/LP-CAB-3__Cabin Living — Seasonal appeal – winter__Spruce__v01.webp"
                 },
                 {
                   title: "Resort Revenue Boost",
@@ -728,7 +728,7 @@ export default function ResortOwnersLandingPage() {
                 {
                   title: "Mountain Retreat Project",
                   description: "Converted family land into premium rental community with 90-day deployment",
-                  image: "/assets/images/new-content/Landing Page- Land Owners/LP-CAB-3__Cabin Living — Seasonal appeal – winter__Pine 2__v01.webp"
+                  image: "/assets/images/new-content/Landing Page- Land Owners/LP-CAB-3__Cabin Living — Seasonal appeal – winter__Spruce__v01.webp"
                 },
                 {
                   title: "Lakeside Community",
@@ -946,7 +946,7 @@ export default function ResortOwnersLandingPage() {
               <div className="bg-gradient-to-br from-discovery-sage/20 to-discovery-gold/20 rounded-2xl p-8 border border-discovery-gold/30">
                 <div className="relative h-80 rounded-xl overflow-hidden shadow-lg">
                   <Image
-                    src="/assets/images/new-content/Pine 2- Spruce/XF pien 1 and 2 charcoal.webp"
+                    src="/assets/images/new-content/Spruce- Spruce/XF pien 1 and 2 charcoal.webp"
                     alt="Spruce Model - The Versatile One"
                     fill
                     className="object-cover"

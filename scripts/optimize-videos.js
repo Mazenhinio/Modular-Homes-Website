@@ -5,7 +5,7 @@ const path = require('path')
 const videoOptimizationGuide = {
   recommendations: [
     {
-      file: 'Pine 1 & 2 Final.mp4',
+      file: 'Pine & 2 Final.mp4',
       currentSize: '4.6 MB',
       targetSize: '2-3 MB',
       suggestions: [
@@ -16,7 +16,7 @@ const videoOptimizationGuide = {
       ]
     },
     {
-      file: 'Pine 3 Final.mp4',
+      file: 'Willow Final.mp4',
       currentSize: '20.4 MB',
       targetSize: '5-8 MB',
       suggestions: [
@@ -31,23 +31,23 @@ const videoOptimizationGuide = {
   ],
   
   ffmpegCommands: {
-    'Pine 1 & 2 Final.mp4': [
+    'Pine & 2 Final.mp4': [
       // High quality optimization
-      'ffmpeg -i "Pine 1 & 2 Final.mp4" -c:v libx264 -crf 28 -preset slow -c:a aac -b:a 128k -movflags +faststart "Pine 1 & 2 Final_optimized.mp4"',
+      'ffmpeg -i "Pine & 2 Final.mp4" -c:v libx264 -crf 28 -preset slow -c:a aac -b:a 128k -movflags +faststart "Pine & 2 Final_optimized.mp4"',
       
       // WebM alternative (better compression)
-      'ffmpeg -i "Pine 1 & 2 Final.mp4" -c:v libvpx-vp9 -crf 30 -b:v 0 -c:a libopus -b:a 128k "Pine 1 & 2 Final.webm"'
+      'ffmpeg -i "Pine & 2 Final.mp4" -c:v libvpx-vp9 -crf 30 -b:v 0 -c:a libopus -b:a 128k "Pine & 2 Final.webm"'
     ],
     
-    'Pine 3 Final.mp4': [
+    'Willow Final.mp4': [
       // Aggressive optimization for large file
-      'ffmpeg -i "Pine 3 Final.mp4" -c:v libx264 -crf 32 -preset slow -vf "scale=1920:1080" -c:a aac -b:a 96k -movflags +faststart "Pine 3 Final_optimized.mp4"',
+      'ffmpeg -i "Willow Final.mp4" -c:v libx264 -crf 32 -preset slow -vf "scale=1920:1080" -c:a aac -b:a 96k -movflags +faststart "Willow Final_optimized.mp4"',
       
       // WebM with aggressive compression
-      'ffmpeg -i "Pine 3 Final.mp4" -c:v libvpx-vp9 -crf 35 -b:v 0 -vf "scale=1920:1080" -c:a libopus -b:a 96k "Pine 3 Final.webm"',
+      'ffmpeg -i "Willow Final.mp4" -c:v libvpx-vp9 -crf 35 -b:v 0 -vf "scale=1920:1080" -c:a libopus -b:a 96k "Willow Final.webm"',
       
       // Create shorter preview version (first 10 seconds)
-      'ffmpeg -i "Pine 3 Final.mp4" -t 10 -c:v libx264 -crf 28 -preset slow -c:a aac -b:a 128k -movflags +faststart "Pine 3 Final_preview.mp4"'
+      'ffmpeg -i "Willow Final.mp4" -t 10 -c:v libx264 -crf 28 -preset slow -c:a aac -b:a 128k -movflags +faststart "Willow Final_preview.mp4"'
     ]
   },
   

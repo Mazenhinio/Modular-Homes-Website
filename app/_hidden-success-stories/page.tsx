@@ -25,8 +25,8 @@ export default function SuccessStoriesPage() {
       title: "Homeowners",
       location: "Rural Saskatchewan",
       image: "/images/testimonials/thompson-family.jpg",
-      quote: "We thought owning a home was impossible until we found Discovery Homes. The Pine 2 model is perfect for our family, and the off-grid package lets us live sustainably.",
-      project: "Pine 2 with Off-Grid Package",
+      quote: "We thought owning a home was impossible until we found Discovery Homes. The Spruce model is perfect for our family, and the off-grid package lets us live sustainably.",
+      project: "Spruce with Off-Grid Package",
       timeline: "Move-in ready in 45 days",
       rating: 5,
       category: "Rural Family"
@@ -38,7 +38,7 @@ export default function SuccessStoriesPage() {
       location: "British Columbia",
       image: "/images/testimonials/marcus-chen.jpg",
       quote: "Adding Discovery Homes cabins to my resort was the best investment decision I've made. Guests love them, and my booking revenue has increased by 40%.",
-      project: "6 Pine 1 Resort Cabins",
+      project: "6 Pine Resort Cabins",
       timeline: "All units delivered in 3 weeks",
       rating: 5,
       category: "Resort Owner"

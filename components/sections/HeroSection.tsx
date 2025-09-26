@@ -12,7 +12,7 @@ export function HeroSection() {
   
   const slides = [
     {
-      image: '/images/new-content/Home Page Hero Carousel/H1__Forest Sunrise__Pine 1__v01.webp',
+      image: '/images/new-content/Home Page Hero Carousel/H1__Forest Sunrise__Pine__v01.webp',
       title: 'Smart, Sustainable Modular Homes',
       subtitle: 'Built for Western Canada'
     },

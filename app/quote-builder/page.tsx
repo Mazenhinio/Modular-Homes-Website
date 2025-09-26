@@ -1157,9 +1157,9 @@ export default function QuoteBuilderPage() {
                       <div className="w-24 h-24 rounded-lg overflow-hidden ml-4">
                         <img 
                           src={
-                            selectedModel.name === 'Willow' ? '/images/new-content/Pine 3- Willow/XF pine 3 scandanavian front right .webp' :
+                            selectedModel.name === 'Willow' ? '/images/new-content/Willow- Willow/XF pine 3 scandanavian front right .webp' :
                             selectedModel.name === 'Pine' ? '/images/new-content/PIne 1 - Pine/xf pine 1 front right scandanavian.webp' :
-                            selectedModel.name === 'Spruce' ? '/images/new-content/Pine 2- Spruce/XF pien 1 and 2 charcoal.webp' :
+                            selectedModel.name === 'Spruce' ? '/images/new-content/Spruce- Spruce/XF pien 1 and 2 charcoal.webp' :
                             '/images/new-content/Custom Builds/cb coastal.webp'
                           }
                           alt={`${selectedModel.name} model`}
@@ -1203,9 +1203,9 @@ export default function QuoteBuilderPage() {
                     <div className="absolute top-4 right-4 w-40 h-40 rounded-lg overflow-hidden">
                       <img 
                         src={
-                          selectedModel.name === 'Willow' ? '/images/new-content/Pine 3- Willow/XF pine 3 scandanavian front right .webp' :
+                          selectedModel.name === 'Willow' ? '/images/new-content/Willow- Willow/XF pine 3 scandanavian front right .webp' :
                           selectedModel.name === 'Pine' ? '/images/new-content/PIne 1 - Pine/xf pine 1 front right scandanavian.webp' :
-                          selectedModel.name === 'Spruce' ? '/images/new-content/Pine 2- Spruce/XF pien 1 and 2 charcoal.webp' :
+                          selectedModel.name === 'Spruce' ? '/images/new-content/Spruce- Spruce/XF pien 1 and 2 charcoal.webp' :
                           '/images/new-content/Custom Builds/cb coastal.webp'
                         }
                         alt={`${selectedModel.name} model`}

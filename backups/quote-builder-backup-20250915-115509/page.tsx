@@ -1985,7 +1985,7 @@ export default function QuoteBuilderPage() {
                         Generating PDF...
                       </>
                   ) : (
-                    'Download Pine 1 PDF'
+                    'Download Pine PDF'
                   )}
                   </button>
                 )}
