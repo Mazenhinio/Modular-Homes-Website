@@ -25,10 +25,6 @@ export default function EcoFriendlyPage() {
         {/* Content */}
         <div className="relative z-10 container-custom h-full flex items-center justify-center">
           <div className="max-w-4xl mx-auto text-center px-6 py-8">
-            <div className="flex items-center justify-center gap-3 mb-6">
-              <Leaf className="text-discovery-gold" size={32} />
-              <span className="text-discovery-gold font-semibold text-xl">Eco-Friendly Living</span>
-            </div>
             
             <h1 className="text-4xl md:text-6xl font-serif font-bold mb-6 text-gradient-nature leading-relaxed overflow-visible pb-2">
               Eco-Friendly Living Starts Here
