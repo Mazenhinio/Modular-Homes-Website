@@ -54,7 +54,7 @@ export default function WebinarsPage() {
   return (
     <div className="min-h-screen bg-discovery-white">
       {/* Hero */}
-      <section className="relative w-full aspect-video overflow-hidden">
+      <section className="relative w-full h-[80vh] overflow-hidden">
         <div className="absolute inset-0">
           <Image
             src="/images/hero-carousel/hero-slide-5.webp"

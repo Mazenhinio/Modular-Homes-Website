@@ -97,7 +97,7 @@ export function HeroSection() {
   }, [nextSlide, isPlaying])
 
   return (
-    <section className="relative w-full h-[60vh] overflow-hidden">
+    <section className="relative w-full h-[80vh] overflow-hidden">
       {/* Carousel Background */}
       <div className="absolute inset-0" ref={imageRef}>
         {slides.map((slide, index) => (

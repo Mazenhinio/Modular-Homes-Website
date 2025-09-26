@@ -11,7 +11,7 @@ export default function EcoFriendlyPage() {
   return (
     <div className="min-h-screen bg-discovery-white">
       {/* Hero Section */}
-      <section className="relative w-full aspect-video text-discovery-white hero-element overflow-hidden">
+      <section className="relative w-full h-[80vh] text-discovery-white hero-element overflow-hidden">
         {/* Background Image */}
         <div className="absolute inset-0 z-0">
           <img

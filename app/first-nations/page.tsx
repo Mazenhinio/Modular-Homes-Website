@@ -38,7 +38,7 @@ export default function FirstNationsLandingPage() {
   return (
     <div className="min-h-screen bg-discovery-white">
       {/* Hero Section */}
-      <section className="relative w-full aspect-video flex items-center justify-center overflow-hidden">
+      <section className="relative w-full h-[80vh] flex items-center justify-center overflow-hidden">
         {/* Background Image */}
         <div className="absolute inset-0">
           <Image

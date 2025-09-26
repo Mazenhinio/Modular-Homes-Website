@@ -9,7 +9,7 @@ interface SegmentHeroProps {
 
 export function SegmentHero({ title, description, subtitle, backgroundImage, primaryCTA, secondaryCTA }: SegmentHeroProps) {
   return (
-    <section className="relative w-full aspect-video bg-gradient-to-r from-[#2D2D2D] to-[#3A3A3A] text-white overflow-hidden">
+    <section className="relative w-full h-[80vh] bg-gradient-to-r from-[#2D2D2D] to-[#3A3A3A] text-white overflow-hidden">
       {/* Background Image */}
       {backgroundImage && (
         <div className="absolute inset-0">

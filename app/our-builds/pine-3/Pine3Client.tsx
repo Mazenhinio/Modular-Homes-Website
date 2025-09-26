@@ -58,7 +58,7 @@ export function Pine3Client() {
   return (
     <>
       {/* Hero Section */}
-      <section className="relative w-full h-[60vh] flex items-center justify-center overflow-hidden text-discovery-white hero-element">
+      <section className="relative w-full h-[80vh] flex items-center justify-center overflow-hidden text-discovery-white hero-element">
         {/* Background Video */}
         <OptimizedVideo
           src="/videos/Pine 3 Final_optimized.mp4"
