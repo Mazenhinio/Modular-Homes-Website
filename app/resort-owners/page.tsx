@@ -212,7 +212,7 @@ export default function ResortOwnersPage() {
                   fields={[
                     { name: 'name', label: 'Full Name', type: 'text', required: true },
                     { name: 'email', label: 'Email Address', type: 'email', required: true },
-                    { name: 'phone', label: 'Phone Number', type: 'tel', required: true },
+                    { name: 'phone', label: 'Phone Number', type: 'tel', required: false },
                     { name: 'businessName', label: 'Business Name', type: 'text', required: false },
                     { name: 'propertyType', label: 'Property Type', type: 'select', options: ['Resort/Hotel', 'Campground/RV Park', 'Vacation Rental', 'Event Venue', 'Other'], required: true },
                     { name: 'location', label: 'Property Location', type: 'text', required: true },

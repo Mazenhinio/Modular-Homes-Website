@@ -78,6 +78,25 @@ export function Footer() {
 
         <div className="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
           <p>&copy; 2024 Discovery Homes. All rights reserved.</p>
+          <div className="mt-2 space-x-4">
+            <a 
+              href="https://app.gohighlevel.com/v2/preview/c0BIvl4xjKStFMrCsqHY?notrack=true" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="hover:text-[#D4AF37] transition-colors"
+            >
+              Terms and Conditions
+            </a>
+            <span>|</span>
+            <a 
+              href="https://app.gohighlevel.com/v2/preview/jryFzO5ua2DdePIov9hr?notrack=true" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="hover:text-[#D4AF37] transition-colors"
+            >
+              Privacy Policy
+            </a>
+          </div>
         </div>
       </div>
     </footer>

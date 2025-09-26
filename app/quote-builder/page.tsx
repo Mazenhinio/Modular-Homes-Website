@@ -378,7 +378,6 @@ export default function QuoteBuilderPage() {
         if (!formData.name.trim()) return 'Please enter your full name.'
         if (!formData.email.trim()) return 'Please enter your email address.'
         if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email.trim())) return 'Please enter a valid email address.'
-        if (!formData.phone.trim()) return 'Please enter your phone number.'
         return null
       }
       case 2: {
@@ -982,14 +981,13 @@ export default function QuoteBuilderPage() {
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-medium text-gray-700 mb-2">Phone Number *</label>
+                  <label className="block text-xs font-medium text-gray-700 mb-2">Phone Number</label>
                   <input
                     type="tel"
                     value={formData.phone}
                     onChange={(e) => updateFormData('phone', e.target.value)}
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#D4AF37] focus:border-transparent"
                     placeholder="Enter your phone number"
-                    required
                   />
                 </div>
               </div>

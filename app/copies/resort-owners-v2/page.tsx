@@ -1099,14 +1099,13 @@ export default function ResortOwnersLandingPage() {
                 </div>
                 
                   <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Phone Number *</label>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Phone Number</label>
                 <input
                   type="tel"
                   value={downloadFormData.phone}
                   onChange={(e) => setDownloadFormData(prev => ({ ...prev, phone: e.target.value }))}
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-discovery-gold focus:border-transparent"
                   placeholder="Enter your phone number"
-                  required
                 />
                   </div>
               
