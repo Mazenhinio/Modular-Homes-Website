@@ -2,6 +2,7 @@
 
 import { Phone, Mail, MapPin, Calendar } from 'lucide-react'
 import { ContactMayaWidget } from '@/components/ContactMayaWidget'
+import Script from 'next/script'
 
 export default function ContactPage() {
 
@@ -85,12 +86,13 @@ export default function ContactPage() {
             <div className="bg-white rounded-2xl p-8 shadow-lg">
               <h2 className="text-3xl font-bold text-[#2D2D2D] mb-0">Book a Consultation</h2>
               <iframe 
-                src="https://api.leadconnectorhq.com/widget/booking/PTZ3zcQLwvLZ7CizfIdf" 
-                style={{ width: '100%', height: '800px', border: 'none', overflow: 'auto' }} 
-                scrolling="yes" 
-                id="PTZ3zcQLwvLZ7CizfIdf_1753871801578"
+                src="https://api.leadconnectorhq.com/widget/booking/wbJJIOUM9g94NdNGDuD8" 
+                style={{ width: '100%', border: 'none', overflow: 'hidden' }} 
+                scrolling="no" 
+                id="wbJJIOUM9g94NdNGDuD8_1759418704880"
                 className="w-full"
               />
+              <Script src="https://link.msgsndr.com/js/form_embed.js" />
             </div>
           </div>
         </div>
