@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 
 // Go High Level webhook URLs for quote builder
 const GHL_WEBHOOK_URL_STEP1 = 'https://services.leadconnectorhq.com/hooks/02vJIYEzMsesDcYai65O/webhook-trigger/2a9c4617-2321-409c-b722-12d62f1c2030'
-const GHL_WEBHOOK_URL_COMPLETE = 'https://services.leadconnectorhq.com/hooks/02vJIYEzMsesDcYai65O/webhook-trigger/c2fda141-5868-44b2-a87f-0e712f8dcd5f'
+const GHL_WEBHOOK_URL_COMPLETE = 'https://services.leadconnectorhq.com/hooks/02vJIYEzMsesDcYai65O/webhook-trigger/3e59a84b-4ed8-41ab-b130-3df8ecbb19d1'
 
 export async function POST(request: NextRequest) {
   try {
